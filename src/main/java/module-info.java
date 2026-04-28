@@ -1,6 +1,7 @@
 module com.example.eksamensprojekt {
     requires javafx.controls;
     requires javafx.fxml;
+    requires com.example.eksamensprojekt;
 
 
     opens com.example.eksamensprojekt to javafx.fxml;
