@@ -1,0 +1,942 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eksamensprojekt.WatanabeSamlingenController">
+   <content>
+      <VBox prefWidth="1400.0">
+         <children>
+            <HBox prefHeight="150.0">
+               <children>
+                  <VBox prefWidth="700.0">
+                     <children>
+                        <Label onMouseClicked="#tilStartSide" text="KUNSTHAL HOLMEN">
+                           <font>
+                              <Font name="System Bold" size="48.0" />
+                           </font>
+                        </Label>
+                        <Label onMouseClicked="#omSamlingenKnap" text="SADAO WATANABE">
+                           <font>
+                              <Font name="Georgia" size="48.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
+                  <VBox prefHeight="150.0" prefWidth="700.0">
+                     <children>
+                        <HBox alignment="TOP_RIGHT">
+                           <children>
+                              <Button mnemonicParsing="false" onMouseClicked="#watanabeSamlingenKnap" text="WATANABE SAMLINGEN">
+                                 <HBox.margin>
+                                    <Insets right="5.0" top="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" onMouseClicked="#favoritterKnap" text="FAVORITTER">
+                                 <HBox.margin>
+                                    <Insets right="5.0" top="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" onMouseClicked="#temaerKnap" text="TEMAER">
+                                 <HBox.margin>
+                                    <Insets right="5.0" top="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="TOP_RIGHT">
+                           <children>
+                              <Button mnemonicParsing="false" onMouseClicked="#undervisningKnap" text="UNDERVISNING">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" onMouseClicked="#omSamlingenKnap" text="OM SAMLINGEN">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" onMouseClicked="#omOsKnap" text="OM OS">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" onMouseClicked="#adminKnap" text="ADMIN">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <VBox spacing="50.0">
+               <opaqueInsets>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <children>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Watanabe-samlingen">
+                           <font>
+                              <Font size="64.0" />
+                           </font>
+                        </Label>
+                        <Label maxWidth="900.0" text="Watanabe-samlingen er en unik samling af japanske træsnit med &#10;bibelske fortællinger skabt af kunstneren Sadao Watanabe" textAlignment="CENTER">
+                           <font>
+                              <Font size="32.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label />
+                        <TextField fx:id="searchField" maxWidth="500.0" prefHeight="41.0" prefWidth="0.0" promptText="Søg efter kunstværker...">
+                           <VBox.margin>
+                              <Insets bottom="25.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </TextField>
+                        <HBox alignment="CENTER" prefHeight="40.0" prefWidth="1380.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefWidth="700.0">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" text="Filter efter årstal">
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font size="28.0" />
+                                       </font>
+                                    </Label>
+                                    <Button mnemonicParsing="false" onAction="#filterAarstalOp">
+                                       <HBox.margin>
+                                          <Insets right="5.0" />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <graphic>
+                                          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@Billeder/OpPil.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#filterAarstalNed">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <graphic>
+                                          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@Billeder/NedPil.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="15.0" />
+                                 </HBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_RIGHT" prefWidth="700.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#downloadHeleSamlingen" text="Download hele samlingen">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets right="100.0" />
+                                 </opaqueInsets>
+                                 <HBox.margin>
+                                    <Insets right="15.0" />
+                                 </HBox.margin>
+                              </HBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <GridPane prefWidth="1390.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="450.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="450.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="0.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="450.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="450.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="450.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="450.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="450.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="450.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="450.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ImageView fx:id="kunstværk1" fitHeight="450.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" />
+                        <ImageView fx:id="kunstværk2" fitHeight="450.0" fitWidth="320.0" layoutX="23.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <ImageView fx:id="kunstværk3" fitHeight="450.0" fitWidth="320.0" layoutX="355.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                        <ImageView fx:id="kunstværk4" fitHeight="450.0" fitWidth="320.0" layoutX="700.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+                        <ImageView fx:id="kunstværk5" fitHeight="450.0" fitWidth="320.0" layoutX="1045.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <ImageView fx:id="kunstværk6" fitHeight="450.0" fitWidth="320.0" layoutX="10.0" layoutY="560.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <ImageView fx:id="kunstværk7" fitHeight="450.0" fitWidth="320.0" layoutX="355.0" layoutY="560.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <ImageView fx:id="kunstværk8" fitHeight="450.0" fitWidth="320.0" layoutX="700.0" layoutY="560.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <ImageView fx:id="kunstværk9" fitHeight="450.0" fitWidth="320.0" layoutX="23.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <ImageView fx:id="kunstværk10" fitHeight="450.0" fitWidth="320.0" layoutX="23.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <ImageView fx:id="kunstværk11" fitHeight="450.0" fitWidth="320.0" layoutX="23.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <ImageView fx:id="kunstværk12" fitHeight="450.0" fitWidth="320.0" layoutX="700.0" layoutY="1110.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <ImageView fx:id="kunstværk13" fitHeight="450.0" fitWidth="320.0" layoutX="1045.0" layoutY="1110.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                        <ImageView fx:id="kunstværk14" fitHeight="450.0" fitWidth="320.0" layoutX="10.0" layoutY="1660.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                        <ImageView fx:id="kunstværk15" fitHeight="450.0" fitWidth="320.0" layoutX="355.0" layoutY="1660.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                        <ImageView fx:id="kunstværk16" fitHeight="450.0" fitWidth="320.0" layoutX="700.0" layoutY="1660.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                        <ImageView fx:id="kunstværk17" fitHeight="450.0" fitWidth="320.0" layoutX="1045.0" layoutY="1660.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                        <ImageView fx:id="kunstværk18" fitHeight="450.0" fitWidth="320.0" layoutX="10.0" layoutY="2210.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                        <ImageView fx:id="kunstværk19" fitHeight="450.0" fitWidth="320.0" layoutX="355.0" layoutY="2210.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                        <ImageView fx:id="kunstværk20" fitHeight="450.0" fitWidth="320.0" layoutX="700.0" layoutY="2210.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                        <ImageView fx:id="kunstværk21" fitHeight="450.0" fitWidth="320.0" layoutX="1045.0" layoutY="2210.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                        <ImageView fx:id="kunstværk22" fitHeight="450.0" fitWidth="320.0" layoutX="10.0" layoutY="2760.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                        <ImageView fx:id="kunstværk23" fitHeight="450.0" fitWidth="320.0" layoutX="355.0" layoutY="2760.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                        <ImageView fx:id="kunstværk24" fitHeight="450.0" fitWidth="320.0" layoutX="700.0" layoutY="2760.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                        <ImageView fx:id="kunstværk25" fitHeight="450.0" fitWidth="320.0" layoutX="1045.0" layoutY="2760.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
+                        <ImageView fx:id="kunstværk26" fitHeight="450.0" fitWidth="320.0" layoutX="10.0" layoutY="3310.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
+                        <ImageView fx:id="kunstværk27" fitHeight="450.0" fitWidth="320.0" layoutX="355.0" layoutY="3310.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
+                        <ImageView fx:id="kunstværk28" fitHeight="450.0" fitWidth="320.0" layoutX="700.0" layoutY="3310.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
+                        <ImageView fx:id="kunstværk29" fitHeight="450.0" fitWidth="320.0" layoutX="10.0" layoutY="3310.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="14" />
+                        <ImageView fx:id="kunstværk30" fitHeight="450.0" fitWidth="320.0" layoutX="10.0" layoutY="3860.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="14" />
+                        <ImageView fx:id="kunstværk31" fitHeight="450.0" fitWidth="320.0" layoutX="355.0" layoutY="3860.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="14" />
+                        <ImageView fx:id="kunstværk32" fitHeight="450.0" fitWidth="320.0" layoutX="700.0" layoutY="3860.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="14" />
+                        <ImageView fx:id="kunstværk33" fitHeight="450.0" fitWidth="320.0" layoutX="1045.0" layoutY="3860.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="16" />
+                        <ImageView fx:id="kunstværk34" fitHeight="450.0" fitWidth="320.0" layoutX="10.0" layoutY="4410.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="16" />
+                        <ImageView fx:id="kunstværk35" fitHeight="450.0" fitWidth="320.0" layoutX="355.0" layoutY="4410.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="16" />
+                        <ImageView fx:id="kunstværk36" fitHeight="450.0" fitWidth="320.0" layoutX="700.0" layoutY="4410.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="16" />
+                        <Label fx:id="kunstværkBeskrivelse1" alignment="TOP_LEFT" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse2" alignment="TOP_LEFT" layoutX="25.0" layoutY="460.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse3" alignment="TOP_LEFT" layoutX="355.0" layoutY="460.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse4" alignment="TOP_LEFT" layoutX="700.0" layoutY="460.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse5" alignment="TOP_LEFT" layoutX="1045.0" layoutY="460.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse6" alignment="TOP_LEFT" layoutX="10.0" layoutY="1010.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse7" alignment="TOP_LEFT" layoutX="355.0" layoutY="1010.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse8" alignment="TOP_LEFT" layoutX="700.0" layoutY="1010.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse9" alignment="TOP_LEFT" layoutX="1045.0" layoutY="1010.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse10" alignment="TOP_LEFT" layoutX="10.0" layoutY="1560.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse11" alignment="TOP_LEFT" layoutX="355.0" layoutY="1560.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse12" alignment="TOP_LEFT" layoutX="700.0" layoutY="1560.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse13" alignment="TOP_LEFT" layoutX="1045.0" layoutY="1560.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.rowIndex="7">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse14" alignment="TOP_LEFT" layoutX="10.0" layoutY="2110.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse15" alignment="TOP_LEFT" layoutX="355.0" layoutY="2110.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse16" alignment="TOP_LEFT" layoutX="700.0" layoutY="2110.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse17" alignment="TOP_LEFT" layoutX="1045.0" layoutY="2110.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.rowIndex="9">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse18" alignment="TOP_LEFT" layoutX="10.0" layoutY="2660.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse19" alignment="TOP_LEFT" layoutX="355.0" layoutY="2660.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="2" GridPane.rowIndex="9">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse20" alignment="TOP_LEFT" layoutX="700.0" layoutY="2660.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="3" GridPane.rowIndex="9">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse21" alignment="TOP_LEFT" layoutX="1045.0" layoutY="2660.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.rowIndex="11">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse22" alignment="TOP_LEFT" layoutX="10.0" layoutY="3210.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse23" alignment="TOP_LEFT" layoutX="355.0" layoutY="3210.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="2" GridPane.rowIndex="11">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse24" alignment="TOP_LEFT" layoutX="700.0" layoutY="3210.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="3" GridPane.rowIndex="11">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse25" alignment="TOP_LEFT" layoutX="1045.0" layoutY="3210.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.rowIndex="13">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse26" alignment="TOP_LEFT" layoutX="10.0" layoutY="3760.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="1" GridPane.rowIndex="13">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse27" alignment="TOP_LEFT" layoutX="355.0" layoutY="3760.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="2" GridPane.rowIndex="13">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse28" alignment="TOP_LEFT" layoutX="25.0" layoutY="460.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="3" GridPane.rowIndex="13">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse29" alignment="TOP_LEFT" layoutX="25.0" layoutY="460.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.rowIndex="15">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse30" alignment="TOP_LEFT" layoutX="25.0" layoutY="460.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="1" GridPane.rowIndex="15">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse31" alignment="TOP_LEFT" layoutX="25.0" layoutY="460.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="2" GridPane.rowIndex="15">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse32" alignment="TOP_LEFT" layoutX="25.0" layoutY="460.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="3" GridPane.rowIndex="15">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse33" alignment="TOP_LEFT" layoutX="25.0" layoutY="460.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.rowIndex="17">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse34" alignment="TOP_LEFT" layoutX="25.0" layoutY="460.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="1" GridPane.rowIndex="17">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse35" alignment="TOP_LEFT" layoutX="25.0" layoutY="460.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="2" GridPane.rowIndex="17">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="kunstværkBeskrivelse36" alignment="TOP_LEFT" layoutX="25.0" layoutY="460.0" prefHeight="100.0" prefWidth="313.0" text="Nummer &#10;Titel" GridPane.columnIndex="3" GridPane.rowIndex="17">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER" prefHeight="200.0" prefWidth="1400.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="350.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <children>
+                        <Label text="Konsthal Holmen">
+                           <font>
+                              <Font name="System Bold" size="32.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Billeder/Lokation.png" />
+                                 </image>
+                              </ImageView>
+                              <Label text="Østergave 13&#10;DK-6240 Løgumkloster">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Billeder/Telefon.png" />
+                                 </image>
+                              </ImageView>
+                              <Label text="Telefon: (+45) 74 74 41 65&#10;Mobil: (+45) 41 41 87 36">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Billeder/Mail.png" />
+                                 </image>
+                              </ImageView>
+                              <Label text="Email: info@kunsthalholmen.dk">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <children>
+                        <Label text="Planlæg dit besøg">
+                           <font>
+                              <Font name="System Bold" size="32.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Åbningstider">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Torsdag - Søndag: kl. 13.00 - 17.00">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label text="Mandag - Onsdag: lukket">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="100.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="350.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <children>
+                        <Label text="Hold dig opdateret">
+                           <font>
+                              <Font name="System Bold" size="32.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fitHeight="45.0" fitWidth="45.0" onMouseClicked="#besøgKunsthallensHjemmesideKnap" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Billeder/FremPil.png" />
+                                 </image>
+                              </ImageView>
+                              <Label onMouseClicked="#besøgKunsthallensHjemmesideKnap" text="Besøg Kunsthallens hjemmeside">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="100.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+   </content>
+</ScrollPane>
