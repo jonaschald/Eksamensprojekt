@@ -9,6 +9,8 @@ import javafx.scene.input.MouseEvent;
 
 public class WatanabeSamlingenController {
 
+    SceneManeger sceneManeger = new SceneManeger();
+
     @FXML
     private ImageView kunstværk1;
 
