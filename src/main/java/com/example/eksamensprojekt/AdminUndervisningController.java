@@ -7,6 +7,8 @@ import javafx.scene.input.MouseEvent;
 
 public class AdminUndervisningController {
 
+    SceneManeger sceneManeger = new SceneManeger();
+
     @FXML
     private ListView<?> indskoling;
 
