@@ -1,12 +1,11 @@
-package com.example.eksamensprojekt;
+package com.example.eksamensprojekt.controllers.admin;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
-import java.io.IOException;
-
-public class UndervisningController {
+public class AdminUndervisningController {
 
     SceneManeger sceneManeger = new SceneManeger();
 
@@ -20,11 +19,14 @@ public class UndervisningController {
     private ListView<?> mellemtrin;
 
     @FXML
+    private Button redigerUndervisningsmateriale;
+
+    @FXML
     private ListView<?> udskoling;
 
     @FXML
-    void adminKnap(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Login.fxml");
+    void adminKnap(MouseEvent event) {
+
     }
 
     @FXML

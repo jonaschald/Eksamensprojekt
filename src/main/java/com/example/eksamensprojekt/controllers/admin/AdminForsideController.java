@@ -1,5 +1,6 @@
-package com.example.eksamensprojekt;
+package com.example.eksamensprojekt.controllers.admin;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -7,7 +8,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
-public class ForsideController {
+public class AdminForsideController {
 
     SceneManeger sceneManeger = new SceneManeger();
 
@@ -27,8 +28,8 @@ public class ForsideController {
     private Label watanabeSamlingTekst;
 
     @FXML
-    void adminKnap(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Login.fxml");
+    void adminKnap(MouseEvent event) {
+
     }
 
     @FXML
@@ -52,13 +53,18 @@ public class ForsideController {
     }
 
     @FXML
+    void rediger(ActionEvent event) {
+
+    }
+
+    @FXML
     void temaerKnap(MouseEvent event) {
 
     }
 
     @FXML
     void undervisningKnap(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Undervisning.fxml");
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/AdminUndervisning.fxml");
     }
 
     @FXML
