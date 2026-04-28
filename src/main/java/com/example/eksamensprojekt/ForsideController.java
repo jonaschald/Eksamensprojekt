@@ -1,11 +1,15 @@
 package com.example.eksamensprojekt;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
+
 public class ForsideController {
+
+    SceneManeger sceneManeger = new SceneManeger();
 
     @FXML
     private ImageView KunsthalHolmenBundBillede;
@@ -14,17 +18,17 @@ public class ForsideController {
     private ImageView kunsthalHolmenTopBillede;
 
     @FXML
-    private TextField omOsTekst;
+    private Label omOsTekst;
 
     @FXML
     private ImageView watanabeSamlingBillede;
 
     @FXML
-    private TextField watanabeSamlingTekst;
+    private Label watanabeSamlingTekst;
 
     @FXML
-    void adminKnap(MouseEvent event) {
-
+    void adminKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Login.fxml");
     }
 
     @FXML
@@ -53,8 +57,8 @@ public class ForsideController {
     }
 
     @FXML
-    void undervisningKnap(MouseEvent event) {
-
+    void undervisningKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Undervisning.fxml");
     }
 
     @FXML

@@ -4,7 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
+
 public class UndervisningController {
+
+    SceneManeger sceneManeger = new SceneManeger();
 
     @FXML
     private ListView<?> indskoling;
@@ -19,8 +23,8 @@ public class UndervisningController {
     private ListView<?> udskoling;
 
     @FXML
-    void adminKnap(MouseEvent event) {
-
+    void adminKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Login.fxml");
     }
 
     @FXML

@@ -6,7 +6,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
+
 public class LoginController {
+
+    SceneManeger sceneManeger = new SceneManeger();
 
     @FXML
     private TextField emailField;
@@ -18,7 +22,8 @@ public class LoginController {
     private PasswordField passwordFiels;
 
     @FXML
-    void login(ActionEvent event) {
+    void login(ActionEvent event) throws IOException {
+        sceneManeger.skiftSceneAction (event, "/com/example/eksamensprojekt/AdminForside.fxml");
 
     }
 
