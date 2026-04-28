@@ -8,6 +8,8 @@ import javafx.scene.input.MouseEvent;
 
 public class AdminPopUpController {
 
+    SceneManeger sceneManeger = new SceneManeger();
+
     @FXML
     private Label InfoLabel;
 

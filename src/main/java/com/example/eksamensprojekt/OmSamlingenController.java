@@ -7,6 +7,8 @@ import javafx.scene.input.MouseEvent;
 
 public class OmSamlingenController {
 
+    SceneManeger sceneManeger = new SceneManeger();
+
     @FXML
     private ImageView KunsthalHolmenBundBillede;
 
