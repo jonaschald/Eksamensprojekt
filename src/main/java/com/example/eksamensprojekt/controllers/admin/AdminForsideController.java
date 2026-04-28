@@ -1,26 +1,27 @@
-package com.example.eksamensprojekt;
+package com.example.eksamensprojekt.controllers.admin;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class AdminUndervisningController {
+public class AdminForsideController {
 
     @FXML
-    private ListView<?> indskoling;
+    private ImageView KunsthalHolmenBundBillede;
 
     @FXML
-    private ListView<?> konfirmation;
+    private ImageView kunsthalHolmenTopBillede;
 
     @FXML
-    private ListView<?> mellemtrin;
+    private Label omOsTekst;
 
     @FXML
-    private Button redigerUndervisningsmateriale;
+    private ImageView watanabeSamlingBillede;
 
     @FXML
-    private ListView<?> udskoling;
+    private Label watanabeSamlingTekst;
 
     @FXML
     void adminKnap(MouseEvent event) {
@@ -44,6 +45,11 @@ public class AdminUndervisningController {
 
     @FXML
     void omSamlingenKnap(MouseEvent event) {
+
+    }
+
+    @FXML
+    void rediger(ActionEvent event) {
 
     }
 

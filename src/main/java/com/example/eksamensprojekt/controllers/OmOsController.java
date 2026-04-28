@@ -1,26 +1,9 @@
-package com.example.eksamensprojekt;
+package com.example.eksamensprojekt.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class ForsideController {
-
-    @FXML
-    private ImageView KunsthalHolmenBundBillede;
-
-    @FXML
-    private ImageView kunsthalHolmenTopBillede;
-
-    @FXML
-    private TextField omOsTekst;
-
-    @FXML
-    private ImageView watanabeSamlingBillede;
-
-    @FXML
-    private TextField watanabeSamlingTekst;
+public class OmOsController {
 
     @FXML
     void adminKnap(MouseEvent event) {

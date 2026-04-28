@@ -1,12 +1,12 @@
-package com.example.eksamensprojekt;
+package com.example.eksamensprojekt.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class AdminForsideController {
+public class ForsideController {
 
     @FXML
     private ImageView KunsthalHolmenBundBillede;
@@ -15,13 +15,13 @@ public class AdminForsideController {
     private ImageView kunsthalHolmenTopBillede;
 
     @FXML
-    private Label omOsTekst;
+    private TextField omOsTekst;
 
     @FXML
     private ImageView watanabeSamlingBillede;
 
     @FXML
-    private Label watanabeSamlingTekst;
+    private TextField watanabeSamlingTekst;
 
     @FXML
     void adminKnap(MouseEvent event) {
@@ -49,11 +49,6 @@ public class AdminForsideController {
     }
 
     @FXML
-    void rediger(ActionEvent event) {
-
-    }
-
-    @FXML
     void temaerKnap(MouseEvent event) {
 
     }
@@ -68,4 +63,8 @@ public class AdminForsideController {
 
     }
 
+    @FXML
+    void rediger(ActionEvent actionEvent) {
+
+    }
 }

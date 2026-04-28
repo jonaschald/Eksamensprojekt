@@ -1,4 +1,4 @@
-package com.example.eksamensprojekt;
+package com.example.eksamensprojekt.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

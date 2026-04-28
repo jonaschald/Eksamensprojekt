@@ -1,10 +1,11 @@
-package com.example.eksamensprojekt;
+package com.example.eksamensprojekt.controllers.admin;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
-public class UndervisningController {
+public class AdminUndervisningController {
 
     @FXML
     private ListView<?> indskoling;
@@ -14,6 +15,9 @@ public class UndervisningController {
 
     @FXML
     private ListView<?> mellemtrin;
+
+    @FXML
+    private Button redigerUndervisningsmateriale;
 
     @FXML
     private ListView<?> udskoling;

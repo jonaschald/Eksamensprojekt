@@ -1,9 +1,22 @@
-package com.example.eksamensprojekt;
+package com.example.eksamensprojekt.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
-public class OmOsController {
+public class UndervisningController {
+
+    @FXML
+    private ListView<?> indskoling;
+
+    @FXML
+    private ListView<?> konfirmation;
+
+    @FXML
+    private ListView<?> mellemtrin;
+
+    @FXML
+    private ListView<?> udskoling;
 
     @FXML
     void adminKnap(MouseEvent event) {
