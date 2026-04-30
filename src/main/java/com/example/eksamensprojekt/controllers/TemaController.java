@@ -1,9 +1,9 @@
 package com.example.eksamensprojekt.controllers;
 
+import com.example.eksamensprojekt.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -15,8 +15,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+
+import java.io.IOException;
 import java.util.Objects;
 
 public class TemaController {
@@ -38,6 +38,8 @@ public class TemaController {
 
     @FXML
     private HBox temaKnapper;
+
+    private SceneManeger sceneManager = new SceneManeger();
 
     // Skab rækker og kolonner af malerier
     private HBox ufyldtRække;
@@ -120,31 +122,6 @@ public class TemaController {
     }
 
     @FXML
-    void adminKnap(MouseEvent event) {
-
-    }
-
-    @FXML
-    void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
-
-    }
-
-    @FXML
-    void favoritterKnap(MouseEvent event) {
-
-    }
-
-    @FXML
-    void omOsKnap(MouseEvent event) {
-
-    }
-
-    @FXML
-    void omSamlingenKnap(MouseEvent event) {
-
-    }
-
-    @FXML
     void temaFilter(ActionEvent event) {
         tilføjMaleri(Objects.requireNonNull(getClass().getResource("/com/example/eksamensprojekt/Billeder/Billede.png")).toExternalForm(), "test nummer", "test titel");
     }
@@ -154,17 +131,49 @@ public class TemaController {
 
     }
 
+    // Skifter scenen til Admin Login
     @FXML
-    void undervisningKnap(MouseEvent event) {
-
+    void adminKnap(MouseEvent event) throws IOException {
+        sceneManager.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Login.fxml");
     }
 
     @FXML
-    void watanabeSamlingenKnap(MouseEvent event) {
+    void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
 
     }
 
+    // Skifter scenen til Farvoritter
     @FXML
-    void tilStartSide(MouseEvent mouseEvent) {
+    void favoritterKnap(MouseEvent event) throws IOException {
+        sceneManager.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Favoritter.fxml");
+    }
+
+    // Skifter scenen til Om Os
+    @FXML
+    void omOsKnap(MouseEvent event) throws IOException {
+        sceneManager.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Om-Os.fxml");
+    }
+
+    // Skifter scenen til Om Samlingen
+    @FXML
+    void omSamlingenKnap(MouseEvent event)  throws IOException {
+        sceneManager.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Om-Samlingen.fxml");
+    }
+
+    // Skifter scenen til Undervisning
+    @FXML
+    void undervisningKnap(MouseEvent event) throws IOException {
+        sceneManager.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Undervisning.fxml");
+    }
+
+    // Skifter scenen til Samlingen
+    @FXML
+    void watanabeSamlingenKnap(MouseEvent event) throws IOException {
+        sceneManager.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Watanabe-samlingen.fxml");
+    }
+
+    @FXML
+    void tilStartSide(MouseEvent event) throws IOException {
+        sceneManager.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Forside.fxml");
     }
 }
