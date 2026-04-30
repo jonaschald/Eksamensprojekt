@@ -9,7 +9,7 @@
 <ScrollPane prefWidth="1400.0"
             xmlns="http://javafx.com/javafx/25"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.eksamensprojekt.OmSamlingenController">
+            fx:controller="com.example.eksamensprojekt.controllers.OmSamlingenController">
 
     <content>
         <VBox prefWidth="1400.0" style="-fx-background-color: #dddddd;">

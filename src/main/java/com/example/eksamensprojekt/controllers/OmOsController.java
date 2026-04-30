@@ -1,12 +1,33 @@
 package com.example.eksamensprojekt.controllers;
 
-import com.example.eksamensprojekt.SceneManeger;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class OmOsController {
+public class OmOsController
+{
 
-    SceneManeger sceneManeger = new SceneManeger();
+    @FXML
+    private Label adresse;
+
+    @FXML
+    private ImageView billedeBund;
+
+    @FXML
+    private ImageView billedeMidt;
+
+    @FXML
+    private ImageView billedeTop;
+
+    @FXML
+    private Label email;
+
+    @FXML
+    private Label omOsTekst;
+
+    @FXML
+    private Label telefon;
 
     @FXML
     void adminKnap(MouseEvent event) {
