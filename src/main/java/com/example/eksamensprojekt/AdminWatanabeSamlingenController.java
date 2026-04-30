@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
+
 public class AdminWatanabeSamlingenController {
 
     SceneManeger sceneManeger = new SceneManeger();
@@ -227,27 +229,19 @@ public class AdminWatanabeSamlingenController {
     private Label kunstværkBeskrivelse9;
 
     @FXML
-    void adminKnap(MouseEvent event) {
-
-    }
-
-    @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
 
     }
 
+    // Skifter scenen til Om Os
     @FXML
-    void favoritterKnap(MouseEvent event) {
+    void omOsKnap(MouseEvent event) throws IOException {
 
     }
 
+    // Skifter scenen til Admin Om Samlingen
     @FXML
-    void omOsKnap(MouseEvent event) {
-
-    }
-
-    @FXML
-    void omSamlingenKnap(MouseEvent event) {
+    void omSamlingenKnap(MouseEvent event) throws IOException {
 
     }
 
@@ -256,8 +250,9 @@ public class AdminWatanabeSamlingenController {
 
     }
 
+    // Skifter scenen til Admin Temaer
     @FXML
-    void temaerKnap(MouseEvent event) {
+    void temaerKnap(MouseEvent event) throws IOException {
 
     }
 
@@ -266,19 +261,17 @@ public class AdminWatanabeSamlingenController {
 
     }
 
+    // Skifter scenen til Startsiden
     @FXML
-    void tilStartSide(MouseEvent event) {
-
+    void tilStartSide(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Forside.fxml");
     }
 
+    // Skifter scenen til Admin Undervisning
     @FXML
-    void undervisningKnap(MouseEvent event) {
-
+    void undervisningKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/AdminUndervisning.fxml");
     }
 
-    @FXML
-    void watanabeSamlingenKnap(MouseEvent event) {
-
-    }
 
 }

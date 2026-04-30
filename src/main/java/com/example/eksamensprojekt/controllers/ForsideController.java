@@ -1,7 +1,6 @@
 package com.example.eksamensprojekt.controllers;
 
 import com.example.eksamensprojekt.SceneManeger;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -28,6 +27,7 @@ public class ForsideController {
     @FXML
     private Label watanabeSamlingTekst;
 
+    // Skifter scenen til Admin Login
     @FXML
     void adminKnap(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Login.fxml");
@@ -38,38 +38,39 @@ public class ForsideController {
 
     }
 
+    // Skifter scenen til Farvoritter
     @FXML
     void favoritterKnap(MouseEvent event) {
 
     }
 
+    // Skifter scenen til Om Os
     @FXML
     void omOsKnap(MouseEvent event) {
 
     }
 
+    // Skifter scenen til Om Samlingen
     @FXML
-    void omSamlingenKnap(MouseEvent event) {
-
+    void omSamlingenKnap(MouseEvent event)  throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/OmSamlingen.fxml");
     }
 
+    // Skifter scenen til Temaer
     @FXML
     void temaerKnap(MouseEvent event) {
 
     }
 
+    // Skifter scenen til Undervisning
     @FXML
     void undervisningKnap(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Undervisning.fxml");
     }
 
+    // Skifter scenen til Samlingen
     @FXML
-    void watanabeSamlingenKnap(MouseEvent event) {
-
-    }
-
-    @FXML
-    void rediger(ActionEvent actionEvent) {
-
+    void watanabeSamlingenKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Watanabe-samlingen.fxml");
     }
 }

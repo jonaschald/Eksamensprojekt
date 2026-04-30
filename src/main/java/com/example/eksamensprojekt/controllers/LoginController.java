@@ -22,6 +22,7 @@ public class LoginController {
     @FXML
     private PasswordField passwordFiels;
 
+    // Skifter scenen til Admin Forside
     @FXML
     void login(ActionEvent event) throws IOException {
         sceneManeger.skiftSceneAction (event, "/com/example/eksamensprojekt/AdminForside.fxml");

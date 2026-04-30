@@ -7,6 +7,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
+
 public class WatanabeSamlingenController {
 
     SceneManeger sceneManeger = new SceneManeger();
@@ -230,9 +232,10 @@ public class WatanabeSamlingenController {
     @FXML
     private TextField searchField;
 
+    // Skifter scenen til Admin Login
     @FXML
-    void adminKnap(MouseEvent event) {
-
+    void adminKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Login.fxml");
     }
 
     @FXML
@@ -245,8 +248,9 @@ public class WatanabeSamlingenController {
 
     }
 
+    // Skifter scenent il Farvoritter
     @FXML
-    void favoritterKnap(MouseEvent event) {
+    void favoritterKnap(MouseEvent event) throws IOException {
 
     }
 
@@ -260,34 +264,35 @@ public class WatanabeSamlingenController {
 
     }
 
+    // Skifter scenen til Om Os
     @FXML
-    void omOsKnap(MouseEvent event) {
+    void omOsKnap(MouseEvent event) throws  IOException {
 
     }
 
+    // Skifter scenen til Om Samlingen
     @FXML
-    void omSamlingenKnap(MouseEvent event) {
+    void omSamlingenKnap(MouseEvent event) throws IOException {
 
     }
 
+    // Skifter scenen til Temaer
     @FXML
-    void temaerKnap(MouseEvent event) {
+    void temaerKnap(MouseEvent event) throws IOException {
 
     }
 
+    // Skifter scenen til Undervisning
     @FXML
-    void undervisningKnap(MouseEvent event) {
-
+    void undervisningKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/undervisning.fxml");
     }
 
+
+    // Skifter scenen til Startsiden
     @FXML
-    void watanabeSamlingenKnap(MouseEvent event) {
-
-    }
-
-    @FXML
-    void tilStartSide(MouseEvent event) {
-
+    void tilStartSide(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Forside.fxml");
     }
 
 }
