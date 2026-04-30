@@ -1,12 +1,14 @@
-package com.example.eksamensprojekt;
+package com.example.eksamensprojekt.controllers;
 
+import com.example.eksamensprojekt.SceneManeger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class AdminWatanabeSamlingenController {
+public class WatanabeSamlingenController {
 
     SceneManeger sceneManeger = new SceneManeger();
 
@@ -227,6 +229,9 @@ public class AdminWatanabeSamlingenController {
     private Label kunstværkBeskrivelse9;
 
     @FXML
+    private TextField searchField;
+
+    @FXML
     void adminKnap(MouseEvent event) {
 
     }
@@ -237,7 +242,22 @@ public class AdminWatanabeSamlingenController {
     }
 
     @FXML
+    void downloadHeleSamlingen(ActionEvent event) {
+
+    }
+
+    @FXML
     void favoritterKnap(MouseEvent event) {
+
+    }
+
+    @FXML
+    void filterAarstalNed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void filterAarstalOp(ActionEvent event) {
 
     }
 
@@ -252,22 +272,7 @@ public class AdminWatanabeSamlingenController {
     }
 
     @FXML
-    void sletKunstværk(ActionEvent event) {
-
-    }
-
-    @FXML
     void temaerKnap(MouseEvent event) {
-
-    }
-
-    @FXML
-    void tilføjKunstværker(ActionEvent event) {
-
-    }
-
-    @FXML
-    void tilStartSide(MouseEvent event) {
 
     }
 
@@ -278,6 +283,11 @@ public class AdminWatanabeSamlingenController {
 
     @FXML
     void watanabeSamlingenKnap(MouseEvent event) {
+
+    }
+
+    @FXML
+    void tilStartSide(MouseEvent event) {
 
     }
 
