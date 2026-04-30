@@ -43,7 +43,7 @@ public class UndervisningController {
     // Skifter scenen til Om Os
     @FXML
     void omOsKnap(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/om-Os.fxml");
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Om-Os.fxml");
     }
 
     // Skifter scenen til Om Samlingen
@@ -61,12 +61,12 @@ public class UndervisningController {
     // Skifter scenen til Samlingen
     @FXML
     void watanabeSamlingenKnap(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Watanabe-samlingen.fxml");
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Watanabe-samlingen.fxml");
     }
 
     // Skifter scenen til Startsiden
     @FXML
     void tilStartSide(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Forside.fxml");
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Forside.fxml");
     }
 }

@@ -59,13 +59,13 @@ public class AdminTemaController {
     // Skifter scenen til Admin Om Os
     @FXML
     void omOsKnap(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Admin-Om-Os.fxml");
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Om-Os.fxml");
     }
 
     // Skifter scenen til Admin Om Samlingen
     @FXML
     void omSamlingenKnap(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Admin-Om-Samlingen.fxml");
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Om-Samlingen.fxml");
     }
 
     @FXML
@@ -86,18 +86,18 @@ public class AdminTemaController {
     // Skifter scenen til Admin Undervisning
     @FXML
     void undervisningKnap(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/AdminUndervisning.fxml");
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/AdminUndervisning.fxml");
     }
 
     // Skifter scenen til Admin Samlingen
     @FXML
     void watanabeSamlingenKnap(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Admin-Watanabe-samlingen.fxml");
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Watanabe-samlingen.fxml");
     }
 
     // Skifter scenen til Admin Startside
     @FXML
     void tilStartSide(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/AdminForside.fxml");
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/AdminForside.fxml");
     }
 }

@@ -47,7 +47,7 @@ public class OmSamlingenController {
     // Skifter scenen til Startsiden
     @FXML
     void tilStartSide(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Forside.fxml");
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Forside.fxml");
     }
 
     // Skifter scenen til Temaer

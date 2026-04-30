@@ -236,7 +236,7 @@ public class WatanabeSamlingenController {
     // Skifter scenen til Admin Login
     @FXML
     void adminKnap(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Login.fxml");
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Login.fxml");
     }
 
     @FXML
@@ -286,12 +286,12 @@ public class WatanabeSamlingenController {
     // Skifter scenen til Undervisning
     @FXML
     void undervisningKnap(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/undervisning.fxml");
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Undervisning.fxml");
     }
 
     // Skifter scenen til Startsiden
     @FXML
     void tilStartSide(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Forside.fxml");
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Forside.fxml");
     }
 }
