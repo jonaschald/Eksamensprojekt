@@ -25,19 +25,7 @@ public class TemaController {
     private VBox billedeContainer;
 
     @FXML
-    private VBox eksempel;
-
-    @FXML
-    private ImageView eksempelBillede;
-
-    @FXML
-    private HBox eksempelKolonne;
-
-    @FXML
-    private Label eksempelNummer;
-
-    @FXML
-    private Label eksempelTitel;
+    private Button TEMPtilføjMaleri;
 
     @FXML
     private Button temaKnap;
@@ -85,17 +73,26 @@ public class TemaController {
         return vBox; // TODO: Måske skab og return et objekt fra en klasse i stedet for?
     }
 
+    private void nyRække() {
+        // Skab ny række
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.TOP_LEFT);
+        hBox.setSpacing(50);
+
+        billedeContainer.getChildren().add(hBox); // Tilføj række til listen
+
+        ufyldtRække = hBox;
+    }
+
     private void tilføjMaleri(String billedSti, String nummer, String titel) {
+        // Findes der en række?
+        if (ufyldtRække == null) {
+            nyRække();
+        }
+
         // Er der 4 elementer i den nuværende række?
         if (ufyldtRække.getChildren().size() == 4) {
-            // Skab ny række
-            HBox hBox = new HBox();
-            hBox.setAlignment(Pos.TOP_LEFT);
-            hBox.setSpacing(50);
-
-            billedeContainer.getChildren().add(hBox); // Tilføj række til listen
-
-            ufyldtRække = hBox;
+            nyRække();
         }
 
         // Tilføj maleriet til den nuværende række
@@ -120,7 +117,6 @@ public class TemaController {
     }
 
     public void initialize() {
-        ufyldtRække = eksempelKolonne;
     }
 
     @FXML
