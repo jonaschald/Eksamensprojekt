@@ -41,7 +41,7 @@ public class ForsideController {
     // Skifter scenen til Farvoritter
     @FXML
     void favoritterKnap(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Farvoritter.fxml");
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Favoritter.fxml");
     }
 
     // Skifter scenen til Om Os
