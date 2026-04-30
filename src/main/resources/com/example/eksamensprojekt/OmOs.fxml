@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane prefWidth="1400.0"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.eksamensprojekt.OmOsController">
+
+    <content>
+        <VBox prefWidth="1400.0" style="-fx-background-color: #dddddd;">
+
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+
+            <!-- HEADER -->
+            <HBox prefHeight="120">
+                <VBox prefWidth="500">
+                    <Label text="KUNSTHAL HOLMEN">
+                        <font><Font name="System Bold" size="28"/></font>
+                    </Label>
+                    <Label text="SADAO WATANABE">
+                        <font><Font name="Georgia" size="28"/></font>
+                    </Label>
+                </VBox>
+
+                <VBox prefWidth="850">
+                    <HBox alignment="TOP_RIGHT" spacing="8">
+                        <Button text="WATANABE SAMLINGEN" onMouseClicked="#watanabeSamlingenKnap"/>
+                        <Button text="FAVORITTER" onMouseClicked="#favoritterKnap"/>
+                        <Button text="TEMAER" onMouseClicked="#temaerKnap"/>
+                    </HBox>
+
+                    <HBox alignment="TOP_RIGHT" spacing="8">
+                        <Button text="UNDERVISNING" onMouseClicked="#undervisningKnap"/>
+                        <Button text="OM SAMLINGEN" onMouseClicked="#omSamlingenKnap"/>
+                        <Button text="OM OS" onMouseClicked="#omOsKnap"/>
+                        <Button text="ADMIN" onMouseClicked="#adminKnap"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+
+            <!-- TITLE -->
+            <Label text="Om os" style="-fx-alignment: center;" maxWidth="1400">
+                <font><Font name="Georgia" size="34"/></font>
+            </Label>
+
+            <!-- MAIN CONTENT -->
+            <HBox spacing="60" prefWidth="1300">
+                <padding>
+                    <Insets top="30" right="40" bottom="30" left="40"/>
+                </padding>
+
+                <!-- LEFT TEXT -->
+                <VBox prefWidth="520" spacing="20">
+                    <Label text="Om Kunsthal Holmen">
+                        <font><Font name="Georgia" size="30"/></font>
+                    </Label>
+
+                    <Label fx:id="omOsTekst"
+                           wrapText="true"
+                           prefWidth="500"
+                           text="Kunsthal Holmen er et lille privat etablissement. Kunsthallen præsenterer et ambitiøst udstillingsprogram med særudstillinger, som byder på kulturelle oplevelser. Der vises ny skiftende udstillinger, og stedet har en særlig forbindelse til Løgumkloster og kunstens fortællende verden.">
+                        <font><Font size="20"/></font>
+                    </Label>
+
+                    <Label text="Østergade 13&#10;DK-6240 Løgumkloster&#10;&#10;Telefon: (+45) 74 74 41 65&#10;Mobil: (+45) 41 41 87 36&#10;&#10;Email: info@kunsthalholmen.dk">
+                        <font><Font size="18"/></font>
+                    </Label>
+                </VBox>
+
+                <!-- RIGHT IMAGES -->
+                <VBox prefWidth="600" spacing="30">
+                    <ImageView fx:id="kunsthalHolmenTopBillede"
+                               fitWidth="520"
+                               fitHeight="230"
+                               preserveRatio="true">
+                        <image>
+                            <Image url="@Billeder/KunsthalHolmenTop.png"/>
+                        </image>
+                    </ImageView>
+
+                    <ImageView fx:id="KunsthalHolmenBundBillede"
+                               fitWidth="520"
+                               fitHeight="230"
+                               preserveRatio="true">
+                        <image>
+                            <Image url="@Billeder/KunsthalHolmenBund.png"/>
+                        </image>
+                    </ImageView>
+
+                    <ImageView fx:id="watanabeSamlingBillede"
+                               fitWidth="520"
+                               fitHeight="230"
+                               preserveRatio="true">
+                        <image>
+                            <Image url="@Billeder/WatanabeSamling.png"/>
+                        </image>
+                    </ImageView>
+                </VBox>
+            </HBox>
+
+            <!-- FOOTER -->
+            <HBox spacing="180" prefHeight="160">
+                <padding>
+                    <Insets top="20" right="40" bottom="20" left="40"/>
+                </padding>
+
+                <VBox>
+                    <Label text="Kunsthal Holmen">
+                        <font><Font name="System Bold" size="20"/></font>
+                    </Label>
+                    <Label text="Østergade 13&#10;DK-6240 Løgumkloster&#10;info@kunsthalholmen.dk"/>
+                </VBox>
+
+                <VBox>
+                    <Label text="Planlæg dit besøg">
+                        <font><Font name="System Bold" size="20"/></font>
+                    </Label>
+                    <Label text="Åbningstider&#10;Torsdag - Søndag: 13.00 - 17.00&#10;Mandag - Onsdag: lukket"/>
+                </VBox>
+
+                <VBox>
+                    <Label text="Hold dig opdateret">
+                        <font><Font name="System Bold" size="20"/></font>
+                    </Label>
+                    <Label text="Besøg Kunsthallens hjemmeside"
+                           onMouseClicked="#besøgKunsthallensHjemmesideKnap"/>
+                </VBox>
+            </HBox>
+
+        </VBox>
+    </content>
+</ScrollPane>
