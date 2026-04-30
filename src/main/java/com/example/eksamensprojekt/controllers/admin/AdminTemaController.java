@@ -101,4 +101,7 @@ public class AdminTemaController {
 
     }
 
+    @FXML
+    void tilStartSide(MouseEvent mouseEvent) {
+    }
 }

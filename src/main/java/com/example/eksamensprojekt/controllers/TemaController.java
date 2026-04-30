@@ -86,4 +86,7 @@ public class TemaController {
 
     }
 
+    @FXML
+    void tilStartSide(MouseEvent mouseEvent) {
+    }
 }

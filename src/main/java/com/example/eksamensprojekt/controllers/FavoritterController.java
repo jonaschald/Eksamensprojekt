@@ -67,4 +67,7 @@ public class FavoritterController {
 
     }
 
+    @FXML
+    void tilStartSide(MouseEvent mouseEvent) {
+    }
 }
