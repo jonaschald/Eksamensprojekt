@@ -5,7 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class OmOsController {
+public class OmOsController
+{
 
     @FXML
     private Label adresse;
