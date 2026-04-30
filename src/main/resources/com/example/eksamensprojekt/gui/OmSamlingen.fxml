@@ -77,7 +77,7 @@
                                fitHeight="280"
                                preserveRatio="true">
                         <image>
-                            <Image url="@Billeder/SadaoWatanabe.png"/>
+                            <Image url="@../Billeder/Sadao Watanabe.jpg"/>
                         </image>
                     </ImageView>
 
@@ -86,7 +86,7 @@
                                fitHeight="360"
                                preserveRatio="true">
                         <image>
-                            <Image url="@Billeder/WatanabeKunst.png"/>
+                            <Image url="@../Billeder/Billede.png"/>
                         </image>
                     </ImageView>
                 </VBox>
