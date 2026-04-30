@@ -1,20 +1,33 @@
-package com.example.eksamensprojekt.controllers;
+package com.example.eksamensprojekt.controllers.admin;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class OmSamlingenController {
+public class AdminOmOsController {
+
+    @FXML
+    private Label adresse;
 
     @FXML
     private ImageView billedeBund;
 
     @FXML
+    private ImageView billedeMidt;
+
+    @FXML
     private ImageView billedeTop;
 
     @FXML
-    private Label omSadaoWatanabeTekst;
+    private Label email;
+
+    @FXML
+    private Label omOsTekst;
+
+    @FXML
+    private Label telefon;
 
     @FXML
     void adminKnap(MouseEvent event) {
@@ -38,6 +51,16 @@ public class OmSamlingenController {
 
     @FXML
     void omSamlingenKnap(MouseEvent event) {
+
+    }
+
+    @FXML
+    void redigerKontaktOplysninger(ActionEvent event) {
+
+    }
+
+    @FXML
+    void redigerOmOsTekst(ActionEvent event) {
 
     }
 

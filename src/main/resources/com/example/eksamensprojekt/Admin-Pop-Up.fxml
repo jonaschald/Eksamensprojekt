@@ -64,7 +64,7 @@
                         </Button>
                      </children>
                   </VBox>
-                  <ImageView fx:id="popupBillede" fitHeight="700.0" fitWidth="660.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="popupBillede" fitHeight="700.0" fitWidth="660.0" onMouseClicked="#tilStorPopUp" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>

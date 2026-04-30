@@ -40,4 +40,9 @@ public class PopupController {
 
     }
 
+    @FXML
+    void tilStorPopUp(MouseEvent event) {
+
+    }
+
 }
