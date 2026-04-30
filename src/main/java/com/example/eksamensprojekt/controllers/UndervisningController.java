@@ -58,11 +58,13 @@ public class UndervisningController {
 
     }
 
-
     // Skifter scenen til Samlingen
     @FXML
     void watanabeSamlingenKnap(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Watanabe-samlingen.fxml");
     }
 
+    @FXML
+    void undervisningKnap(MouseEvent event) {
+    }
 }

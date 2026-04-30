@@ -274,5 +274,15 @@ public class AdminWatanabeSamlingenController {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/AdminUndervisning.fxml");
     }
 
+    @FXML
+    void watanabeSamlingenKnap(MouseEvent event) {
+    }
 
+    @FXML
+    void favoritterKnap(MouseEvent event) {
+    }
+
+    @FXML
+    void adminKnap(MouseEvent event) {
+    }
 }

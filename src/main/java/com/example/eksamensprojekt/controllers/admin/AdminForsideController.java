@@ -69,4 +69,11 @@ public class AdminForsideController {
 
     }
 
+    @FXML
+    void favoritterKnap(MouseEvent event) {
+    }
+
+    @FXML
+    void adminKnap(MouseEvent event) {
+    }
 }

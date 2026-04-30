@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eksamensprojekt.controllers.AdminOmOsController">
+<ScrollPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eksamensprojekt.controllers.admin.AdminOmOsController">
    <content>
       <VBox prefWidth="1400.0">
          <children>
@@ -182,7 +182,7 @@
                                        <children>
                                           <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@Billeder/Lokation.png" />
+                                                <Image url="@../Billeder/Lokation.png" />
                                              </image>
                                           </ImageView>
                                           <Label fx:id="adresse" text="Østergave 13&#10;DK-6240 Løgumkloster">
@@ -202,7 +202,7 @@
                                        <children>
                                           <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@Billeder/Telefon.png" />
+                                                <Image url="@../Billeder/Telefon.png" />
                                              </image>
                                           </ImageView>
                                           <Label fx:id="telefon" text="Telefon: (+45) 74 74 41 65&#10;Mobil: (+45) 41 41 87 36">
@@ -222,7 +222,7 @@
                                        <children>
                                           <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@Billeder/Mail.png" />
+                                                <Image url="@../Billeder/Mail.png" />
                                              </image>
                                           </ImageView>
                                           <Label fx:id="email" text="Email: info@kunsthalholmen.dk">
@@ -246,17 +246,17 @@
                            <children>
                               <ImageView fx:id="billedeTop" fitHeight="289.0" fitWidth="531.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Kunsthal Holmen.jpg" />
+                                    <Image url="@../Billeder/Kunsthal Holmen.jpg" />
                                  </image>
                               </ImageView>
                               <ImageView fx:id="billedeMidt" fitHeight="379.0" fitWidth="514.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Kunsthal Holmen - inde.png" />
+                                    <Image url="@../Billeder/Kunsthal Holmen - inde.png" />
                                  </image>
                               </ImageView>
                               <ImageView fx:id="billedeBund" fitHeight="379.0" fitWidth="514.0" layoutX="10.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Kunsthal Holmen - inde - mennesker.jpg" />
+                                    <Image url="@../Billeder/Kunsthal Holmen - inde - mennesker.jpg" />
                                  </image>
                               </ImageView>
                            </children>
@@ -292,7 +292,7 @@
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Lokation.png" />
+                                    <Image url="@../Billeder/Lokation.png" />
                                  </image>
                               </ImageView>
                               <Label text="Østergave 13&#10;DK-6240 Løgumkloster">
@@ -312,7 +312,7 @@
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Telefon.png" />
+                                    <Image url="@../Billeder/Telefon.png" />
                                  </image>
                               </ImageView>
                               <Label text="Telefon: (+45) 74 74 41 65&#10;Mobil: (+45) 41 41 87 36">
@@ -332,7 +332,7 @@
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Mail.png" />
+                                    <Image url="@../Billeder/Mail.png" />
                                  </image>
                               </ImageView>
                               <Label text="Email: info@kunsthalholmen.dk">
@@ -400,7 +400,7 @@
                            <children>
                               <ImageView fitHeight="45.0" fitWidth="45.0" onMouseClicked="#besøgKunsthallensHjemmesideKnap" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/FremPil.png" />
+                                    <Image url="@../Billeder/FremPil.png" />
                                  </image>
                               </ImageView>
                               <Label onMouseClicked="#besøgKunsthallensHjemmesideKnap" text="Besøg Kunsthallens hjemmeside">

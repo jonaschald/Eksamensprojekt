@@ -296,4 +296,7 @@ public class WatanabeSamlingenController {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Forside.fxml");
     }
 
+    @FXML
+    void watanabeSamlingenKnap(MouseEvent event) {
+    }
 }

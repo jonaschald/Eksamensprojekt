@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eksamensprojekt.controllers.ForsideController">
+<ScrollPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eksamensprojekt.controllers.admin.AdminOmSamlingenController">
    <content>
       <VBox prefWidth="1400.0">
          <children>
@@ -126,6 +126,14 @@
                      <children>
                         <VBox prefHeight="1400.0" prefWidth="750.0">
                            <children>
+                              <Button mnemonicParsing="false" onAction="#redigerOmSadaoWatanabeTekst" text="Rediger">
+                                 <font>
+                                    <Font size="32.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" />
+                                 </VBox.margin>
+                              </Button>
                               <Label text="Om Sadao Watanabe">
                                  <font>
                                     <Font size="52.0" />
@@ -185,7 +193,7 @@
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Lokation.png" />
+                                    <Image url="@../Billeder/Lokation.png" />
                                  </image>
                               </ImageView>
                               <Label text="Østergave 13&#10;DK-6240 Løgumkloster">
@@ -205,7 +213,7 @@
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Telefon.png" />
+                                    <Image url="@../Billeder/Telefon.png" />
                                  </image>
                               </ImageView>
                               <Label text="Telefon: (+45) 74 74 41 65&#10;Mobil: (+45) 41 41 87 36">
@@ -225,7 +233,7 @@
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Mail.png" />
+                                    <Image url="@../Billeder/Mail.png" />
                                  </image>
                               </ImageView>
                               <Label text="Email: info@kunsthalholmen.dk">
@@ -293,7 +301,7 @@
                            <children>
                               <ImageView fitHeight="45.0" fitWidth="45.0" onMouseClicked="#besøgKunsthallensHjemmesideKnap" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/FremPil.png" />
+                                    <Image url="@../Billeder/FremPil.png" />
                                  </image>
                               </ImageView>
                               <Label onMouseClicked="#besøgKunsthallensHjemmesideKnap" text="Besøg Kunsthallens hjemmeside">

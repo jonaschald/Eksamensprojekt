@@ -53,7 +53,7 @@ public class ForsideController {
     // Skifter scenen til Om Samlingen
     @FXML
     void omSamlingenKnap(MouseEvent event)  throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/OmSamlingen.fxml");
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Om-Samlingen.fxml");
     }
 
     // Skifter scenen til Temaer
@@ -71,6 +71,6 @@ public class ForsideController {
     // Skifter scenen til Samlingen
     @FXML
     void watanabeSamlingenKnap(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Watanabe-samlingen.fxml");
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Watanabe-samlingen.fxml");
     }
 }
