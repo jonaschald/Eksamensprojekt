@@ -167,7 +167,7 @@
                                        <graphic>
                                           <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@Billeder/OpPil.png" />
+                                                <Image url="@../Billeder/OpPil.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>
@@ -179,7 +179,7 @@
                                        <graphic>
                                           <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@Billeder/NedPil.png" />
+                                                <Image url="@../Billeder/NedPil.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>
@@ -799,7 +799,7 @@
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Lokation.png" />
+                                    <Image url="@../Billeder/Lokation.png" />
                                  </image>
                               </ImageView>
                               <Label text="Østergave 13&#10;DK-6240 Løgumkloster">
@@ -819,7 +819,7 @@
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Telefon.png" />
+                                    <Image url="@../Billeder/Telefon.png" />
                                  </image>
                               </ImageView>
                               <Label text="Telefon: (+45) 74 74 41 65&#10;Mobil: (+45) 41 41 87 36">
@@ -839,7 +839,7 @@
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Mail.png" />
+                                    <Image url="@../Billeder/Mail.png" />
                                  </image>
                               </ImageView>
                               <Label text="Email: info@kunsthalholmen.dk">
@@ -907,7 +907,7 @@
                            <children>
                               <ImageView fitHeight="45.0" fitWidth="45.0" onMouseClicked="#besøgKunsthallensHjemmesideKnap" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/FremPil.png" />
+                                    <Image url="@../Billeder/FremPil.png" />
                                  </image>
                               </ImageView>
                               <Label onMouseClicked="#besøgKunsthallensHjemmesideKnap" text="Besøg Kunsthallens hjemmeside">

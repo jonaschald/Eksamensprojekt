@@ -24,7 +24,7 @@ public class LoginController {
 
     @FXML
     void login(ActionEvent event) throws IOException {
-        sceneManeger.skiftSceneAction (event, "/com/example/eksamensprojekt/AdminForside.fxml");
+        sceneManeger.skiftSceneAction (event, "/com/example/eksamensprojekt/admin/AdminForside.fxml");
 
     }
 

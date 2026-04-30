@@ -24,7 +24,7 @@
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#tilbageTilOversigtKnap" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Billeder/TilbagePil.png" />
+                        <Image url="@../Billeder/TilbagePil.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -40,7 +40,7 @@
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#forrigeBilledeKnap" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Tilbage.png" />
+                                    <Image url="@../Billeder/Tilbage.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -97,7 +97,7 @@
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#næsteBilledeKnap" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Frem.png" />
+                                    <Image url="@../Billeder/Frem.png" />
                                  </image>
                               </ImageView>
                            </graphic>

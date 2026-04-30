@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eksamensprojekt.StorPopupController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eksamensprojekt.controllers.StorPopupController">
    <children>
       <VBox prefWidth="1400.0">
          <children>
@@ -21,7 +21,7 @@
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#tilbageTilOversigtKnap" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Billeder/TilbagePil.png" />
+                        <Image url="@../Billeder/TilbagePil.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -37,7 +37,7 @@
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#forrigeBilledeKnap" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Tilbage.png" />
+                                    <Image url="@../Billeder/Tilbage.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -60,7 +60,7 @@
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#næsteBilledeKnap" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Frem.png" />
+                                    <Image url="@../Billeder/Frem.png" />
                                  </image>
                               </ImageView>
                            </graphic>

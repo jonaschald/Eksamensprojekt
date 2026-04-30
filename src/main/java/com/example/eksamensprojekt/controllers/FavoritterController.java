@@ -1,31 +1,35 @@
 package com.example.eksamensprojekt.controllers;
 
-import com.example.eksamensprojekt.SceneManeger;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
-import java.io.IOException;
-
-public class UndervisningController {
-
-    SceneManeger sceneManeger = new SceneManeger();
+public class FavoritterController {
 
     @FXML
-    private ListView<?> indskoling;
+    private VBox billedeContainer;
 
     @FXML
-    private ListView<?> konfirmation;
+    private VBox eksempel;
 
     @FXML
-    private ListView<?> mellemtrin;
+    private ImageView eksempelBillede;
 
     @FXML
-    private ListView<?> udskoling;
+    private HBox eksempelKolonne;
 
     @FXML
-    void adminKnap(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Login.fxml");
+    private Label eksempelNummer;
+
+    @FXML
+    private Label eksempelTitel;
+
+    @FXML
+    void adminKnap(MouseEvent event) {
+
     }
 
     @FXML

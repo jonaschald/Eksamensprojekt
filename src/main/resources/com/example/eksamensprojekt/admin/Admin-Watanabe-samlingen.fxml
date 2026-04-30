@@ -740,7 +740,7 @@
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Lokation.png" />
+                                    <Image url="@../Billeder/Lokation.png" />
                                  </image>
                               </ImageView>
                               <Label text="Østergave 13&#10;DK-6240 Løgumkloster">
@@ -760,7 +760,7 @@
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Telefon.png" />
+                                    <Image url="@../Billeder/Telefon.png" />
                                  </image>
                               </ImageView>
                               <Label text="Telefon: (+45) 74 74 41 65&#10;Mobil: (+45) 41 41 87 36">
@@ -780,7 +780,7 @@
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Mail.png" />
+                                    <Image url="@../Billeder/Mail.png" />
                                  </image>
                               </ImageView>
                               <Label text="Email: info@kunsthalholmen.dk">
@@ -848,7 +848,7 @@
                            <children>
                               <ImageView fitHeight="45.0" fitWidth="45.0" onMouseClicked="#besøgKunsthallensHjemmesideKnap" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@EASV/Projekter/2.%20Semester/Eksamens%20Projekt%20uge%2016-22/Kunsthal%20Holmen/src/main/resources/com/example/eksamensprojekt/Billeder/FremPil.png" />
+                                    <Image url="@../Billeder/FremPil.png" />
                                  </image>
                               </ImageView>
                               <Label onMouseClicked="#besøgKunsthallensHjemmesideKnap" text="Besøg Kunsthallens hjemmeside">

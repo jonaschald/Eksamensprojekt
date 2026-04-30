@@ -4,17 +4,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eksamensprojekt.controllers.OmOsController">
+<ScrollPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eksamensprojekt.controllers.admin.AdminTemaController">
    <content>
       <VBox prefWidth="1400.0">
          <children>
@@ -118,143 +114,86 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </opaqueInsets>
                <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  <Insets bottom="5.0" left="40.0" right="40.0" top="5.0" />
                </padding>
                <children>
-                  <GridPane alignment="CENTER">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="339.0" minWidth="0.0" prefWidth="108.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="811.0" minWidth="10.0" prefWidth="521.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="530.0" minWidth="10.0" prefWidth="160.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="521.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="108.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="394.0" minHeight="0.0" prefHeight="147.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="1176.0" minHeight="10.0" prefHeight="1040.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="34.0" minHeight="3.0" prefHeight="19.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                  <HBox alignment="CENTER" prefHeight="120.0" prefWidth="1380.0">
                      <children>
-                        <Label alignment="CENTER" text="Om Os" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <Label alignment="CENTER" text="Temaer" textAlignment="CENTER">
                            <font>
-                              <Font name="Georgia" size="48.0" />
+                              <Font name="Georgia" size="58.0" />
                            </font>
                         </Label>
-                        <VBox prefWidth="347.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="50.0" layoutY="185.0" prefHeight="78.0" prefWidth="1380.0" spacing="20.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#nytTema" prefHeight="60.0" prefWidth="200.0" text="+ Tilføj Tema" textAlignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="673.0" layoutY="48.0" mnemonicParsing="false" onAction="#redigerTema" prefHeight="60.0" prefWidth="200.0" text="Rediger Temaer" textAlignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="700.0" layoutY="48.0" mnemonicParsing="false" onAction="#sletTema" prefHeight="60.0" prefWidth="200.0" text="Slet Tema" textAlignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="-40.0" />
+                     </padding>
+                  </HBox>
+                  <HBox fx:id="temaKnapper" alignment="CENTER" prefHeight="78.0" prefWidth="1380.0" spacing="20.0">
+                     <children>
+                        <Button fx:id="temaKnap" mnemonicParsing="false" onAction="#temaFilter" prefHeight="60.0" prefWidth="200.0" text="Tema 1" textAlignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="temaKnap2" layoutX="673.0" layoutY="48.0" mnemonicParsing="false" onAction="#temaFilter" prefHeight="60.0" prefWidth="200.0" text="Tema 2" textAlignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="temaKnap3" layoutX="700.0" layoutY="48.0" mnemonicParsing="false" onAction="#temaFilter" prefHeight="60.0" prefWidth="200.0" text="Tema 3" textAlignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <VBox fx:id="billedeContainer" prefHeight="200.0" prefWidth="100.0" spacing="50.0">
+                     <children>
+                        <HBox fx:id="eksempelKolonne" prefHeight="473.0" spacing="50.0">
                            <children>
-                              <Label text="Om Kunsthal Holmen">
-                                 <font>
-                                    <Font name="Georgia" size="40.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="omOsTekst" layoutX="10.0" layoutY="10.0" prefHeight="611.0" prefWidth="513.0" text="Kunsthal Holmen er en lille perle af et udstillingssted. Kunsthallen præsenterer et ambitiøst udstillingsprogram med samtidskunst, som byder på erkendelsesmæssige, æstetiske og sanselige oplevelser. Der vises tre skiftende udstillinger om året. Kunsthallen er placeret i den smukke gamle slægtsgård Holmen i Løgumkloster – blot få kilometer nord for Tønder. Sammen med Løgumkloster Refugium, Løgumkloster Højskole, Løgumkloster Kirke, Folkekirkens Uddannelses- og Videnscenter samt Kirkemusikskolen er Kunsthal Holmen en aktiv del af byen og af kommunens rige kulturliv. Tønder Kommune er kunsthallens hovedtilskudsgiver." wrapText="true">
-                                 <font>
-                                    <Font name="Georgia" size="28.0" />
-                                 </font>
-                              </Label>
-                              <Separator prefWidth="200.0">
-                                 <padding>
-                                    <Insets top="24.0" />
-                                 </padding>
-                              </Separator>
-                              <VBox prefHeight="318.0" prefWidth="513.0">
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </padding>
+                              <VBox fx:id="eksempel" alignment="CENTER" prefHeight="506.0" prefWidth="233.0">
                                  <children>
-                                    <Label text="Konsthal Holmen">
+                                    <ImageView fx:id="eksempelBillede" fitHeight="357.0" fitWidth="290.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Billeder/Billede.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="eksempelNummer" prefHeight="35.0" prefWidth="325.0" text="MH 1991/1365. 29">
                                        <font>
-                                          <Font name="System Bold" size="32.0" />
+                                          <Font name="System Bold" size="20.0" />
                                        </font>
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" />
-                                       </VBox.margin>
                                     </Label>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                                       <children>
-                                          <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@Billeder/Lokation.png" />
-                                             </image>
-                                          </ImageView>
-                                          <Label fx:id="adresse" text="Østergave 13&#10;DK-6240 Løgumkloster">
-                                             <font>
-                                                <Font size="26.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets bottom="5.0" left="5.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                                       <children>
-                                          <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@Billeder/Telefon.png" />
-                                             </image>
-                                          </ImageView>
-                                          <Label fx:id="telefon" text="Telefon: (+45) 74 74 41 65&#10;Mobil: (+45) 41 41 87 36">
-                                             <font>
-                                                <Font size="26.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets left="5.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                                       <children>
-                                          <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@Billeder/Mail.png" />
-                                             </image>
-                                          </ImageView>
-                                          <Label fx:id="email" text="Email: info@kunsthalholmen.dk">
-                                             <HBox.margin>
-                                                <Insets left="5.0" />
-                                             </HBox.margin>
-                                             <font>
-                                                <Font size="26.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
+                                    <Label fx:id="eksempelTitel" layoutX="176.0" layoutY="160.0" prefWidth="325.0" text="Jesu fødsel - jul - 1982">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </VBox>
                            </children>
-                        </VBox>
-                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="50.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                           <children>
-                              <ImageView fx:id="billedeTop" fitHeight="289.0" fitWidth="531.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@Billeder/Kunsthal Holmen.jpg" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="billedeMidt" fitHeight="379.0" fitWidth="514.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@Billeder/Kunsthal Holmen - inde.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="billedeBund" fitHeight="379.0" fitWidth="514.0" layoutX="10.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@Billeder/Kunsthal Holmen - inde - mennesker.jpg" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </VBox>
+                        </HBox>
                      </children>
-                  </GridPane>
+                  </VBox>
                </children>
             </VBox>
             <HBox alignment="CENTER" prefHeight="200.0" prefWidth="1400.0">
@@ -276,7 +215,7 @@
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Lokation.png" />
+                                    <Image url="@../Billeder/Lokation.png" />
                                  </image>
                               </ImageView>
                               <Label text="Østergave 13&#10;DK-6240 Løgumkloster">
@@ -296,7 +235,7 @@
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Telefon.png" />
+                                    <Image url="@../Billeder/Telefon.png" />
                                  </image>
                               </ImageView>
                               <Label text="Telefon: (+45) 74 74 41 65&#10;Mobil: (+45) 41 41 87 36">
@@ -316,7 +255,7 @@
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/Mail.png" />
+                                    <Image url="@../Billeder/Mail.png" />
                                  </image>
                               </ImageView>
                               <Label text="Email: info@kunsthalholmen.dk">
@@ -384,7 +323,7 @@
                            <children>
                               <ImageView fitHeight="45.0" fitWidth="45.0" onMouseClicked="#besøgKunsthallensHjemmesideKnap" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Billeder/FremPil.png" />
+                                    <Image url="@../Billeder/FremPil.png" />
                                  </image>
                               </ImageView>
                               <Label onMouseClicked="#besøgKunsthallensHjemmesideKnap" text="Besøg Kunsthallens hjemmeside">
