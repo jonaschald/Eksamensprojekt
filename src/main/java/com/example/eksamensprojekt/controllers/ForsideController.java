@@ -40,14 +40,14 @@ public class ForsideController {
 
     // Skifter scenen til Farvoritter
     @FXML
-    void favoritterKnap(MouseEvent event) {
-
+    void favoritterKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Farvoritter.fxml");
     }
 
     // Skifter scenen til Om Os
     @FXML
-    void omOsKnap(MouseEvent event) {
-
+    void omOsKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Om-Os.fxml");
     }
 
     // Skifter scenen til Om Samlingen
@@ -58,8 +58,8 @@ public class ForsideController {
 
     // Skifter scenen til Temaer
     @FXML
-    void temaerKnap(MouseEvent event) {
-
+    void temaerKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Temaer.fxml");
     }
 
     // Skifter scenen til Undervisning

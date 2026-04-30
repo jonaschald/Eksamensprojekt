@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
+
 public class PopupController {
 
     SceneManeger sceneManeger = new SceneManeger();
@@ -40,8 +42,10 @@ public class PopupController {
 
     }
 
+    // Skifter scenen til Stor Pop-up
     @FXML
-    void tilStorPopUp(MouseEvent event) {
+    void tilStorPopUp(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Stor-Pop-up.fxml");
 
     }
 

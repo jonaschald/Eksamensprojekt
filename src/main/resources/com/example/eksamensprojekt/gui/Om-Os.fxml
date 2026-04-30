@@ -22,7 +22,7 @@
                <children>
                   <VBox prefWidth="700.0">
                      <children>
-                        <Label text="KUNSTHAL HOLMEN">
+                        <Label onMouseClicked="#tilStartSide" text="KUNSTHAL HOLMEN">
                            <font>
                               <Font name="System Bold" size="48.0" />
                            </font>
@@ -88,7 +88,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" onMouseClicked="#omOsKnap" text="OM OS">
+                              <Button mnemonicParsing="false" text="OM OS">
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin>

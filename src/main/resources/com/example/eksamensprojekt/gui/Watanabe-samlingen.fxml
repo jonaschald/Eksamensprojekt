@@ -41,7 +41,7 @@
                      <children>
                         <HBox alignment="TOP_RIGHT">
                            <children>
-                              <Button mnemonicParsing="false" onMouseClicked="#watanabeSamlingenKnap" text="WATANABE SAMLINGEN">
+                              <Button mnemonicParsing="false" text="WATANABE SAMLINGEN">
                                  <HBox.margin>
                                     <Insets right="5.0" top="5.0" />
                                  </HBox.margin>

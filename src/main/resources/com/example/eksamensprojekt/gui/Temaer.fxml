@@ -53,7 +53,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" onMouseClicked="#temaerKnap" text="TEMAER">
+                              <Button mnemonicParsing="false" text="TEMAER">
                                  <HBox.margin>
                                     <Insets right="5.0" top="5.0" />
                                  </HBox.margin>

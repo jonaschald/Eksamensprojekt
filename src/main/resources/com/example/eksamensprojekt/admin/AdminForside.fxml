@@ -45,7 +45,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" onMouseClicked="#favoritterKnap" text="FAVORITTER">
+                              <Button mnemonicParsing="false" text="FAVORITTER">
                                  <HBox.margin>
                                     <Insets right="5.0" top="5.0" />
                                  </HBox.margin>
@@ -92,7 +92,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" onMouseClicked="#adminKnap" text="ADMIN">
+                              <Button mnemonicParsing="false" text="ADMIN">
                                  <HBox.margin>
                                     <Insets left="10.0" right="5.0" />
                                  </HBox.margin>
@@ -116,7 +116,7 @@
                         <Font size="32.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="812.0" prefWidth="1400.0">
+                  <Button mnemonicParsing="false" onMouseClicked="#watanabeSamlingenKnap" prefHeight="812.0" prefWidth="1400.0">
                      <graphic>
                         <HBox onMouseClicked="#omSamlingenKnap" prefHeight="100.0" prefWidth="200.0">
                            <children>
@@ -169,7 +169,7 @@
                         <Font size="32.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="812.0" prefWidth="1400.0">
+                  <Button mnemonicParsing="false" onMouseClicked="#omOsKnap" prefHeight="812.0" prefWidth="1400.0">
                      <graphic>
                         <HBox onMouseClicked="#omOsKnap" prefWidth="1400.0">
                            <children>

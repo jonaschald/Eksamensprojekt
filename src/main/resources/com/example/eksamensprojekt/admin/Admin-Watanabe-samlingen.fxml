@@ -40,7 +40,7 @@
                      <children>
                         <HBox alignment="TOP_RIGHT">
                            <children>
-                              <Button mnemonicParsing="false" onMouseClicked="#watanabeSamlingenKnap" text="WATANABE SAMLINGEN">
+                              <Button mnemonicParsing="false" text="WATANABE SAMLINGEN">
                                  <HBox.margin>
                                     <Insets right="5.0" top="5.0" />
                                  </HBox.margin>
@@ -48,7 +48,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" onMouseClicked="#favoritterKnap" text="FAVORITTER">
+                              <Button mnemonicParsing="false" text="FAVORITTER">
                                  <HBox.margin>
                                     <Insets right="5.0" top="5.0" />
                                  </HBox.margin>
@@ -95,7 +95,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" onMouseClicked="#adminKnap" text="ADMIN">
+                              <Button mnemonicParsing="false" text="ADMIN">
                                  <HBox.margin>
                                     <Insets left="10.0" right="5.0" />
                                  </HBox.margin>

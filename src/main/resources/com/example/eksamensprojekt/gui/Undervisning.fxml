@@ -21,7 +21,7 @@
                <children>
                   <VBox prefWidth="700.0">
                      <children>
-                        <Label text="KUNSTHAL HOLMEN">
+                        <Label onMouseClicked="#tilStartSide" text="KUNSTHAL HOLMEN">
                            <font>
                               <Font name="System Bold" size="48.0" />
                            </font>
@@ -71,7 +71,7 @@
                         </HBox>
                         <HBox alignment="TOP_RIGHT">
                            <children>
-                              <Button mnemonicParsing="false" onMouseClicked="#undervisningKnap" text="UNDERVISNING">
+                              <Button mnemonicParsing="false" text="UNDERVISNING">
                                  <font>
                                     <Font size="24.0" />
                                  </font>

@@ -37,25 +37,25 @@ public class UndervisningController {
     // Skifter scenen til Farvoritter
     @FXML
     void favoritterKnap(MouseEvent event) throws IOException {
-
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Favoritter.fxml");
     }
 
     // Skifter scenen til Om Os
     @FXML
     void omOsKnap(MouseEvent event) throws IOException {
-
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/om-Os.fxml");
     }
 
     // Skifter scenen til Om Samlingen
     @FXML
     void omSamlingenKnap(MouseEvent event) throws IOException {
-
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Om-Samlingen.fxml");
     }
 
     // Skifter scenen til Temaer
     @FXML
     void temaerKnap(MouseEvent event) throws IOException {
-
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Temaer.fxml");
     }
 
     // Skifter scenen til Samlingen
@@ -64,7 +64,9 @@ public class UndervisningController {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Watanabe-samlingen.fxml");
     }
 
+    // Skifter scenen til Startsiden
     @FXML
-    void undervisningKnap(MouseEvent event) {
+    void tilStartSide(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Forside.fxml");
     }
 }

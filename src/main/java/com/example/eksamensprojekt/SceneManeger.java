@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class SceneManeger {
 
-    // Så vi kan skifte scenen ved brug af On Mouseclicked
+    // Så vi kan skifte scenen ved brug af On Mouse Clicked
     public void skiftSceneMouse (MouseEvent event, String fxml) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root = loader.load();

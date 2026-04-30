@@ -1,5 +1,6 @@
 package com.example.eksamensprojekt.controllers;
 
+import com.example.eksamensprojekt.SceneManeger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -7,7 +8,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
+
 public class FavoritterController {
+
+    SceneManeger sceneManeger = new SceneManeger();
 
     @FXML
     private VBox billedeContainer;
@@ -27,9 +32,10 @@ public class FavoritterController {
     @FXML
     private Label eksempelTitel;
 
+    // Skifter scenen til Admin Login
     @FXML
-    void adminKnap(MouseEvent event) {
-
+    void adminKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Login.fxml");
     }
 
     @FXML
@@ -37,37 +43,39 @@ public class FavoritterController {
 
     }
 
+    // Skifter scenen til Om Os
     @FXML
-    void favoritterKnap(MouseEvent event) {
-
+    void omOsKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Om-Os.fxml");
     }
 
+    // Skifter scenen til Om samlingen
     @FXML
-    void omOsKnap(MouseEvent event) {
-
+    void omSamlingenKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Om-Samlingen.fxml");
     }
 
+    // Skifter scenen til Temaer
     @FXML
-    void omSamlingenKnap(MouseEvent event) {
-
+    void temaerKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Temaer.fxml");
     }
 
+    // Skifter scenen til Undervisning
     @FXML
-    void temaerKnap(MouseEvent event) {
-
+    void undervisningKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Undervisning.fxml");
     }
 
+    // Skifter scenen til Samlingne
     @FXML
-    void undervisningKnap(MouseEvent event) {
-
+    void watanabeSamlingenKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Watanabe-samlingen.fxml");
     }
 
+    // Skifter scenen til Startsiden
     @FXML
-    void watanabeSamlingenKnap(MouseEvent event) {
-
-    }
-
-    @FXML
-    void tilStartSide(MouseEvent mouseEvent) {
+    void tilStartSide(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Forside.fxml");
     }
 }

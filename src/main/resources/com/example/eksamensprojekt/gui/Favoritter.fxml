@@ -45,7 +45,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" onMouseClicked="#favoritterKnap" text="FAVORITTER">
+                              <Button mnemonicParsing="false" text="FAVORITTER">
                                  <HBox.margin>
                                     <Insets right="5.0" top="5.0" />
                                  </HBox.margin>
