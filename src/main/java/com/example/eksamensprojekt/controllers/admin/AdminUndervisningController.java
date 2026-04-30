@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
+
 public class AdminUndervisningController {
 
     SceneManeger sceneManeger = new SceneManeger();
@@ -26,43 +28,38 @@ public class AdminUndervisningController {
     private ListView<?> udskoling;
 
     @FXML
-    void adminKnap(MouseEvent event) {
-
-    }
-
-    @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
 
     }
 
+    // Skifter scenen til Admin Om Os
     @FXML
-    void favoritterKnap(MouseEvent event) {
+    void omOsKnap(MouseEvent event) throws IOException {
 
     }
 
+    // Skifter scenen til Admin Om Samlingen
     @FXML
-    void omOsKnap(MouseEvent event) {
+    void omSamlingenKnap(MouseEvent event) throws IOException {
 
     }
 
+    // Skiftet scenen til Admin Temaer
     @FXML
-    void omSamlingenKnap(MouseEvent event) {
+    void temaerKnap(MouseEvent event) throws IOException {
 
     }
 
+    // Skifter scenen til Admin Undervisning
     @FXML
-    void temaerKnap(MouseEvent event) {
-
+    void undervisningKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/AdminUndervisning.fxml");
     }
 
+    // Skifter scene til Admin Samlingen
     @FXML
-    void undervisningKnap(MouseEvent event) {
-
-    }
-
-    @FXML
-    void watanabeSamlingenKnap(MouseEvent event) {
-
+    void watanabeSamlingenKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Admin-Watanabe-samlingen.fxml");
     }
 
 }

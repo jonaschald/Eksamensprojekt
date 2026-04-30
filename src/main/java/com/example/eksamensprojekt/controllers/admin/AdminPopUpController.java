@@ -46,4 +46,9 @@ public class AdminPopUpController {
 
     }
 
+    @FXML
+    void tilStorPopUp(MouseEvent event) {
+
+    }
+
 }

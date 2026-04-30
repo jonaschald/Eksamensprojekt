@@ -1,11 +1,12 @@
-package com.example.eksamensprojekt.controllers;
+package com.example.eksamensprojekt.controllers.admin;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class OmSamlingenController {
+public class AdminOmSamlingenController {
 
     @FXML
     private ImageView billedeBund;
@@ -38,6 +39,11 @@ public class OmSamlingenController {
 
     @FXML
     void omSamlingenKnap(MouseEvent event) {
+
+    }
+
+    @FXML
+    void redigerOmSadaoWatanabeTekst(ActionEvent event) {
 
     }
 

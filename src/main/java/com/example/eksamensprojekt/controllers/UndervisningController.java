@@ -23,6 +23,7 @@ public class UndervisningController {
     @FXML
     private ListView<?> udskoling;
 
+    // Skifter scene til Admin Login
     @FXML
     void adminKnap(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Login.fxml");
@@ -33,34 +34,35 @@ public class UndervisningController {
 
     }
 
+    // Skifter scenen til Farvoritter
     @FXML
-    void favoritterKnap(MouseEvent event) {
+    void favoritterKnap(MouseEvent event) throws IOException {
 
     }
 
+    // Skifter scenen til Om Os
     @FXML
-    void omOsKnap(MouseEvent event) {
+    void omOsKnap(MouseEvent event) throws IOException {
 
     }
 
+    // Skifter scenen til Om Samlingen
     @FXML
-    void omSamlingenKnap(MouseEvent event) {
+    void omSamlingenKnap(MouseEvent event) throws IOException {
 
     }
 
+    // Skifter scenen til Temaer
     @FXML
-    void temaerKnap(MouseEvent event) {
+    void temaerKnap(MouseEvent event) throws IOException {
 
     }
 
+
+    // Skifter scenen til Samlingen
     @FXML
-    void undervisningKnap(MouseEvent event) {
-
-    }
-
-    @FXML
-    void watanabeSamlingenKnap(MouseEvent event) {
-
+    void watanabeSamlingenKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Watanabe-samlingen.fxml");
     }
 
 }

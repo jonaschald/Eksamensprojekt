@@ -29,27 +29,19 @@ public class AdminForsideController {
     private Label watanabeSamlingTekst;
 
     @FXML
-    void adminKnap(MouseEvent event) {
-
-    }
-
-    @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
 
     }
 
+    // Skifter scenen til Admin Om Os
     @FXML
-    void favoritterKnap(MouseEvent event) {
+    void omOsKnap(MouseEvent event) throws IOException {
 
     }
 
+    // Skifter scenen til Admin Om Samlingen
     @FXML
-    void omOsKnap(MouseEvent event) {
-
-    }
-
-    @FXML
-    void omSamlingenKnap(MouseEvent event) {
+    void omSamlingenKnap(MouseEvent event) throws IOException {
 
     }
 
@@ -58,18 +50,22 @@ public class AdminForsideController {
 
     }
 
+    // Skifter scenen til Admin Temaer
     @FXML
-    void temaerKnap(MouseEvent event) {
+    void temaerKnap(MouseEvent event) throws IOException {
 
     }
 
+    // Skifter scenen til Admin Undervisning
     @FXML
     void undervisningKnap(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/AdminUndervisning.fxml");
     }
 
+    // Skifter scenen til Admin Samlingen
     @FXML
-    void watanabeSamlingenKnap(MouseEvent event) {
+    void watanabeSamlingenKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/Admin-Watanabe-samlingen.fxml");
 
     }
 
