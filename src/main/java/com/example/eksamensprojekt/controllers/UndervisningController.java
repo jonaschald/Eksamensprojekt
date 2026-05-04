@@ -1,6 +1,7 @@
 package com.example.eksamensprojekt.controllers;
 
 import com.example.eksamensprojekt.SceneManeger;
+import com.example.eksamensprojekt.Undervisning.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
@@ -12,16 +13,25 @@ public class UndervisningController {
     SceneManeger sceneManeger = new SceneManeger();
 
     @FXML
-    private ListView<?> indskoling;
+    private ListView<Indskoling> indskolingData;
 
     @FXML
-    private ListView<?> konfirmation;
+    private ListView<Mellemtrin> mellemtrinData;
 
     @FXML
-    private ListView<?> mellemtrin;
+    private ListView<Udskoling> udskolingData;
 
     @FXML
-    private ListView<?> udskoling;
+    private ListView<Konfirmation> konfirmationData;
+
+    public void initialize() {
+        System.out.println("UndervisningController initialized");
+
+        indskolingData.setItems(DataDeling.indskolingList);
+        mellemtrinData.setItems(DataDeling.mellemtrinList);
+        udskolingData.setItems(DataDeling.udskolingList);
+        konfirmationData.setItems(DataDeling.konfirmationList);
+    }
 
     // Skifter scene til Admin Login
     @FXML
