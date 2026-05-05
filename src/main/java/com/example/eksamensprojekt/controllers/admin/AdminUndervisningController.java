@@ -10,7 +10,8 @@ import javafx.scene.input.MouseEvent;
 import java.awt.*;
 import java.io.IOException;
 
-public class AdminUndervisningController {
+public class AdminUndervisningController
+{
 
     SceneManeger sceneManeger = new SceneManeger();
 
