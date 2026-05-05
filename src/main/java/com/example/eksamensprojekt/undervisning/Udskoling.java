@@ -1,10 +1,10 @@
-package com.example.eksamensprojekt.Undervisning;
+package com.example.eksamensprojekt.undervisning;
 
-public class Indskoling {
+public class Udskoling {
     private String name;
     private String pdfFile;
 
-    public Indskoling(String name, String pdfFile) {
+    public Udskoling(String name, String pdfFile) {
         this.name = name;
         this.pdfFile = pdfFile;
     }
@@ -13,7 +13,9 @@ public class Indskoling {
         return name;
     }
 
-    public String getPdfFile() { return pdfFile; }
+    public String getPdfFile() {
+        return pdfFile;
+    }
 
     @Override
     public String toString() {

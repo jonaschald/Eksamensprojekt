@@ -9,6 +9,6 @@ module com.example.eksamensprojekt {
     opens com.example.eksamensprojekt.controllers to javafx.fxml;
     exports com.example.eksamensprojekt.controllers.admin;
     opens com.example.eksamensprojekt.controllers.admin to javafx.fxml;
-    exports com.example.eksamensprojekt.Undervisning;
-    opens com.example.eksamensprojekt.Undervisning to javafx.fxml;
+    exports com.example.eksamensprojekt.undervisning;
+    opens com.example.eksamensprojekt.undervisning to javafx.fxml;
 }
