@@ -2,6 +2,7 @@ package com.example.eksamensprojekt.controllers.admin;
 
 import com.example.eksamensprojekt.*;
 import com.example.eksamensprojekt.Undervisning.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -35,22 +36,23 @@ public class AdminUndervisningController {
         udskolingData.setItems(DataDeling.udskolingList);
         konfirmationData.setItems(DataDeling.konfirmationList);
 
-        indskolingData.getItems().add(
-                new Indskoling("At læse og tale billeder", new File("/Desktop/Undervisningsforløb - At læse og tale billeder.pdf"))
-        );
-        indskolingData.getSelectionModel().selectedItemProperty().addListener((obd, oldItem, newItem) -> {
-            if (newItem != null) {
-                try {
-                    Desktop.getDesktop().open(newItem.getPdfFile());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     @FXML
-    private Button redigerUndervisningsmateriale;
+    void tilføjUndervisningsmateriale(ActionEvent event) {
+
+    }
+
+    @FXML
+    void redigerUndervisningsmatriale(ActionEvent event) {
+
+    }
+
+    @FXML
+    void sletUndervisningsmatriale(ActionEvent event) {
+
+    }
+
 
     @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event) {

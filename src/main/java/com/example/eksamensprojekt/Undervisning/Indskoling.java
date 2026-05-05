@@ -5,9 +5,9 @@ import java.net.URL;
 
 public class Indskoling {
     private String name;
-    private File pdfFile;
+    private String pdfFile;
 
-    public Indskoling(String name, File pdfFile) {
+    public Indskoling(String name, String pdfFile) {
         this.name = name;
         this.pdfFile = pdfFile;
     }
@@ -16,7 +16,7 @@ public class Indskoling {
         return name;
     }
 
-    public File getPdfFile() { return pdfFile; }
+    public String getPdfFile() { return pdfFile; }
 
     @Override
     public String toString() {
