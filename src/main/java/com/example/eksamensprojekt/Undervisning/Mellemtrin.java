@@ -1,12 +1,10 @@
 package com.example.eksamensprojekt.Undervisning;
 
-import java.io.File;
-
 public class Mellemtrin {
     private String name;
-    private File pdfFile;
+    private String pdfFile;
 
-    public Mellemtrin(String name, File pdfFile) {
+    public Mellemtrin(String name, String pdfFile) {
         this.name = name;
         this.pdfFile = pdfFile;
     }
@@ -15,7 +13,7 @@ public class Mellemtrin {
         return name;
     }
 
-    public File getPdfFile() {
+    public String getPdfFile() {
         return pdfFile;
     }
 

@@ -34,7 +34,6 @@ public class AdminUndervisningController {
         mellemtrinData.setItems(DataDeling.mellemtrinList);
         udskolingData.setItems(DataDeling.udskolingList);
         konfirmationData.setItems(DataDeling.konfirmationList);
-
     }
 
     @FXML

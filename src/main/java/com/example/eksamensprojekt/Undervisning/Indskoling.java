@@ -1,8 +1,5 @@
 package com.example.eksamensprojekt.Undervisning;
 
-import java.io.File;
-import java.net.URL;
-
 public class Indskoling {
     private String name;
     private String pdfFile;

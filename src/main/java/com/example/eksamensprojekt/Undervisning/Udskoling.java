@@ -1,12 +1,10 @@
 package com.example.eksamensprojekt.Undervisning;
 
-import java.io.File;
-
 public class Udskoling {
     private String name;
-    private File pdfFile;
+    private String pdfFile;
 
-    public Udskoling(String name, File pdfFile) {
+    public Udskoling(String name, String pdfFile) {
         this.name = name;
         this.pdfFile = pdfFile;
     }
@@ -15,7 +13,7 @@ public class Udskoling {
         return name;
     }
 
-    public File getPdfFile() {
+    public String getPdfFile() {
         return pdfFile;
     }
 
