@@ -1,10 +1,10 @@
-package com.example.eksamensprojekt.Undervisning;
+package com.example.eksamensprojekt.undervisning;
 
-public class Konfirmation {
+public class Mellemtrin {
     private String name;
     private String pdfFile;
 
-    public Konfirmation (String name, String pdfFile) {
+    public Mellemtrin(String name, String pdfFile) {
         this.name = name;
         this.pdfFile = pdfFile;
     }

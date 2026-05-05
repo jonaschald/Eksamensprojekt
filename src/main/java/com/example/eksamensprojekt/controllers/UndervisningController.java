@@ -1,7 +1,7 @@
 package com.example.eksamensprojekt.controllers;
 
 import com.example.eksamensprojekt.SceneManeger;
-import com.example.eksamensprojekt.Undervisning.*;
+import com.example.eksamensprojekt.undervisning.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
