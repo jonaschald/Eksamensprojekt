@@ -32,7 +32,7 @@ public class UndervisningController {
         udskolingData.setItems(DataDeling.udskolingList);
         konfirmationData.setItems(DataDeling.konfirmationList);
 
-    // Gør så man kan klikke på undervisningsmaterialet, og åbne det for at se det
+    // Gør så man kan klikke på undervisningsmaterialet til indskoling, og åbne det for at se det
         indskolingData.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 Indskoling selected =
@@ -44,6 +44,66 @@ public class UndervisningController {
                         var url = getClass().getResource(selected.getPdfFile());
 
                     // Åbner filen i computerens standart program
+                        Desktop.getDesktop().browse(url.toURI());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        // Gør så man kan klikke på undervisningsmaterialet til mellemtrin, og åbne det for at se det
+        mellemtrinData.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Mellemtrin selected =
+                        mellemtrinData.getSelectionModel().getSelectedItem();
+
+                if (selected != null) {
+                    try {
+                        // Finder pdf inde i projektet resource mappe og laver en url til den
+                        var url = getClass().getResource(selected.getPdfFile());
+
+                        // Åbner filen i computerens standart program
+                        Desktop.getDesktop().browse(url.toURI());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        // Gør så man kan klikke på undervisningsmaterialet til udskoling, og åbne det for at se det
+        udskolingData.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Udskoling selected =
+                        udskolingData.getSelectionModel().getSelectedItem();
+
+                if (selected != null) {
+                    try {
+                        // Finder pdf inde i projektet resource mappe og laver en url til den
+                        var url = getClass().getResource(selected.getPdfFile());
+
+                        // Åbner filen i computerens standart program
+                        Desktop.getDesktop().browse(url.toURI());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        // Gør så man kan klikke på undervisningsmaterialet til konfirmation, og åbne det for at se det
+        konfirmationData.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Konfirmation selected =
+                        konfirmationData.getSelectionModel().getSelectedItem();
+
+                if (selected != null) {
+                    try {
+                        // Finder pdf inde i projektet resource mappe og laver en url til den
+                        var url = getClass().getResource(selected.getPdfFile());
+
+                        // Åbner filen i computerens standart program
                         Desktop.getDesktop().browse(url.toURI());
                     } catch (Exception e) {
                         e.printStackTrace();
