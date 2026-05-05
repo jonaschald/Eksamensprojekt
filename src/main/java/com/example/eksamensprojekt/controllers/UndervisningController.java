@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class UndervisningController {
@@ -25,12 +26,31 @@ public class UndervisningController {
     private ListView<Konfirmation> konfirmationData;
 
     public void initialize() {
-        System.out.println("UndervisningController initialized");
-
+    // Gør så listerne viser undervisningsmaterialet
         indskolingData.setItems(DataDeling.indskolingList);
         mellemtrinData.setItems(DataDeling.mellemtrinList);
         udskolingData.setItems(DataDeling.udskolingList);
         konfirmationData.setItems(DataDeling.konfirmationList);
+
+    // Gør så man kan klikke på undervisningsmaterialet, og åbne det for at se det
+        indskolingData.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Indskoling selected =
+                        indskolingData.getSelectionModel().getSelectedItem();
+
+                if (selected != null) {
+                    try {
+                    // Finder pdf inde i projektet resource mappe og laver en url til den
+                        var url = getClass().getResource(selected.getPdfFile());
+
+                    // Åbner filen i computerens standart program
+                        Desktop.getDesktop().browse(url.toURI());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     // Skifter scene til Admin Login

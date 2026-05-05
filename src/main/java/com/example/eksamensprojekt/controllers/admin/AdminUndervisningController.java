@@ -29,8 +29,7 @@ public class AdminUndervisningController {
     private ListView<Konfirmation> konfirmationData;
 
     public void initialize() {
-        System.out.println("AdminUndervisningController initialized");
-
+    // Gør så listerne viser undervisningsmaterialet
         indskolingData.setItems(DataDeling.indskolingList);
         mellemtrinData.setItems(DataDeling.mellemtrinList);
         udskolingData.setItems(DataDeling.udskolingList);
