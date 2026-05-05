@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eksamensprojekt.controllers.OmSamlingenController">
+<ScrollPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eksamensprojekt.controllers.ForsideController">
    <content>
       <VBox prefWidth="1400.0">
          <children>
@@ -18,12 +18,12 @@
                <children>
                   <VBox prefWidth="700.0">
                      <children>
-                        <Label onMouseClicked="#tilStartSide" text="KUNSTHAL HOLMEN">
+                        <Label text="KUNSTHAL HOLMEN">
                            <font>
                               <Font name="System Bold" size="48.0" />
                            </font>
                         </Label>
-                        <Label text="SADAO WATANABE">
+                        <Label onMouseClicked="#omSamlingenKnap" text="SADAO WATANABE">
                            <font>
                               <Font name="Georgia" size="48.0" />
                            </font>
@@ -76,7 +76,7 @@
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="OM SAMLINGEN">
+                              <Button mnemonicParsing="false" onMouseClicked="#omSamlingenKnap" text="OM SAMLINGEN">
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin>
@@ -155,8 +155,17 @@
                         </VBox>
                         <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="650.0">
                            <children>
-                              <ImageView fx:id="billedeTop" fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fx:id="billedeBund" fitHeight="600.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="billedeTop" fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Billeder/Sadao%20Watanabe.jpg" />
+                                 </image></ImageView>
+                              <ImageView fx:id="billedeBund" fitHeight="600.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Billeder/Billede.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets top="100.0" />
+                                 </VBox.margin></ImageView>
                            </children>
                            <padding>
                               <Insets top="70.0" />
