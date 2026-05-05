@@ -136,7 +136,7 @@
                               <Font size="32.0" />
                            </font>
                            <content>
-                              <ListView fx:id="indskoling" prefHeight="200.0" prefWidth="200.0" />
+                              <ListView fx:id="indskolingData" prefHeight="200.0" prefWidth="200.0" />
                            </content>
                       </TitledPane>
                       <TitledPane animated="false" text="Mellemtrin (4. - 6. klasse)">
@@ -144,7 +144,7 @@
                               <Font size="32.0" />
                            </font>
                            <content>
-                              <ListView fx:id="mellemtrin" prefHeight="200.0" prefWidth="200.0" />
+                              <ListView fx:id="mellemtrinData" prefHeight="200.0" prefWidth="200.0" />
                            </content>
                       </TitledPane>
                       <TitledPane animated="false" text="Udskoling (7. - 9. (10.) klasse)">
@@ -152,7 +152,7 @@
                               <Font size="32.0" />
                            </font>
                            <content>
-                              <ListView fx:id="udskoling" prefHeight="200.0" prefWidth="200.0" />
+                              <ListView fx:id="udskolingData" prefHeight="200.0" prefWidth="200.0" />
                            </content>
                       </TitledPane>
                         <TitledPane prefHeight="200.0" prefWidth="200.0" text="Konfirmation">
@@ -160,7 +160,7 @@
                               <Font size="32.0" />
                            </font>
                            <content>
-                              <ListView fx:id="konfirmation" prefHeight="200.0" prefWidth="200.0" />
+                              <ListView fx:id="konfirmationData" prefHeight="200.0" prefWidth="200.0" />
                            </content>
                         </TitledPane>
                     </panes>

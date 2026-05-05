@@ -1,11 +1,13 @@
 package com.example.eksamensprojekt.controllers.admin;
 
-import com.example.eksamensprojekt.SceneManeger;
+import com.example.eksamensprojekt.*;
+import com.example.eksamensprojekt.Undervisning.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class AdminUndervisningController {
@@ -13,19 +15,40 @@ public class AdminUndervisningController {
     SceneManeger sceneManeger = new SceneManeger();
 
     @FXML
-    private ListView<?> indskoling;
+    private ListView<Indskoling> indskolingData;
 
     @FXML
-    private ListView<?> konfirmation;
+    private ListView<Mellemtrin> mellemtrinData;
 
     @FXML
-    private ListView<?> mellemtrin;
+    private ListView<Udskoling> udskolingData;
 
     @FXML
-    private Button redigerUndervisningsmateriale;
+    private ListView<Konfirmation> konfirmationData;
+
+    public void initialize() {
+    // Gør så listerne viser undervisningsmaterialet
+        indskolingData.setItems(DataDeling.indskolingList);
+        mellemtrinData.setItems(DataDeling.mellemtrinList);
+        udskolingData.setItems(DataDeling.udskolingList);
+        konfirmationData.setItems(DataDeling.konfirmationList);
+    }
 
     @FXML
-    private ListView<?> udskoling;
+    void tilføjUndervisningsmateriale(ActionEvent event) {
+
+    }
+
+    @FXML
+    void redigerUndervisningsmatriale(ActionEvent event) {
+
+    }
+
+    @FXML
+    void sletUndervisningsmatriale(ActionEvent event) {
+
+    }
+
 
     @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event) {

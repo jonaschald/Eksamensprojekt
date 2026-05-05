@@ -1,10 +1,12 @@
 package com.example.eksamensprojekt.controllers;
 
 import com.example.eksamensprojekt.SceneManeger;
+import com.example.eksamensprojekt.Undervisning.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class UndervisningController {
@@ -12,16 +14,104 @@ public class UndervisningController {
     SceneManeger sceneManeger = new SceneManeger();
 
     @FXML
-    private ListView<?> indskoling;
+    private ListView<Indskoling> indskolingData;
 
     @FXML
-    private ListView<?> konfirmation;
+    private ListView<Mellemtrin> mellemtrinData;
 
     @FXML
-    private ListView<?> mellemtrin;
+    private ListView<Udskoling> udskolingData;
 
     @FXML
-    private ListView<?> udskoling;
+    private ListView<Konfirmation> konfirmationData;
+
+    public void initialize() {
+    // Gør så listerne viser undervisningsmaterialet
+        indskolingData.setItems(DataDeling.indskolingList);
+        mellemtrinData.setItems(DataDeling.mellemtrinList);
+        udskolingData.setItems(DataDeling.udskolingList);
+        konfirmationData.setItems(DataDeling.konfirmationList);
+
+    // Gør så man kan klikke på undervisningsmaterialet til indskoling, og åbne det for at se det
+        indskolingData.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Indskoling selected =
+                        indskolingData.getSelectionModel().getSelectedItem();
+
+                if (selected != null) {
+                    try {
+                    // Finder pdf inde i projektet resource mappe og laver en url til den
+                        var url = getClass().getResource(selected.getPdfFile());
+
+                    // Åbner filen i computerens standart program
+                        Desktop.getDesktop().browse(url.toURI());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        // Gør så man kan klikke på undervisningsmaterialet til mellemtrin, og åbne det for at se det
+        mellemtrinData.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Mellemtrin selected =
+                        mellemtrinData.getSelectionModel().getSelectedItem();
+
+                if (selected != null) {
+                    try {
+                        // Finder pdf inde i projektet resource mappe og laver en url til den
+                        var url = getClass().getResource(selected.getPdfFile());
+
+                        // Åbner filen i computerens standart program
+                        Desktop.getDesktop().browse(url.toURI());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        // Gør så man kan klikke på undervisningsmaterialet til udskoling, og åbne det for at se det
+        udskolingData.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Udskoling selected =
+                        udskolingData.getSelectionModel().getSelectedItem();
+
+                if (selected != null) {
+                    try {
+                        // Finder pdf inde i projektet resource mappe og laver en url til den
+                        var url = getClass().getResource(selected.getPdfFile());
+
+                        // Åbner filen i computerens standart program
+                        Desktop.getDesktop().browse(url.toURI());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        // Gør så man kan klikke på undervisningsmaterialet til konfirmation, og åbne det for at se det
+        konfirmationData.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Konfirmation selected =
+                        konfirmationData.getSelectionModel().getSelectedItem();
+
+                if (selected != null) {
+                    try {
+                        // Finder pdf inde i projektet resource mappe og laver en url til den
+                        var url = getClass().getResource(selected.getPdfFile());
+
+                        // Åbner filen i computerens standart program
+                        Desktop.getDesktop().browse(url.toURI());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
 
     // Skifter scene til Admin Login
     @FXML

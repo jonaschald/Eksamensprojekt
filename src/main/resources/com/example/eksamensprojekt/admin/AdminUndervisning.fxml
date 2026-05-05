@@ -129,11 +129,28 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Button fx:id="redigerUndervisningsmateriale" mnemonicParsing="false" text="Rediger undervisningsmateriale">
-                     <font>
-                        <Font size="32.0" />
-                     </font>
-                  </Button>
+                  <HBox prefHeight="50.0" prefWidth="1400.0" spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#tilføjUndervisningsmateriale" text="Tilføj">
+                           <font>
+                              <Font size="32.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#redigerUndervisningsmatriale" text="Rediger">
+                           <font>
+                              <Font size="32.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#sletUndervisningsmatriale" text="Slet">
+                           <font>
+                              <Font size="32.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </HBox>
                   <Accordion prefWidth="1400.0">
                     <panes>
                       <TitledPane animated="false" prefWidth="1400.0" text="Indskoling (0. - 3. klasse)">
@@ -141,7 +158,7 @@
                               <Font size="32.0" />
                            </font>
                            <content>
-                              <ListView fx:id="indskoling" prefWidth="1400.0" />
+                              <ListView fx:id="indskolingData" prefWidth="1400.0" />
                            </content>
                       </TitledPane>
                       <TitledPane animated="false" prefWidth="1400.0" text="Mellemtrin (4. - 6. klasse)">
@@ -149,7 +166,7 @@
                               <Font size="32.0" />
                            </font>
                            <content>
-                              <ListView fx:id="mellemtrin" prefWidth="1400.0" />
+                              <ListView fx:id="mellemtrinData" prefWidth="1400.0" />
                            </content>
                       </TitledPane>
                       <TitledPane animated="false" prefWidth="1400.0" text="Udskoling (7. - 9. (10.) klasse)">
@@ -157,7 +174,7 @@
                               <Font size="32.0" />
                            </font>
                            <content>
-                              <ListView fx:id="udskoling" prefWidth="1400.0" />
+                              <ListView fx:id="udskolingData" prefWidth="1400.0" />
                            </content>
                       </TitledPane>
                         <TitledPane prefWidth="1400.0" text="Konfirmation">
@@ -165,7 +182,7 @@
                               <Font size="32.0" />
                            </font>
                            <content>
-                              <ListView fx:id="konfirmation" prefWidth="1400.0" />
+                              <ListView fx:id="konfirmationData" prefWidth="1400.0" />
                            </content>
                         </TitledPane>
                     </panes>
