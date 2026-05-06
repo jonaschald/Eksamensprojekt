@@ -8,7 +8,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 
 public class WatanabeSamlingenController {
 
@@ -241,7 +243,11 @@ public class WatanabeSamlingenController {
 
     @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
-
+        try {
+            Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

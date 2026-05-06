@@ -122,7 +122,11 @@ public class UndervisningController {
 
     @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
-
+        try {
+            Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Skifter scenen til Farvoritter
@@ -159,14 +163,5 @@ public class UndervisningController {
     @FXML
     void tilStartSide(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Forside.fxml");
-    }
-
-    @FXML
-    void tilKunsthallensHjemmeside(MouseEvent event) {
-        try {
-            Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

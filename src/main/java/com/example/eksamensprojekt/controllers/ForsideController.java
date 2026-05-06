@@ -37,7 +37,11 @@ public class ForsideController {
 
     @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
-
+        try {
+            Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Skifter scenen til Farvoritter
@@ -74,14 +78,5 @@ public class ForsideController {
     @FXML
     void watanabeSamlingenKnap(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Watanabe-samlingen.fxml");
-    }
-
-    @FXML
-    void tilKunsthallensHjemmeside(MouseEvent event) {
-        try {
-            Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -364,7 +364,7 @@
                         </Label>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <HBox alignment="CENTER_LEFT" onMouseClicked="#tilKunsthallensHjemmeside" prefWidth="327.0">
+                              <HBox alignment="CENTER_LEFT" prefWidth="327.0">
                                  <children>
                                     <ImageView fitHeight="45.0" fitWidth="45.0" onMouseClicked="#besøgKunsthallensHjemmesideKnap" pickOnBounds="true" preserveRatio="true">
                                        <image>

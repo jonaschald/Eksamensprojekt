@@ -6,7 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 
 public class OmOsController
 {
@@ -42,7 +44,11 @@ public class OmOsController
 
     @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
-
+        try {
+            Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Skifter scenen til Farvoritter

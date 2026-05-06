@@ -8,7 +8,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 
 public class FavoritterController {
 
@@ -40,7 +42,11 @@ public class FavoritterController {
 
     @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
-
+        try {
+            Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Skifter scenen til Om Os

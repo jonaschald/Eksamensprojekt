@@ -16,7 +16,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Objects;
 
 public class TemaController {
@@ -139,7 +141,11 @@ public class TemaController {
 
     @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
-
+        try {
+            Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Skifter scenen til Farvoritter
