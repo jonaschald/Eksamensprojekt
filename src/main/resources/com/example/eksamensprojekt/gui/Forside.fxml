@@ -128,7 +128,7 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
                                     </Label>
-                                    <Label onMouseClicked="#omSamlingenKnap" prefHeight="626.0" prefWidth="808.0" text="Watanabe-samlingen er en samling af stenciltryk &#10;skabt af den japanske kunstner Sadao Watanabe. &#10;Trykkene er fremstillet i perioden fra 1961 til 1989.&#10;&#10;Billedernes motiver er hentet fra biblen, primært &#10;det nye testamente.&#10;&#10;Stilen er stærkt stiliseret med hovedvægten lagt &#10;på fremstillingen af mennesker med Jesus som &#10;den centrale figur.&#10;&#10;Billederne er købt af Museet Holmen, nu Kunsthal &#10;Holmen, med støtte fra The&#10;Scandinavia-Japan Sasakawa Foundation.">
+                                    <Label onMouseClicked="#omSamlingenKnap" prefHeight="550.0" prefWidth="780.0" text="Watanabe-samlingen er en samling af stenciltryk &#10;skabt af den japanske kunstner Sadao Watanabe. &#10;Trykkene er fremstillet i perioden fra 1961 til 1989.&#10;&#10;Billedernes motiver er hentet fra biblen, primært &#10;det nye testamente.&#10;&#10;Stilen er stærkt stiliseret med hovedvægten lagt &#10;på fremstillingen af mennesker med Jesus som &#10;den centrale figur.&#10;&#10;Billederne er købt af Museet Holmen, nu Kunsthal &#10;Holmen, med støtte fra The&#10;Scandinavia-Japan Sasakawa Foundation.">
                                        <font>
                                           <Font size="32.0" />
                                        </font>
@@ -179,15 +179,15 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
                                     </Label>
-                                    <Label onMouseClicked="#omOsKnap" prefHeight="669.0" prefWidth="781.0" text="Kunsthal Holmen er en lille perle af et &#10;udstillingssted. Kunsthallen præsenterer et &#10;ambitiøst udstillingsprogram med samtidskunst, &#10;som byder på erkendelsesmæssige, æstetiske og &#10;sanselige oplevelser. Der vises tre skiftende &#10;udstillinger om året. &#10;Kunsthallen er placeret i den smukke gamle &#10;slægtsgård Holmen i Løgumkloster – blot få &#10;kilometer nord for Tønder. Sammen med &#10;Løgumkloster Refugium, Løgumkloster Højskole, &#10;Løgumkloster Kirke, Folkekirkens Uddannelses-&#10;og Videnscenter samt Kirkemusikskolen er &#10;Kunsthal Holmen en aktiv del af byen og &#10;af kommunens rige kulturliv. Tønder Kommune er &#10;kunsthallens hovedtilskudsgiver.">
+                                    <Label onMouseClicked="#omOsKnap" prefHeight="596.0" prefWidth="772.0" text="Kunsthal Holmen er en lille perle af et &#10;udstillingssted. Kunsthallen præsenterer et &#10;ambitiøst udstillingsprogram med samtidskunst, &#10;som byder på erkendelsesmæssige, æstetiske og &#10;sanselige oplevelser. Der vises tre skiftende &#10;udstillinger om året. &#10;Kunsthallen er placeret i den smukke gamle &#10;slægtsgård Holmen i Løgumkloster – blot få &#10;kilometer nord for Tønder. Sammen med &#10;Løgumkloster Refugium, Løgumkloster Højskole, &#10;Løgumkloster Kirke, Folkekirkens Uddannelses-&#10;og Videnscenter samt Kirkemusikskolen er &#10;Kunsthal Holmen en aktiv del af byen og &#10;af kommunens rige kulturliv. Tønder Kommune er &#10;kunsthallens hovedtilskudsgiver.">
                                        <font>
                                           <Font size="32.0" />
                                        </font>
                                        <VBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="5.0" />
                                        </VBox.margin>
                                        <padding>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="5.0" />
                                        </padding>
                                     </Label>
                                  </children>
