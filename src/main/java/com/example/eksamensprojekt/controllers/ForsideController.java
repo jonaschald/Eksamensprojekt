@@ -6,7 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 
 public class ForsideController {
 
@@ -72,5 +74,14 @@ public class ForsideController {
     @FXML
     void watanabeSamlingenKnap(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Watanabe-samlingen.fxml");
+    }
+
+    @FXML
+    void tilKunsthallensHjemmeside(MouseEvent event) {
+        try {
+            Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
