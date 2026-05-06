@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 
 public class UndervisningController {
 
@@ -158,5 +159,14 @@ public class UndervisningController {
     @FXML
     void tilStartSide(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Forside.fxml");
+    }
+
+    @FXML
+    void tilKunsthallensHjemmeside(MouseEvent event) {
+        try {
+            Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
