@@ -23,7 +23,7 @@
                               <Font name="System Bold" size="48.0" />
                            </font>
                         </Label>
-                        <Label onMouseClicked="#omSamlingenKnap" text="SADAO WATANABE">
+                        <Label text="SADAO WATANABE">
                            <font>
                               <Font name="Georgia" size="48.0" />
                            </font>
@@ -76,7 +76,7 @@
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" onMouseClicked="#omSamlingenKnap" text="OM SAMLINGEN">
+                              <Button mnemonicParsing="false" text="OM SAMLINGEN">
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin>
