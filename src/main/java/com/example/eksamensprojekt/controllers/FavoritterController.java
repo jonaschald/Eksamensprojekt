@@ -12,7 +12,8 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 
-public class FavoritterController {
+public class FavoritterController
+{
 
     SceneManeger sceneManeger = new SceneManeger();
 
