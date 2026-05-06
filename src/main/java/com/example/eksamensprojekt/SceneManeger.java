@@ -10,7 +10,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SceneManeger {
+public class SceneManeger
+{
 
     private int maxX = 1400;
     private int maxY = 800;
