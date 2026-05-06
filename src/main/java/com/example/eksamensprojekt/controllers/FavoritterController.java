@@ -10,7 +10,8 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
-public class FavoritterController {
+public class FavoritterController
+{
 
     SceneManeger sceneManeger = new SceneManeger();
 
