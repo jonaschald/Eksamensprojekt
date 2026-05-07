@@ -1,4 +1,4 @@
-package com.example.eksamensprojekt;
+package com.example.eksamensprojekt.sqlklasser;
 
 import java.io.File;
 
