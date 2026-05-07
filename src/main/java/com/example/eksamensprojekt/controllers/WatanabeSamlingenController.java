@@ -19,6 +19,46 @@ public class WatanabeSamlingenController {
 
     private ImageView[] billeder;
     private Label[] beskrivelser;
+    private boolean omvendtSortering = false;
+
+    private final String[] titler = {
+            "Den gode hyrde",
+            "Jesu fødsel",
+            "Maria og barnet",
+            "Den sidste nadver",
+            "Jesus på korset",
+            "Opstandelsen",
+            "Moses",
+            "Noas ark",
+            "David og Goliat",
+            "Englen Gabriel",
+            "Bøn",
+            "Fred",
+            "Tro",
+            "Kærlighed",
+            "Lys",
+            "Håb",
+            "Jerusalem",
+            "Påske",
+            "Kristus",
+            "Hyrden",
+            "Bibelsk scene",
+            "Discipel",
+            "Det hellige barn",
+            "Profet",
+            "Kirken",
+            "Velsignelse",
+            "Troens vej",
+            "Himlen",
+            "Barmhjertighed",
+            "Visdom",
+            "Evigt liv",
+            "Sadao kunst",
+            "Japansk tro",
+            "Fredens due",
+            "Hellige ord",
+            "Tro og håb"
+    };
 
     @FXML private ImageView kunstværk1;
     @FXML private ImageView kunstværk2;
@@ -133,6 +173,8 @@ public class WatanabeSamlingenController {
 
         opdaterVisningNormal();
         indlaesBilleder();
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> soegKunstvaerk(newValue));
     }
 
     private void indlaesBilleder() {
@@ -153,25 +195,111 @@ public class WatanabeSamlingenController {
     }
 
     private void opdaterVisningNormal() {
+        omvendtSortering = false;
+        visAlle();
+
+        int startAar = 1965;
+
         for (int i = 0; i < beskrivelser.length; i++) {
-            beskrivelser[i].setText("Kunstværk nr. " + (i + 1));
+            beskrivelser[i].setText(
+                    "Nr. " + (i + 1)
+                            + "\n" + titler[i]
+                            + "\nÅr: " + (startAar + i)
+            );
         }
     }
 
     private void opdaterVisningOmvendt() {
+        omvendtSortering = true;
+        visAlle();
+
+        int startAar = 1965;
+
         for (int i = 0; i < beskrivelser.length; i++) {
-            beskrivelser[i].setText("Kunstværk nr. " + (36 - i));
+            int originalIndex = beskrivelser.length - 1 - i;
+
+            beskrivelser[i].setText(
+                    "Nr. " + (originalIndex + 1)
+                            + "\n" + titler[originalIndex]
+                            + "\nÅr: " + (startAar + originalIndex)
+            );
+        }
+    }
+
+    private void soegKunstvaerk(String soegeTekst) {
+        int startAar = 1965;
+
+        if (soegeTekst == null || soegeTekst.isBlank()) {
+            if (omvendtSortering) {
+                opdaterVisningOmvendt();
+            } else {
+                opdaterVisningNormal();
+            }
+            return;
+        }
+
+        String tekst = soegeTekst.toLowerCase();
+
+        for (int i = 0; i < billeder.length; i++) {
+            billeder[i].setVisible(false);
+            billeder[i].setManaged(false);
+
+            beskrivelser[i].setVisible(false);
+            beskrivelser[i].setManaged(false);
+        }
+
+        int visningsIndex = 0;
+
+        for (int i = 0; i < titler.length; i++) {
+            int originalIndex = omvendtSortering ? titler.length - 1 - i : i;
+
+            int nummer = originalIndex + 1;
+            int aar = startAar + originalIndex;
+            String titel = titler[originalIndex];
+
+            boolean matcher =
+                    String.valueOf(nummer).contains(tekst)
+                            || titel.toLowerCase().contains(tekst)
+                            || String.valueOf(aar).contains(tekst);
+
+            if (matcher && visningsIndex < billeder.length) {
+                billeder[visningsIndex].setVisible(true);
+                billeder[visningsIndex].setManaged(true);
+
+                beskrivelser[visningsIndex].setVisible(true);
+                beskrivelser[visningsIndex].setManaged(true);
+
+                beskrivelser[visningsIndex].setText(
+                        "Nr. " + nummer
+                                + "\n" + titel
+                                + "\nÅr: " + aar
+                );
+
+                visningsIndex++;
+            }
+        }
+    }
+
+    private void visAlle() {
+        for (int i = 0; i < billeder.length; i++) {
+            billeder[i].setVisible(true);
+            billeder[i].setManaged(true);
+
+            beskrivelser[i].setVisible(true);
+            beskrivelser[i].setManaged(true);
         }
     }
 
     @FXML
     void filterAarstalOp(ActionEvent event) {
         opdaterVisningNormal();
+        searchField.clear();
     }
 
     @FXML
     void filterAarstalNed(ActionEvent event) {
         opdaterVisningOmvendt();
+        searchField.clear();
     }
 
     @FXML
