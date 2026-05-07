@@ -8,9 +8,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
 
 public class WatanabeSamlingenController {
@@ -22,117 +25,33 @@ public class WatanabeSamlingenController {
     private boolean omvendtSortering = false;
 
     private final String[] titler = {
-            "Den gode hyrde",
-            "Jesu fødsel",
-            "Maria og barnet",
-            "Den sidste nadver",
-            "Jesus på korset",
-            "Opstandelsen",
-            "Moses",
-            "Noas ark",
-            "David og Goliat",
-            "Englen Gabriel",
-            "Bøn",
-            "Fred",
-            "Tro",
-            "Kærlighed",
-            "Lys",
-            "Håb",
-            "Jerusalem",
-            "Påske",
-            "Kristus",
-            "Hyrden",
-            "Bibelsk scene",
-            "Discipel",
-            "Det hellige barn",
-            "Profet",
-            "Kirken",
-            "Velsignelse",
-            "Troens vej",
-            "Himlen",
-            "Barmhjertighed",
-            "Visdom",
-            "Evigt liv",
-            "Sadao kunst",
-            "Japansk tro",
-            "Fredens due",
-            "Hellige ord",
-            "Tro og håb"
+            "Den gode hyrde", "Jesu fødsel", "Maria og barnet",
+            "Den sidste nadver", "Jesus på korset", "Opstandelsen",
+            "Moses", "Noas ark", "David og Goliat", "Englen Gabriel",
+            "Bøn", "Fred", "Tro", "Kærlighed", "Lys", "Håb",
+            "Jerusalem", "Påske", "Kristus", "Hyrden", "Bibelsk scene",
+            "Discipel", "Det hellige barn", "Profet", "Kirken",
+            "Velsignelse", "Troens vej", "Himlen", "Barmhjertighed",
+            "Visdom", "Evigt liv", "Sadao kunst", "Japansk tro",
+            "Fredens due", "Hellige ord", "Tro og håb"
     };
 
-    @FXML private ImageView kunstværk1;
-    @FXML private ImageView kunstværk2;
-    @FXML private ImageView kunstværk3;
-    @FXML private ImageView kunstværk4;
-    @FXML private ImageView kunstværk5;
-    @FXML private ImageView kunstværk6;
-    @FXML private ImageView kunstværk7;
-    @FXML private ImageView kunstværk8;
-    @FXML private ImageView kunstværk9;
-    @FXML private ImageView kunstværk10;
-    @FXML private ImageView kunstværk11;
-    @FXML private ImageView kunstværk12;
-    @FXML private ImageView kunstværk13;
-    @FXML private ImageView kunstværk14;
-    @FXML private ImageView kunstværk15;
-    @FXML private ImageView kunstværk16;
-    @FXML private ImageView kunstværk17;
-    @FXML private ImageView kunstværk18;
-    @FXML private ImageView kunstværk19;
-    @FXML private ImageView kunstværk20;
-    @FXML private ImageView kunstværk21;
-    @FXML private ImageView kunstværk22;
-    @FXML private ImageView kunstværk23;
-    @FXML private ImageView kunstværk24;
-    @FXML private ImageView kunstværk25;
-    @FXML private ImageView kunstværk26;
-    @FXML private ImageView kunstværk27;
-    @FXML private ImageView kunstværk28;
-    @FXML private ImageView kunstværk29;
-    @FXML private ImageView kunstværk30;
-    @FXML private ImageView kunstværk31;
-    @FXML private ImageView kunstværk32;
-    @FXML private ImageView kunstværk33;
-    @FXML private ImageView kunstværk34;
-    @FXML private ImageView kunstværk35;
-    @FXML private ImageView kunstværk36;
+    @FXML private ImageView kunstværk1, kunstværk2, kunstværk3, kunstværk4, kunstværk5, kunstværk6;
+    @FXML private ImageView kunstværk7, kunstværk8, kunstværk9, kunstværk10, kunstværk11, kunstværk12;
+    @FXML private ImageView kunstværk13, kunstværk14, kunstværk15, kunstværk16, kunstværk17, kunstværk18;
+    @FXML private ImageView kunstværk19, kunstværk20, kunstværk21, kunstværk22, kunstværk23, kunstværk24;
+    @FXML private ImageView kunstværk25, kunstværk26, kunstværk27, kunstværk28, kunstværk29, kunstværk30;
+    @FXML private ImageView kunstværk31, kunstværk32, kunstværk33, kunstværk34, kunstværk35, kunstværk36;
 
-    @FXML private Label kunstværkBeskrivelse1;
-    @FXML private Label kunstværkBeskrivelse2;
-    @FXML private Label kunstværkBeskrivelse3;
-    @FXML private Label kunstværkBeskrivelse4;
-    @FXML private Label kunstværkBeskrivelse5;
-    @FXML private Label kunstværkBeskrivelse6;
-    @FXML private Label kunstværkBeskrivelse7;
-    @FXML private Label kunstværkBeskrivelse8;
-    @FXML private Label kunstværkBeskrivelse9;
-    @FXML private Label kunstværkBeskrivelse10;
-    @FXML private Label kunstværkBeskrivelse11;
-    @FXML private Label kunstværkBeskrivelse12;
-    @FXML private Label kunstværkBeskrivelse13;
-    @FXML private Label kunstværkBeskrivelse14;
-    @FXML private Label kunstværkBeskrivelse15;
-    @FXML private Label kunstværkBeskrivelse16;
-    @FXML private Label kunstværkBeskrivelse17;
-    @FXML private Label kunstværkBeskrivelse18;
-    @FXML private Label kunstværkBeskrivelse19;
-    @FXML private Label kunstværkBeskrivelse20;
-    @FXML private Label kunstværkBeskrivelse21;
-    @FXML private Label kunstværkBeskrivelse22;
-    @FXML private Label kunstværkBeskrivelse23;
-    @FXML private Label kunstværkBeskrivelse24;
-    @FXML private Label kunstværkBeskrivelse25;
-    @FXML private Label kunstværkBeskrivelse26;
-    @FXML private Label kunstværkBeskrivelse27;
-    @FXML private Label kunstværkBeskrivelse28;
-    @FXML private Label kunstværkBeskrivelse29;
-    @FXML private Label kunstværkBeskrivelse30;
-    @FXML private Label kunstværkBeskrivelse31;
-    @FXML private Label kunstværkBeskrivelse32;
-    @FXML private Label kunstværkBeskrivelse33;
-    @FXML private Label kunstværkBeskrivelse34;
-    @FXML private Label kunstværkBeskrivelse35;
-    @FXML private Label kunstværkBeskrivelse36;
+    @FXML private Label kunstværkBeskrivelse1, kunstværkBeskrivelse2, kunstværkBeskrivelse3, kunstværkBeskrivelse4;
+    @FXML private Label kunstværkBeskrivelse5, kunstværkBeskrivelse6, kunstværkBeskrivelse7, kunstværkBeskrivelse8;
+    @FXML private Label kunstværkBeskrivelse9, kunstværkBeskrivelse10, kunstværkBeskrivelse11, kunstværkBeskrivelse12;
+    @FXML private Label kunstværkBeskrivelse13, kunstværkBeskrivelse14, kunstværkBeskrivelse15, kunstværkBeskrivelse16;
+    @FXML private Label kunstværkBeskrivelse17, kunstværkBeskrivelse18, kunstværkBeskrivelse19, kunstværkBeskrivelse20;
+    @FXML private Label kunstværkBeskrivelse21, kunstværkBeskrivelse22, kunstværkBeskrivelse23, kunstværkBeskrivelse24;
+    @FXML private Label kunstværkBeskrivelse25, kunstværkBeskrivelse26, kunstværkBeskrivelse27, kunstværkBeskrivelse28;
+    @FXML private Label kunstværkBeskrivelse29, kunstværkBeskrivelse30, kunstværkBeskrivelse31, kunstværkBeskrivelse32;
+    @FXML private Label kunstværkBeskrivelse33, kunstværkBeskrivelse34, kunstværkBeskrivelse35, kunstværkBeskrivelse36;
 
     @FXML private TextField searchField;
 
@@ -174,7 +93,9 @@ public class WatanabeSamlingenController {
         opdaterVisningNormal();
         indlaesBilleder();
 
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> soegKunstvaerk(newValue));
+        searchField.textProperty().addListener(
+                (observable, oldValue, newValue) -> soegKunstvaerk(newValue)
+        );
     }
 
     private void indlaesBilleder() {
@@ -243,7 +164,6 @@ public class WatanabeSamlingenController {
         for (int i = 0; i < billeder.length; i++) {
             billeder[i].setVisible(false);
             billeder[i].setManaged(false);
-
             beskrivelser[i].setVisible(false);
             beskrivelser[i].setManaged(false);
         }
@@ -265,7 +185,6 @@ public class WatanabeSamlingenController {
             if (matcher && visningsIndex < billeder.length) {
                 billeder[visningsIndex].setVisible(true);
                 billeder[visningsIndex].setManaged(true);
-
                 beskrivelser[visningsIndex].setVisible(true);
                 beskrivelser[visningsIndex].setManaged(true);
 
@@ -284,7 +203,6 @@ public class WatanabeSamlingenController {
         for (int i = 0; i < billeder.length; i++) {
             billeder[i].setVisible(true);
             billeder[i].setManaged(true);
-
             beskrivelser[i].setVisible(true);
             beskrivelser[i].setManaged(true);
         }
@@ -303,6 +221,42 @@ public class WatanabeSamlingenController {
     }
 
     @FXML
+    void downloadHeleSamlingen(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Gem Watanabe-samlingen");
+        fileChooser.setInitialFileName("Watanabe-samlingen.txt");
+
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Tekstfil", "*.txt")
+        );
+
+        File fil = fileChooser.showSaveDialog(null);
+
+        if (fil == null) {
+            return;
+        }
+
+        try (PrintWriter writer = new PrintWriter(fil)) {
+            writer.println("WATANABE-SAMLINGEN");
+            writer.println("==================");
+            writer.println();
+
+            int startAar = 1965;
+
+            for (int i = 0; i < titler.length; i++) {
+                writer.println("Nr. " + (i + 1));
+                writer.println("Titel: " + titler[i]);
+                writer.println("Kunstner: Sadao Watanabe");
+                writer.println("År: " + (startAar + i));
+                writer.println("--------------------");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     void adminKnap(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Login.fxml");
     }
@@ -314,10 +268,6 @@ public class WatanabeSamlingenController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    void downloadHeleSamlingen(ActionEvent event) {
     }
 
     @FXML
