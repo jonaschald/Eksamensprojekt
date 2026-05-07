@@ -141,7 +141,7 @@
                               <Font size="32.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#sletUndervisningsmatriale" text="Slet">
+                        <Button mnemonicParsing="false" onAction="#sletUndervisningsmatriale" text="Slet på alle lister">
                            <font>
                               <Font size="32.0" />
                            </font>

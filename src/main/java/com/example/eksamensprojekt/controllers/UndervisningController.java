@@ -15,16 +15,16 @@ public class UndervisningController {
     SceneManeger sceneManeger = new SceneManeger();
 
     @FXML
-    private ListView<Indskoling> indskolingData;
+    private ListView<PdfItem> indskolingData;
 
     @FXML
-    private ListView<Mellemtrin> mellemtrinData;
+    private ListView<PdfItem> mellemtrinData;
 
     @FXML
-    private ListView<Udskoling> udskolingData;
+    private ListView<PdfItem> udskolingData;
 
     @FXML
-    private ListView<Konfirmation> konfirmationData;
+    private ListView<PdfItem> konfirmationData;
 
     public void initialize() {
     // Gør så listerne viser undervisningsmaterialet
@@ -33,10 +33,11 @@ public class UndervisningController {
         udskolingData.setItems(DataDeling.udskolingList);
         konfirmationData.setItems(DataDeling.konfirmationList);
 
-    // Gør så man kan klikke på undervisningsmaterialet til indskoling, og åbne det for at se det
+    /*
+        // Gør så man kan klikke på undervisningsmaterialet til indskoling, og åbne det for at se det
         indskolingData.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                Indskoling selected =
+                PdfItem selected =
                         indskolingData.getSelectionModel().getSelectedItem();
 
                 if (selected != null) {
@@ -44,7 +45,7 @@ public class UndervisningController {
                     // Finder pdf inde i projektet resource mappe og laver en url til den
                         var url = getClass().getResource(selected.getPdfFile());
 
-                    // Åbner filen i computerens standart program
+                    // Åbner filen i computerens standard program
                         Desktop.getDesktop().browse(url.toURI());
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -56,7 +57,7 @@ public class UndervisningController {
         // Gør så man kan klikke på undervisningsmaterialet til mellemtrin, og åbne det for at se det
         mellemtrinData.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                Mellemtrin selected =
+                PdfItem selected =
                         mellemtrinData.getSelectionModel().getSelectedItem();
 
                 if (selected != null) {
@@ -64,7 +65,7 @@ public class UndervisningController {
                         // Finder pdf inde i projektet resource mappe og laver en url til den
                         var url = getClass().getResource(selected.getPdfFile());
 
-                        // Åbner filen i computerens standart program
+                        // Åbner filen i computerens standard program
                         Desktop.getDesktop().browse(url.toURI());
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -76,7 +77,7 @@ public class UndervisningController {
         // Gør så man kan klikke på undervisningsmaterialet til udskoling, og åbne det for at se det
         udskolingData.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                Udskoling selected =
+                PdfItem selected =
                         udskolingData.getSelectionModel().getSelectedItem();
 
                 if (selected != null) {
@@ -84,7 +85,7 @@ public class UndervisningController {
                         // Finder pdf inde i projektet resource mappe og laver en url til den
                         var url = getClass().getResource(selected.getPdfFile());
 
-                        // Åbner filen i computerens standart program
+                        // Åbner filen i computerens standard program
                         Desktop.getDesktop().browse(url.toURI());
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -96,7 +97,7 @@ public class UndervisningController {
         // Gør så man kan klikke på undervisningsmaterialet til konfirmation, og åbne det for at se det
         konfirmationData.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                Konfirmation selected =
+                PdfItem selected =
                         konfirmationData.getSelectionModel().getSelectedItem();
 
                 if (selected != null) {
@@ -104,7 +105,7 @@ public class UndervisningController {
                         // Finder pdf inde i projektet resource mappe og laver en url til den
                         var url = getClass().getResource(selected.getPdfFile());
 
-                        // Åbner filen i computerens standart program
+                        // Åbner filen i computerens standard program
                         Desktop.getDesktop().browse(url.toURI());
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -112,7 +113,9 @@ public class UndervisningController {
                 }
             }
         });
+        */
     }
+
 
     // Skifter scene til Admin Login
     @FXML
