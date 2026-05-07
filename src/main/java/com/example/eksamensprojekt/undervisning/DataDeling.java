@@ -5,17 +5,11 @@ import javafx.collections.ObservableList;
 
 public class DataDeling {
 
-    public static ObservableList<Indskoling> indskolingList = FXCollections.observableArrayList(
-            new Indskoling("At læse og tale billeder", "/com/example/eksamensprojekt/undervisningsmateriale/Undervisningsforløb - At læse og tale billeder.pdf"));
+    public static ObservableList<PdfItem> indskolingList = FXCollections.observableArrayList();
 
-    public static ObservableList<Mellemtrin> mellemtrinList = FXCollections.observableArrayList(
-            new Mellemtrin("At læse og tale billeder", "/com/example/eksamensprojekt/undervisningsmateriale/Undervisningsforløb - At læse og tale billeder.pdf"));
+    public static ObservableList<PdfItem> mellemtrinList = FXCollections.observableArrayList();
 
-    public static ObservableList<Udskoling> udskolingList = FXCollections.observableArrayList(
-            new Udskoling("At læse og tale billeder", "/com/example/eksamensprojekt/undervisningsmateriale/Undervisningsforløb - At læse og tale billeder.pdf")
-    );
+    public static ObservableList<PdfItem> udskolingList = FXCollections.observableArrayList();
 
-    public static ObservableList<Konfirmation> konfirmationList = FXCollections.observableArrayList(
-            new Konfirmation("At læse og tale billeder", "/com/example/eksamensprojekt/undervisningsmateriale/Undervisningsforløb - At læse og tale billeder.pdf")
-    );
+    public static ObservableList<PdfItem> konfirmationList = FXCollections.observableArrayList();
 }
