@@ -10,11 +10,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
+import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class WatanabeSamlingenController {
 
@@ -222,37 +226,112 @@ public class WatanabeSamlingenController {
 
     @FXML
     void downloadHeleSamlingen(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Gem Watanabe-samlingen");
-        fileChooser.setInitialFileName("Watanabe-samlingen.txt");
+        System.out.println("Downloader en test fil i .zip format");
 
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Tekstfil", "*.txt")
-        );
+        String sti = "/com/example/eksamensprojekt/Billeder";
+        String zipNavn = "Watanabe_Samling";
 
-        File fil = fileChooser.showSaveDialog(null);
+        File fil;
 
-        if (fil == null) {
-            return;
-        }
+        try {
+            // Finder mappen i resources
+            File malerier = new File(getClass().getResource(sti).toURI());
 
-        try (PrintWriter writer = new PrintWriter(fil)) {
-            writer.println("WATANABE-SAMLINGEN");
-            writer.println("==================");
-            writer.println();
-
-            int startAar = 1965;
-
-            for (int i = 0; i < titler.length; i++) {
-                writer.println("Nr. " + (i + 1));
-                writer.println("Titel: " + titler[i]);
-                writer.println("Kunstner: Sadao Watanabe");
-                writer.println("År: " + (startAar + i));
-                writer.println("--------------------");
+            // Er mappen en mappe?
+            if (!malerier.isDirectory()) {
+                System.out.println("Malerier eksisterer ikke");
+                return;
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            // Spørg brugeren efter en downloadsti
+            File downloadSti = spørgEfterDownloadSti();
+
+            // Blev download annulleret, eller er downloadstien ikke en mappe?
+            if (downloadSti == null || !downloadSti.isDirectory()) {
+                return;
+            }
+
+            // Skab en ny zip fil og check om den allerede eksistere i mappen
+            fil = new File(downloadSti, zipNavn + ".zip");
+            if (fil.exists()) {
+                // Spørg brugeren om de vil erstatte den eksisterende zip fil med den nye
+                int svar = JOptionPane.showConfirmDialog(
+                        null,
+                        "Filen findes allerede. Overskriv?",
+                        "Bekræft overskrivning",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                // Brugeren har trykket nej, download ikke
+                if (svar != JOptionPane.YES_OPTION) {
+                    return;
+                }
+            }
+
+            // Prøv at downloade zip filen til downloadstien
+            try {
+                downloadTilZip(malerier.toPath(), fil.toPath());
+            } catch (IOException | UncheckedIOException e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        } catch (URISyntaxException | RuntimeException e) {
+            System.out.println("Fejl med download: " + e.getMessage());
+        }
+    }
+
+    // Skab et vindue der giver brugeren muligheden for at angive hvor Watanabe Samlingen skal downloades
+    private File spørgEfterDownloadSti() {
+        JFileChooser jfc = new JFileChooser();
+        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); // Brugeren skal kun vælge en mappe
+        jfc.setAcceptAllFileFilterUsed(false);
+
+        int result = jfc.showSaveDialog(null);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            return jfc.getSelectedFile();
+        }
+
+        return null; // Brugeren har annulleret download
+    }
+
+    // Download alle filer i en mappe til en zip fil
+    private void downloadTilZip(Path kilde, Path zipFil) throws IOException {
+        // Skab en FileOutputStream of ZipOutputStream så vi kan skrive billederne til zip filen
+        // FileOutputStream skriver direkte til filen på disk
+        // ZipOutputStream sørger for at formatet bliver en gyldig zip fil
+        try (
+                FileOutputStream fos = new FileOutputStream(zipFil.toFile());
+                ZipOutputStream zipOut = new ZipOutputStream(fos)
+        ) {
+            // Gå gennem mappen rekursivt og finder kun normale filer (filer der ikke er mapper)
+            Files.walk(kilde)
+                    .filter(Files::isRegularFile)
+                    .forEach(path -> {
+                        // Find filens relative sti ifølge kildemappen, så den kan bevare mappestrukturen i zip filen
+                        Path relativ = kilde.relativize(path);
+
+                        try (InputStream in = Files.newInputStream(path)) {
+                            // Lav et ZipEntry til filen og sikrer at stier bruger et "/" i stedet for "\"
+                            ZipEntry entry = new ZipEntry(relativ.toString().replace("\\", "/"));
+                            zipOut.putNextEntry(entry);
+
+                            // Skriver filen ind i zip filen
+                            byte[] buffer = new byte[8192];
+                            int len;
+
+                            while ((len = in.read(buffer)) > 0) {
+                                zipOut.write(buffer, 0, len);
+                            }
+
+                            // Lukker den nuværende fil i zip filen
+                            zipOut.closeEntry();
+                        } catch (IOException e) {
+                            throw new UncheckedIOException(e);
+                        }
+                    });
+
+            // Sluk strømmen, så zip filen gøres gyldig
+            zipOut.finish();
         }
     }
 
