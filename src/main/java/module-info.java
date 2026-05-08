@@ -4,6 +4,7 @@ module com.example.eksamensprojekt {
     requires java.desktop;
     requires javafx.graphics;
     requires com.microsoft.sqlserver.jdbc;
+    requires java.sql;
 
     opens com.example.eksamensprojekt to javafx.fxml;
     exports com.example.eksamensprojekt;
@@ -13,6 +14,8 @@ module com.example.eksamensprojekt {
     opens com.example.eksamensprojekt.controllers.admin to javafx.fxml;
     exports com.example.eksamensprojekt.undervisning;
     opens com.example.eksamensprojekt.undervisning to javafx.fxml;
-    exports com.example.eksamensprojekt.sqlklasser;
-    opens com.example.eksamensprojekt.sqlklasser to javafx.fxml;
+    exports com.example.eksamensprojekt.ObjektKlasser;
+    opens com.example.eksamensprojekt.ObjektKlasser to javafx.fxml;
+    exports com.example.eksamensprojekt.Database;
+    opens com.example.eksamensprojekt.Database to javafx.fxml;
 }

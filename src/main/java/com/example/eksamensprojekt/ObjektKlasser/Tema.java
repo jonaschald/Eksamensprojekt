@@ -1,4 +1,4 @@
-package com.example.eksamensprojekt.sqlklasser;
+package com.example.eksamensprojekt.ObjektKlasser;
 
 public class Tema {
     private int id;

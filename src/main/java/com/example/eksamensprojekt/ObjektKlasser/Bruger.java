@@ -1,11 +1,11 @@
-package com.example.eksamensprojekt.sqlklasser;
+package com.example.eksamensprojekt.ObjektKlasser;
 
-public class Login {
+public class Bruger {
     private String email;
     private String password;
     private String passwordHash;
 
-    public Login(String email, String password, String passwordHash) {
+    public Bruger(String email, String password, String passwordHash) {
         this.email = email;
         this.password = password;
         this.passwordHash = passwordHash;
