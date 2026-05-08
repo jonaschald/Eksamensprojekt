@@ -2,19 +2,13 @@ package com.example.eksamensprojekt.undervisning;
 
 public class Mellemtrin {
     private String name;
-    private String pdfFile;
 
-    public Mellemtrin(String name, String pdfFile) {
+    public Mellemtrin(String name) {
         this.name = name;
-        this.pdfFile = pdfFile;
     }
 
     public String getName() {
         return name;
-    }
-
-    public String getPdfFile() {
-        return pdfFile;
     }
 
     @Override
