@@ -1,4 +1,4 @@
-package com.example.eksamensprojekt.ObjektKlasser;
+package com.example.eksamensprojekt.objektKlasser;
 
 import java.io.File;
 

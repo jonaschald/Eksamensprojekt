@@ -1,9 +1,9 @@
-package com.example.eksamensprojekt.Database;
+package com.example.eksamensprojekt.database;
 
-import com.example.eksamensprojekt.ObjektKlasser.Bruger;
-import com.example.eksamensprojekt.ObjektKlasser.Kunstværk;
-import com.example.eksamensprojekt.ObjektKlasser.Tema;
-import com.example.eksamensprojekt.ObjektKlasser.Undervisningsmateriale;
+import com.example.eksamensprojekt.objektKlasser.Bruger;
+import com.example.eksamensprojekt.objektKlasser.Kunstværk;
+import com.example.eksamensprojekt.objektKlasser.Tema;
+import com.example.eksamensprojekt.objektKlasser.Undervisningsmateriale;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import javafx.collections.ObservableList;
 

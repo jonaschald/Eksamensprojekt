@@ -1,4 +1,4 @@
-package com.example.eksamensprojekt.ObjektKlasser;
+package com.example.eksamensprojekt.objektKlasser;
 
 public class Målgruppe {
     private int id;
