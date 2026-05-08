@@ -14,8 +14,8 @@ module com.example.eksamensprojekt {
     opens com.example.eksamensprojekt.controllers.admin to javafx.fxml;
     exports com.example.eksamensprojekt.undervisning;
     opens com.example.eksamensprojekt.undervisning to javafx.fxml;
-    exports com.example.eksamensprojekt.objektKlasser;
-    opens com.example.eksamensprojekt.objektKlasser to javafx.fxml;
+    exports com.example.eksamensprojekt.objekter;
+    opens com.example.eksamensprojekt.objekter to javafx.fxml;
     exports com.example.eksamensprojekt.database;
     opens com.example.eksamensprojekt.database to javafx.fxml;
 }
