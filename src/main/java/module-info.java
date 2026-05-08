@@ -3,6 +3,7 @@ module com.example.eksamensprojekt {
     requires javafx.fxml;
     requires java.desktop;
     requires javafx.graphics;
+    requires com.microsoft.sqlserver.jdbc;
 
     opens com.example.eksamensprojekt to javafx.fxml;
     exports com.example.eksamensprojekt;
