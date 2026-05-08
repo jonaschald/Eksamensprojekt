@@ -273,4 +273,10 @@ public class AdminWatanabeSamlingenController {
     void undervisningKnap(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/AdminUndervisning.fxml");
     }
+
+    // Skifter scene til Forsiden
+    @FXML
+    void logudKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Forside.fxml");
+    }
 }

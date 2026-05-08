@@ -69,4 +69,9 @@ public class AdminForsideController {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Watanabe-samlingen.fxml");
     }
 
+    // Skifter scene til Forsiden
+    @FXML
+    void logudKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Forside.fxml");
+    }
 }
