@@ -332,6 +332,7 @@ public class WatanabeSamlingenController {
 
             // Sluk strømmen, så zip filen gøres gyldig
             zipOut.finish();
+            Desktop.getDesktop().open(zipFil.toFile());
         }
     }
 
