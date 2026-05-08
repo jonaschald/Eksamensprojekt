@@ -63,4 +63,9 @@ public class AdminOmSamlingenController {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/AdminForside.fxml");
     }
 
+    // Skifter scene til Forsiden
+    @FXML
+    void logudKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Forside.fxml");
+    }
 }

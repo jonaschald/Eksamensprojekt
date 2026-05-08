@@ -33,89 +33,28 @@ public class UndervisningController {
         udskolingData.setItems(DataDeling.udskolingList);
         konfirmationData.setItems(DataDeling.konfirmationList);
 
-    /*
-        // Gør så man kan klikke på undervisningsmaterialet til indskoling, og åbne det for at se det
-        indskolingData.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                PdfItem selected =
-                        indskolingData.getSelectionModel().getSelectedItem();
-
-                if (selected != null) {
-                    try {
-                    // Finder pdf inde i projektet resource mappe og laver en url til den
-                        var url = getClass().getResource(selected.getPdfFile());
-
-                    // Åbner filen i computerens standard program
-                        Desktop.getDesktop().browse(url.toURI());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-
-        // Gør så man kan klikke på undervisningsmaterialet til mellemtrin, og åbne det for at se det
-        mellemtrinData.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                PdfItem selected =
-                        mellemtrinData.getSelectionModel().getSelectedItem();
-
-                if (selected != null) {
-                    try {
-                        // Finder pdf inde i projektet resource mappe og laver en url til den
-                        var url = getClass().getResource(selected.getPdfFile());
-
-                        // Åbner filen i computerens standard program
-                        Desktop.getDesktop().browse(url.toURI());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-
-        // Gør så man kan klikke på undervisningsmaterialet til udskoling, og åbne det for at se det
-        udskolingData.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                PdfItem selected =
-                        udskolingData.getSelectionModel().getSelectedItem();
-
-                if (selected != null) {
-                    try {
-                        // Finder pdf inde i projektet resource mappe og laver en url til den
-                        var url = getClass().getResource(selected.getPdfFile());
-
-                        // Åbner filen i computerens standard program
-                        Desktop.getDesktop().browse(url.toURI());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-
-        // Gør så man kan klikke på undervisningsmaterialet til konfirmation, og åbne det for at se det
-        konfirmationData.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                PdfItem selected =
-                        konfirmationData.getSelectionModel().getSelectedItem();
-
-                if (selected != null) {
-                    try {
-                        // Finder pdf inde i projektet resource mappe og laver en url til den
-                        var url = getClass().getResource(selected.getPdfFile());
-
-                        // Åbner filen i computerens standard program
-                        Desktop.getDesktop().browse(url.toURI());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        */
+        // Gør så man kan åbne PDF filerne
+        setupPdfOpen(indskolingData);
+        setupPdfOpen(mellemtrinData);
+        setupPdfOpen(udskolingData);
+        setupPdfOpen(konfirmationData);
     }
 
+    // Gør så man kan åbne PDF filerne i computerens standard program
+    private void setupPdfOpen(ListView<PdfItem> listView) {
+        listView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                PdfItem item = listView.getSelectionModel().getSelectedItem();
+                if (item != null) {
+                    try {
+                        Desktop.getDesktop().open(item.getpdfFile());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
 
     // Skifter scene til Admin Login
     @FXML
