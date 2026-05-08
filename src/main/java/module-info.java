@@ -5,6 +5,7 @@ module com.example.eksamensprojekt {
     requires javafx.graphics;
     requires com.microsoft.sqlserver.jdbc;
     requires java.sql;
+    requires java.naming;
 
     opens com.example.eksamensprojekt to javafx.fxml;
     exports com.example.eksamensprojekt;

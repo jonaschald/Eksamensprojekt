@@ -2,19 +2,13 @@ package com.example.eksamensprojekt.undervisning;
 
 public class Konfirmation {
     private String name;
-    private String pdfFile;
 
-    public Konfirmation (String name, String pdfFile) {
+    public Konfirmation (String name) {
         this.name = name;
-        this.pdfFile = pdfFile;
     }
 
     public String getName() {
         return name;
-    }
-
-    public String getPdfFile() {
-        return pdfFile;
     }
 
     @Override
