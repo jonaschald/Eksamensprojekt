@@ -2,6 +2,7 @@ module com.example.eksamensprojekt {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
+    requires javafx.graphics;
 
     opens com.example.eksamensprojekt to javafx.fxml;
     exports com.example.eksamensprojekt;
@@ -11,4 +12,6 @@ module com.example.eksamensprojekt {
     opens com.example.eksamensprojekt.controllers.admin to javafx.fxml;
     exports com.example.eksamensprojekt.undervisning;
     opens com.example.eksamensprojekt.undervisning to javafx.fxml;
+    exports com.example.eksamensprojekt.sqlklasser;
+    opens com.example.eksamensprojekt.sqlklasser to javafx.fxml;
 }
