@@ -1,11 +1,11 @@
 package com.example.eksamensprojekt.objektKlasser;
 
-public class Bruger {
+public class AdminLogin {
     private String email;
     private String password;
     private String passwordHash;
 
-    public Bruger(String email, String password, String passwordHash) {
+    public AdminLogin(String email, String password, String passwordHash) {
         this.email = email;
         this.password = password;
         this.passwordHash = passwordHash;

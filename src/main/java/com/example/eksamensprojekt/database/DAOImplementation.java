@@ -1,6 +1,6 @@
 package com.example.eksamensprojekt.database;
 
-import com.example.eksamensprojekt.objektKlasser.Bruger;
+import com.example.eksamensprojekt.objektKlasser.AdminLogin;
 import com.example.eksamensprojekt.objektKlasser.Kunstværk;
 import com.example.eksamensprojekt.objektKlasser.Tema;
 import com.example.eksamensprojekt.objektKlasser.Undervisningsmateriale;
@@ -110,7 +110,7 @@ public class DAOImplementation implements DAO {
     }
 
     @Override
-    public boolean opretBruger(Bruger bruger) throws ExecutionException, InterruptedException {
+    public boolean opretBruger(AdminLogin adminLogin) throws ExecutionException, InterruptedException {
         return false;
     }
 
