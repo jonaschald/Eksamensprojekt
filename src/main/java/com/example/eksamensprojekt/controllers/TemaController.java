@@ -107,17 +107,14 @@ public class TemaController {
     }
 
     private void visMaleri(MouseEvent event) {
-        System.out.println("Brugeren har trykket på et maleri!");
-
-        VBox container = (VBox) event.getSource();
-        ImageView billede = (ImageView) container.getChildren().getFirst();
-        Label nummer = (Label) container.getChildren().get(1);
-        Label titel = (Label) container.getChildren().get(2);
-
-        System.out.println(billede);
-        System.out.println(nummer);
-        System.out.println(titel);
-
+        try {
+            sceneManager.skiftSceneTilbage(event,
+                    "/com/example/eksamensprojekt/gui/Temaer.fxml",
+                    "/com/example/eksamensprojekt/gui/Pop-Up.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     public void initialize() {

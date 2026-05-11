@@ -46,7 +46,7 @@ public class PopupController {
     @FXML
     void tilStorPopUp(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneTilbage (event,
-                "/com/example/eksamensprojekt/gui/Pop-up.fxml",
+                "/com/example/eksamensprojekt/gui/Pop-Up.fxml",
                 "/com/example/eksamensprojekt/gui/Stor-Pop-up.fxml");
     }
 }
