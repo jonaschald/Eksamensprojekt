@@ -19,4 +19,6 @@ module com.example.eksamensprojekt {
     opens com.example.eksamensprojekt.objekter to javafx.fxml;
     exports com.example.eksamensprojekt.database;
     opens com.example.eksamensprojekt.database to javafx.fxml;
+    exports com.example.eksamensprojekt.midlertidigeKlasser;
+    opens com.example.eksamensprojekt.midlertidigeKlasser to javafx.fxml;
 }
