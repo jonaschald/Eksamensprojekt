@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
+
 public class StorPopupController {
 
     SceneManeger sceneManeger = new SceneManeger();
@@ -27,8 +29,8 @@ public class StorPopupController {
     }
 
     @FXML
-    void tilbageTilOversigtKnap(MouseEvent event) {
-
+    void tilbageKnap(MouseEvent event) throws IOException {
+        sceneManeger.tilbage(event);
     }
 
 }
