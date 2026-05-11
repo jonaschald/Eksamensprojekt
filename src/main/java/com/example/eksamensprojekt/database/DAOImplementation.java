@@ -7,9 +7,7 @@ import com.example.eksamensprojekt.objekter.Undervisningsmateriale;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import javafx.collections.ObservableList;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -79,8 +77,43 @@ public class DAOImplementation implements DAO {
 
     @Override
     public void hentAlleKunstværker(ObservableList<Kunstværk> kunstværker) throws ExecutionException, InterruptedException {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try(Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("SELECT * FROM Art_pieces");
+                    ResultSet resultSet = preparedStatement.executeQuery();
 
-    }
+                    while(resultSet.next()) {
+                        String id = resultSet.getString("ID");
+                        String serieNummer = resultSet.getString("Serial_Number");
+                        String titel = resultSet.getString("Title");
+                        int årstal = resultSet.getInt("Year");
+                        String kunstner = resultSet.getString("Artist");
+                        String størrelseMedRamme = resultSet.getString("Size_With_Frame");
+                        String størrelseUdenRamme = resultSet.getString("Size_Without_Frame");
+                        String beskrivelse = resultSet.getString("Description");
+                        byte[] billedeData = resultSet.getBytes("Image_Data");
+                        int temaId = resultSet.getInt("ThemeID");
+                        boolean favorit = resultSet.getBoolean("Favorite");
+
+                        Kunstværk kunstværk = new Kunstværk(id, serieNummer, titel, kunstner, årstal,
+                                størrelseMedRamme, størrelseUdenRamme, beskrivelse, billedeData, temaId, favorit);
+
+                        kunstværker.add(kunstværk);
+                    }
+
+                    } catch (SQLException e) {
+                        System.out.println("Fejl ved indlæsning af kunstværker fra Databasen");
+                        throw new RuntimeException(e);
+                    }
+                }
+            };
+
+            Future future = executor.submit(runnable);
+            future.get();
+        }
 
     @Override
     public boolean sletKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException {
