@@ -3,15 +3,18 @@ package com.example.eksamensprojekt.controllers;
 import com.example.eksamensprojekt.SceneManeger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -96,6 +99,7 @@ public class WatanabeSamlingenController {
 
         opdaterVisningNormal();
         indlaesBilleder();
+        tilfoejZoomTilBilleder();
 
         searchField.textProperty().addListener(
                 (observable, oldValue, newValue) -> soegKunstvaerk(newValue)
@@ -117,6 +121,56 @@ public class WatanabeSamlingenController {
         for (ImageView imageView : billeder) {
             imageView.setImage(billede);
         }
+    }
+
+    private void tilfoejZoomTilBilleder() {
+        for (ImageView imageView : billeder) {
+            imageView.setOnMouseClicked(event -> aabenZoomVindue(imageView.getImage()));
+            imageView.setStyle("-fx-cursor: hand;");
+        }
+    }
+
+    private void aabenZoomVindue(Image image) {
+        if (image == null) {
+            return;
+        }
+
+        ImageView zoomBillede = new ImageView(image);
+        zoomBillede.setPreserveRatio(true);
+        zoomBillede.setFitWidth(800);
+
+        StackPane stackPane = new StackPane(zoomBillede);
+
+        ScrollPane scrollPane = new ScrollPane(stackPane);
+        scrollPane.setPannable(true);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
+        final double[] zoomLevel = {1.0};
+
+        scrollPane.setOnScroll(event -> {
+            if (event.getDeltaY() > 0) {
+                zoomLevel[0] += 0.1;
+            } else {
+                zoomLevel[0] -= 0.1;
+            }
+
+            if (zoomLevel[0] < 0.5) {
+                zoomLevel[0] = 0.5;
+            }
+
+            if (zoomLevel[0] > 5.0) {
+                zoomLevel[0] = 5.0;
+            }
+
+            zoomBillede.setScaleX(zoomLevel[0]);
+            zoomBillede.setScaleY(zoomLevel[0]);
+        });
+
+        Stage stage = new Stage();
+        stage.setTitle("Zoom kunstværk");
+        stage.setScene(new Scene(scrollPane, 900, 700));
+        stage.show();
     }
 
     private void opdaterVisningNormal() {
@@ -234,27 +288,22 @@ public class WatanabeSamlingenController {
         File fil;
 
         try {
-            // Finder mappen i resources
             File malerier = new File(getClass().getResource(sti).toURI());
 
-            // Er mappen en mappe?
             if (!malerier.isDirectory()) {
                 System.out.println("Malerier eksisterer ikke");
                 return;
             }
 
-            // Spørg brugeren efter en downloadsti
             File downloadSti = spørgEfterDownloadSti();
 
-            // Blev download annulleret, eller er downloadstien ikke en mappe?
             if (downloadSti == null || !downloadSti.isDirectory()) {
                 return;
             }
 
-            // Skab en ny zip fil og check om den allerede eksistere i mappen
             fil = new File(downloadSti, zipNavn + ".zip");
+
             if (fil.exists()) {
-                // Spørg brugeren om de vil erstatte den eksisterende zip fil med den nye
                 int svar = JOptionPane.showConfirmDialog(
                         null,
                         "Filen findes allerede. Overskriv?",
@@ -262,27 +311,25 @@ public class WatanabeSamlingenController {
                         JOptionPane.YES_NO_OPTION
                 );
 
-                // Brugeren har trykket nej, download ikke
                 if (svar != JOptionPane.YES_OPTION) {
                     return;
                 }
             }
 
-            // Prøv at downloade zip filen til downloadstien
             try {
                 downloadTilZip(malerier.toPath(), fil.toPath());
             } catch (IOException | UncheckedIOException e) {
                 throw new RuntimeException(e.getMessage());
             }
+
         } catch (URISyntaxException | RuntimeException e) {
             System.out.println("Fejl med download: " + e.getMessage());
         }
     }
 
-    // Skab et vindue der giver brugeren muligheden for at angive hvor Watanabe Samlingen skal downloades
     private File spørgEfterDownloadSti() {
         JFileChooser jfc = new JFileChooser();
-        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); // Brugeren skal kun vælge en mappe
+        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         jfc.setAcceptAllFileFilterUsed(false);
 
         int result = jfc.showSaveDialog(null);
@@ -291,31 +338,23 @@ public class WatanabeSamlingenController {
             return jfc.getSelectedFile();
         }
 
-        return null; // Brugeren har annulleret download
+        return null;
     }
 
-    // Download alle filer i en mappe til en zip fil
     private void downloadTilZip(Path kilde, Path zipFil) throws IOException {
-        // Skab en FileOutputStream of ZipOutputStream så vi kan skrive billederne til zip filen
-        // FileOutputStream skriver direkte til filen på disk
-        // ZipOutputStream sørger for at formatet bliver en gyldig zip fil
         try (
                 FileOutputStream fos = new FileOutputStream(zipFil.toFile());
                 ZipOutputStream zipOut = new ZipOutputStream(fos)
         ) {
-            // Gå gennem mappen rekursivt og finder kun normale filer (filer der ikke er mapper)
             Files.walk(kilde)
                     .filter(Files::isRegularFile)
                     .forEach(path -> {
-                        // Find filens relative sti ifølge kildemappen, så den kan bevare mappestrukturen i zip filen
                         Path relativ = kilde.relativize(path);
 
                         try (InputStream in = Files.newInputStream(path)) {
-                            // Lav et ZipEntry til filen og sikrer at stier bruger et "/" i stedet for "\"
                             ZipEntry entry = new ZipEntry(relativ.toString().replace("\\", "/"));
                             zipOut.putNextEntry(entry);
 
-                            // Skriver filen ind i zip filen
                             byte[] buffer = new byte[8192];
                             int len;
 
@@ -323,14 +362,13 @@ public class WatanabeSamlingenController {
                                 zipOut.write(buffer, 0, len);
                             }
 
-                            // Lukker den nuværende fil i zip filen
                             zipOut.closeEntry();
+
                         } catch (IOException e) {
                             throw new UncheckedIOException(e);
                         }
                     });
 
-            // Sluk strømmen, så zip filen gøres gyldig
             zipOut.finish();
             Desktop.getDesktop().open(zipFil.toFile());
         }
