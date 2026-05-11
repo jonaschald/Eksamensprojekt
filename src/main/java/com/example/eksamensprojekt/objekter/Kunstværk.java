@@ -10,12 +10,12 @@ public class Kunstværk
     private String størrelseMedRamme;
     private String størrelseUdenRamme;
     private String beskrivelse;
-    private String billedeSti;
+    private byte[] billedeData;
     private int temaId;
     private boolean favorit;
 
     // Konstruktør
-    public Kunstværk (String id, String serieNummer, String titel, String kunstner, int årstal, String størrelseMedRamme, String størrelseUdenRamme, String beskrivelse, String billedeSti, int  temaId, boolean favorit) {
+    public Kunstværk (String id, String serieNummer, String titel, String kunstner, int årstal, String størrelseMedRamme, String størrelseUdenRamme, String beskrivelse, byte[] billedeData, int  temaId, boolean favorit) {
         this.id = id;
         this.serieNummer = serieNummer;
         this.titel = titel;
@@ -24,7 +24,7 @@ public class Kunstværk
         this.størrelseMedRamme = størrelseMedRamme;
         this.størrelseUdenRamme = størrelseUdenRamme;
         this.beskrivelse = beskrivelse;
-        this.billedeSti = billedeSti;
+        this.billedeData = billedeData;
         this.temaId = temaId;
         this.favorit = favorit;
     }
@@ -85,11 +85,11 @@ public class Kunstværk
         this.beskrivelse = beskrivelse;
     }
 
-    public String getBilledeSti() {
-        return billedeSti;
+    public byte[] getBilledeData() {
+        return billedeData;
     }
-    public void setBilledeSti(String billedeSti) {
-        this.billedeSti = billedeSti;
+    public void setBilledeData(byte[] billedeData) {
+        this.billedeData = billedeData;
     }
 
     public int getTemaId() {

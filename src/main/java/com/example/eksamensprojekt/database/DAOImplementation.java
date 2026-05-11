@@ -7,9 +7,14 @@ import com.example.eksamensprojekt.objekter.Undervisningsmateriale;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import javafx.collections.ObservableList;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DAOImplementation implements DAO {
 
@@ -31,7 +36,45 @@ public class DAOImplementation implements DAO {
 
     @Override
     public boolean gemKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException {
-        return false;
+        AtomicBoolean resultat = new AtomicBoolean(false);
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try (Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+
+                    preparedStatement = forbindelse.prepareStatement("INSERT INTO Art_Pieces " +
+                            "(ID, Serial_Number, Title, Year, Artist, Size_With_Frame, Size_Without_Frame, Description, Image_Data, ThemeID, Favorite) "
+                            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+                    preparedStatement.setString(1, kunstværk.getId());
+                    preparedStatement.setString(2, kunstværk.getSerieNummer());
+                    preparedStatement.setString(3, kunstværk.getTitel());
+                    preparedStatement.setInt(4, kunstværk.getÅrstal());
+                    preparedStatement.setString(5, kunstværk.getKunstner());
+                    preparedStatement.setString(6, kunstværk.getStørrelseMedRamme());
+                    preparedStatement.setString(7, kunstværk.getStørrelseUdenRamme());
+                    preparedStatement.setString(8, kunstværk.getBeskrivelse());
+                    preparedStatement.setBytes(9, kunstværk.getBilledeData());
+                    preparedStatement.setInt(10, kunstværk.getTemaId());
+                    preparedStatement.setBoolean(11, kunstværk.isFavorit());
+
+                    preparedStatement.executeUpdate();
+
+                    resultat.set(true);
+
+                } catch (SQLException e) {
+                    System.out.println("Fejl ved oprettelse af kunstværk i Databasen");
+                    resultat.set(false);
+                }
+            }
+        };
+
+        Future future = executor.submit(runnable);
+        future.get();
+
+        return resultat.get();
     }
 
     @Override
