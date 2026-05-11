@@ -1,6 +1,11 @@
 package com.example.eksamensprojekt.controllers;
 
 import com.example.eksamensprojekt.SceneManeger;
+import com.example.eksamensprojekt.database.DAO;
+import com.example.eksamensprojekt.database.DAOImplementation;
+import com.example.eksamensprojekt.objekter.Kunstværk;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -8,6 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 import javax.swing.*;
@@ -17,12 +24,17 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.concurrent.ExecutionException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class WatanabeSamlingenController {
 
     SceneManeger sceneManeger = new SceneManeger();
+
+    DAO dao = new DAOImplementation();
+
+    ObservableList<Kunstværk> kunstværker = FXCollections.observableArrayList();
 
     private ImageView[] billeder;
     private Label[] beskrivelser;
@@ -40,62 +52,37 @@ public class WatanabeSamlingenController {
             "Fredens due", "Hellige ord", "Tro og håb"
     };
 
-    @FXML private ImageView kunstværk1, kunstværk2, kunstværk3, kunstværk4, kunstværk5, kunstværk6;
-    @FXML private ImageView kunstværk7, kunstværk8, kunstværk9, kunstværk10, kunstværk11, kunstværk12;
-    @FXML private ImageView kunstværk13, kunstværk14, kunstværk15, kunstværk16, kunstværk17, kunstværk18;
-    @FXML private ImageView kunstværk19, kunstværk20, kunstværk21, kunstværk22, kunstværk23, kunstværk24;
-    @FXML private ImageView kunstværk25, kunstværk26, kunstværk27, kunstværk28, kunstværk29, kunstværk30;
-    @FXML private ImageView kunstværk31, kunstværk32, kunstværk33, kunstværk34, kunstværk35, kunstværk36;
-
-    @FXML private Label kunstværkBeskrivelse1, kunstværkBeskrivelse2, kunstværkBeskrivelse3, kunstværkBeskrivelse4;
-    @FXML private Label kunstværkBeskrivelse5, kunstværkBeskrivelse6, kunstværkBeskrivelse7, kunstværkBeskrivelse8;
-    @FXML private Label kunstværkBeskrivelse9, kunstværkBeskrivelse10, kunstværkBeskrivelse11, kunstværkBeskrivelse12;
-    @FXML private Label kunstværkBeskrivelse13, kunstværkBeskrivelse14, kunstværkBeskrivelse15, kunstværkBeskrivelse16;
-    @FXML private Label kunstværkBeskrivelse17, kunstværkBeskrivelse18, kunstværkBeskrivelse19, kunstværkBeskrivelse20;
-    @FXML private Label kunstværkBeskrivelse21, kunstværkBeskrivelse22, kunstværkBeskrivelse23, kunstværkBeskrivelse24;
-    @FXML private Label kunstværkBeskrivelse25, kunstværkBeskrivelse26, kunstværkBeskrivelse27, kunstværkBeskrivelse28;
-    @FXML private Label kunstværkBeskrivelse29, kunstværkBeskrivelse30, kunstværkBeskrivelse31, kunstværkBeskrivelse32;
-    @FXML private Label kunstværkBeskrivelse33, kunstværkBeskrivelse34, kunstværkBeskrivelse35, kunstværkBeskrivelse36;
-
     @FXML private TextField searchField;
 
     @FXML
+    private Label nummerLabel;
+
+    @FXML
+    private Label titelLabel;
+
+    @FXML
+    private Label årstalLabel;
+
+    @FXML
+    private VBox billedeContainer;
+
+    @FXML
+    private HBox billedeKolonne;
+
+    @FXML
+    private VBox kunstværkBilledeOgInfo;
+
+    @FXML
+    private ImageView kunstværkImageView;
+
+    @FXML
     public void initialize() {
-        billeder = new ImageView[]{
-                kunstværk1, kunstværk2, kunstværk3, kunstværk4,
-                kunstværk5, kunstværk6, kunstværk7, kunstværk8,
-                kunstværk9, kunstværk10, kunstværk11, kunstværk12,
-                kunstværk13, kunstværk14, kunstværk15, kunstværk16,
-                kunstværk17, kunstværk18, kunstværk19, kunstværk20,
-                kunstværk21, kunstværk22, kunstværk23, kunstværk24,
-                kunstværk25, kunstværk26, kunstværk27, kunstværk28,
-                kunstværk29, kunstværk30, kunstværk31, kunstværk32,
-                kunstværk33, kunstværk34, kunstværk35, kunstværk36
-        };
-
-        beskrivelser = new Label[]{
-                kunstværkBeskrivelse1, kunstværkBeskrivelse2,
-                kunstværkBeskrivelse3, kunstværkBeskrivelse4,
-                kunstværkBeskrivelse5, kunstværkBeskrivelse6,
-                kunstværkBeskrivelse7, kunstværkBeskrivelse8,
-                kunstværkBeskrivelse9, kunstværkBeskrivelse10,
-                kunstværkBeskrivelse11, kunstværkBeskrivelse12,
-                kunstværkBeskrivelse13, kunstværkBeskrivelse14,
-                kunstværkBeskrivelse15, kunstværkBeskrivelse16,
-                kunstværkBeskrivelse17, kunstværkBeskrivelse18,
-                kunstværkBeskrivelse19, kunstværkBeskrivelse20,
-                kunstværkBeskrivelse21, kunstværkBeskrivelse22,
-                kunstværkBeskrivelse23, kunstværkBeskrivelse24,
-                kunstværkBeskrivelse25, kunstværkBeskrivelse26,
-                kunstværkBeskrivelse27, kunstværkBeskrivelse28,
-                kunstværkBeskrivelse29, kunstværkBeskrivelse30,
-                kunstværkBeskrivelse31, kunstværkBeskrivelse32,
-                kunstværkBeskrivelse33, kunstværkBeskrivelse34,
-                kunstværkBeskrivelse35, kunstværkBeskrivelse36
-        };
-
-        opdaterVisningNormal();
-        indlaesBilleder();
+        // Henter kunstværkerne fra Databasen og viser dem
+        try {
+            dao.hentAlleKunstværker(kunstværker);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         searchField.textProperty().addListener(
                 (observable, oldValue, newValue) -> soegKunstvaerk(newValue)
@@ -150,6 +137,8 @@ public class WatanabeSamlingenController {
             );
         }
     }
+
+
 
     private void soegKunstvaerk(String soegeTekst) {
         int startAar = 1965;
