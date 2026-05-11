@@ -38,15 +38,15 @@ public class PopupController {
     }
 
     @FXML
-    void tilbageTilOversigtKnap(MouseEvent event) {
-
+    void tilbageKnap(MouseEvent event) throws IOException {
+        sceneManeger.tilbage(event);
     }
 
     // Skifter scenen til Stor Pop-up
     @FXML
     void tilStorPopUp(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Stor-Pop-up.fxml");
-
+        sceneManeger.skiftSceneTilbage (event,
+                "/com/example/eksamensprojekt/gui/Pop-up.fxml",
+                "/com/example/eksamensprojekt/gui/Stor-Pop-up.fxml");
     }
-
 }

@@ -14,12 +14,12 @@
    <children>
       <VBox prefWidth="1400.0">
          <children>
-            <Button mnemonicParsing="false" onMouseClicked="#tilbageTilOversigtKnap" text="Tilbage til oversigten">
+            <Button mnemonicParsing="false" onMouseClicked="#tilbageKnap" text="Tilbage">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#tilbageTilOversigtKnap" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#tilbageKnap" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Billeder/TilbagePil.png" />
                      </image>
