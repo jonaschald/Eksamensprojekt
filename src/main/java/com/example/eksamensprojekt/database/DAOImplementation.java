@@ -132,7 +132,7 @@ public class DAOImplementation implements DAO {
                     resultat.set(true);
 
                 } catch (SQLException e) {
-                    System.out.println("Sletning af kunstværket lykkes ikke");
+                    System.out.println("Sletning af kunstværket i databasen lykkes ikke");
                     resultat.set(false);
                     throw new RuntimeException(e);
                 }
@@ -171,7 +171,7 @@ public class DAOImplementation implements DAO {
                     preparedStatement.executeUpdate();
 
                 } catch(SQLException e) {
-                    System.out.println("Opdatering af kunstværket lykkes ikke");
+                    System.out.println("Opdatering af kunstværket i databasen lykkes ikke");
                     throw new RuntimeException(e);
                 }
             }
