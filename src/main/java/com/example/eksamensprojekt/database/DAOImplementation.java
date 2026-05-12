@@ -31,7 +31,6 @@ public class DAOImplementation implements DAO {
         System.out.println("Database: " + kilde.getDatabaseName());
     }
 
-
     @Override
     public boolean gemKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException {
         AtomicBoolean resultat = new AtomicBoolean(false);
@@ -65,10 +64,10 @@ public class DAOImplementation implements DAO {
                 } catch (SQLException e) {
                     System.out.println("Fejl ved oprettelse af kunstværk i Databasen");
                     resultat.set(false);
+                    throw new RuntimeException(e);
                 }
             }
         };
-
         Future future = executor.submit(runnable);
         future.get();
 
@@ -110,19 +109,75 @@ public class DAOImplementation implements DAO {
                     }
                 }
             };
-
             Future future = executor.submit(runnable);
             future.get();
         }
 
     @Override
     public boolean sletKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException {
-        return false;
+        AtomicBoolean resultat = new AtomicBoolean(false);
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try(Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+
+                    preparedStatement = forbindelse.prepareStatement("DELETE FROM Art_Pieces WHERE ID = ?");
+
+                    preparedStatement.setString(1, kunstværk.getId());
+
+                    preparedStatement.executeUpdate();
+
+                    resultat.set(true);
+
+                } catch (SQLException e) {
+                    System.out.println("Sletning af kunstværket lykkes ikke");
+                    resultat.set(false);
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
+
+        return resultat.get();
     }
 
     @Override
     public void opdaterKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try(Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
 
+                    preparedStatement = forbindelse.prepareStatement("UPDATE Art_Pieces SET " + "Serial_Number = ?, " +
+                            "Title = ?, " + "Year = ?, " + "Artist = ?, " + "Size_With_Frame = ?, " + "Size_Without_Frame = ?, " +
+                            "Description = ?, " + "Image_Data = ?, " + "ThemeID = ?, " + "Favorite = ? " + "WHERE ID = ?");
+
+                    preparedStatement.setString(1, kunstværk.getSerieNummer());
+                    preparedStatement.setString(2, kunstværk.getTitel());
+                    preparedStatement.setInt(3, kunstværk.getÅrstal());
+                    preparedStatement.setString(4, kunstværk.getKunstner());
+                    preparedStatement.setString(5, kunstværk.getStørrelseMedRamme());
+                    preparedStatement.setString(6, kunstværk.getStørrelseUdenRamme());
+                    preparedStatement.setString(7, kunstværk.getBeskrivelse());
+                    preparedStatement.setBytes(8, kunstværk.getBilledeData());
+                    preparedStatement.setInt(9, kunstværk.getTemaId());
+                    preparedStatement.setBoolean(10, kunstværk.isFavorit());
+                    preparedStatement.setString(11, kunstværk.getId());
+
+                    preparedStatement.executeUpdate();
+
+                } catch(SQLException e) {
+                    System.out.println("Opdatering af kunstværket lykkes ikke");
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
     }
 
     @Override
