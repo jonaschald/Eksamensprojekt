@@ -79,12 +79,12 @@ public class DAOImplementation implements DAO {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try(Connection forbindelse = kilde.getConnection()) {
+                try (Connection forbindelse = kilde.getConnection()) {
                     PreparedStatement preparedStatement;
                     preparedStatement = forbindelse.prepareStatement("SELECT * FROM Art_pieces");
                     ResultSet resultSet = preparedStatement.executeQuery();
 
-                    while(resultSet.next()) {
+                    while (resultSet.next()) {
                         String id = resultSet.getString("ID");
                         String serieNummer = resultSet.getString("Serial_Number");
                         String titel = resultSet.getString("Title");
@@ -103,15 +103,15 @@ public class DAOImplementation implements DAO {
                         kunstværker.add(kunstværk);
                     }
 
-                    } catch (SQLException e) {
-                        System.out.println("Fejl ved indlæsning af kunstværker fra Databasen");
-                        throw new RuntimeException(e);
-                    }
+                } catch (SQLException e) {
+                    System.out.println("Fejl ved indlæsning af kunstværker fra Databasen");
+                    throw new RuntimeException(e);
                 }
-            };
-            Future future = executor.submit(runnable);
-            future.get();
-        }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
+    }
 
     @Override
     public boolean sletKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException {
@@ -120,7 +120,7 @@ public class DAOImplementation implements DAO {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try(Connection forbindelse = kilde.getConnection()) {
+                try (Connection forbindelse = kilde.getConnection()) {
                     PreparedStatement preparedStatement;
 
                     preparedStatement = forbindelse.prepareStatement("DELETE FROM Art_Pieces WHERE ID = ?");
@@ -149,7 +149,7 @@ public class DAOImplementation implements DAO {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try(Connection forbindelse = kilde.getConnection()) {
+                try (Connection forbindelse = kilde.getConnection()) {
                     PreparedStatement preparedStatement;
 
                     preparedStatement = forbindelse.prepareStatement("UPDATE Art_Pieces SET " + "Serial_Number = ?, " +
@@ -170,7 +170,7 @@ public class DAOImplementation implements DAO {
 
                     preparedStatement.executeUpdate();
 
-                } catch(SQLException e) {
+                } catch (SQLException e) {
                     System.out.println("Opdatering af kunstværket i databasen lykkes ikke");
                     throw new RuntimeException(e);
                 }
@@ -197,22 +197,107 @@ public class DAOImplementation implements DAO {
 
     @Override
     public boolean gemTema(Tema tema) throws ExecutionException, InterruptedException {
-        return false;
+        AtomicBoolean resultat = new AtomicBoolean(false);
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try(Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("INSERT INTO Themes (ID, Theme_Name) VALUES (?, ?)");
+                    preparedStatement.setInt(1, tema.getId());
+                    preparedStatement.setString(2, tema.getNavn());
+                    preparedStatement.executeUpdate();
+
+                    resultat.set(true);
+
+                } catch (SQLException e) {
+                    System.out.println("Oprettelse af tema i databasen lykkes ikke");
+                    resultat.set(false);
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
+
+        return resultat.get();
     }
 
     @Override
     public void hentAlleTemaer(ObservableList<Tema> temaer) throws ExecutionException, InterruptedException {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try (Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("SELECT * FROM Themes");
+                    ResultSet resultSet = preparedStatement.executeQuery();
 
+                    while (resultSet.next()) {
+                        int id = resultSet.getInt("ID");
+                        String temaNavn = resultSet.getString("Theme_Name");
+
+                        Tema tema = new Tema(id, temaNavn);
+                        temaer.add(tema);
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Fejl ved indlæsning af temaer fra databasen");
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
     }
 
     @Override
     public boolean sletTema(Tema tema) throws ExecutionException, InterruptedException {
-        return false;
+
+        AtomicBoolean resultat = new AtomicBoolean(false);
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try(Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("DELETE FROM Themes WHERE ID = ?");
+                    preparedStatement.setInt(1, tema.getId());
+                    preparedStatement.executeUpdate();
+
+                    resultat.set(true);
+
+                } catch (SQLException e) {
+                    System.out.println("Sletning af tema lykkes ikke i databasen");
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
+
+        return resultat.get();
     }
 
     @Override
     public void opdaterTema(Tema tema) throws ExecutionException, InterruptedException {
-
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try(Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("UPDATE Themes SET " + "Theme_Name = ? " + "WHERE ID = ?");
+                    preparedStatement.setString(1, tema.getNavn());
+                    preparedStatement.setInt(2, tema.getId());
+                    preparedStatement.executeUpdate();
+                } catch (SQLException e) {
+                    System.out.println("Opdatering af tema lykkes ikke i databasen");
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
     }
 
     @Override
