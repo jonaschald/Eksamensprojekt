@@ -310,7 +310,7 @@ public class DAOImplementation implements DAO {
                             "(Title, PDF_Path, Target_Group_ID) " + "VALUES (?, ?, ?)");
 
                     preparedStatement.setString(1, undervisningsmateriale.getTitle());
-                    preparedStatement.setString(2, undervisningsmateriale.getPdf().getAbsolutePath());
+                    preparedStatement.setBytes(2, undervisningsmateriale.getPdf());
                     preparedStatement.setInt(3, undervisningsmateriale.getMålgruppeId());
                     preparedStatement.executeUpdate();
 
@@ -368,7 +368,7 @@ public class DAOImplementation implements DAO {
                     + "PDF_Path = ?, " + "Target_Group_ID = ? " + "WHERE ID = ?");
 
                     preparedStatement.setString(1, undervisningsmateriale.getTitle());
-                    preparedStatement.setString(2, undervisningsmateriale.getPdf().getAbsolutePath());
+                    preparedStatement.setBytes(2, undervisningsmateriale.getPdf());
                     preparedStatement.setInt(3, undervisningsmateriale.getMålgruppeId());
                     preparedStatement.setInt(4, undervisningsmateriale.getId());
                     preparedStatement.executeUpdate();
