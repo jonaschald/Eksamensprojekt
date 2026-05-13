@@ -265,6 +265,7 @@ public class DAOImplementation implements DAO {
 
                 } catch (SQLException e) {
                     System.out.println("Sletning af tema lykkes ikke i databasen");
+                    resultat.set(false);
                     throw new RuntimeException(e);
                 }
             }
@@ -298,22 +299,88 @@ public class DAOImplementation implements DAO {
 
     @Override
     public boolean gemUndervisningsmateriale(Undervisningsmateriale undervisningsmateriale) throws ExecutionException, InterruptedException {
-        return false;
-    }
+        AtomicBoolean resultat = new AtomicBoolean(false);
 
-    @Override
-    public void hentAlleUndervisningsmaterialer(ObservableList<Undervisningsmateriale> undervisningsmaterialer) throws ExecutionException, InterruptedException {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try(Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("INSERT INTO Teaching_Materials " +
+                            "(Title, PDF_Path, Target_Group_ID) " + "VALUES (?, ?, ?)");
 
+                    preparedStatement.setString(1, undervisningsmateriale.getTitle());
+                    preparedStatement.setString(2, undervisningsmateriale.getPdf().getAbsolutePath());
+                    preparedStatement.setInt(3, undervisningsmateriale.getMålgruppeId());
+                    preparedStatement.executeUpdate();
+
+                    resultat.set(true);
+
+                } catch (SQLException e) {
+                    System.out.println("Fejl ved oprettelse af pdf i databasen");
+                    resultat.set(false);
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
+
+        return resultat.get();
     }
 
     @Override
     public boolean sletUndervisningsmateriale(Undervisningsmateriale undervisningsmateriale) throws ExecutionException, InterruptedException {
-        return false;
+        AtomicBoolean resultat = new AtomicBoolean(false);
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try(Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("DELETE FROM Teaching_Materials WHERE ID = ?");
+                    preparedStatement.setInt(1, undervisningsmateriale.getId());
+                    preparedStatement.executeUpdate();
+
+                    resultat.set(true);
+
+                } catch (SQLException e) {
+                    System.out.println("Sletning af undervisningsmateriale i databasen lykkes ikke");
+                    resultat.set(false);
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
+
+        return resultat.get();
     }
 
     @Override
     public void opdaterUndervisningsmateriale(Undervisningsmateriale undervisningsmateriale) throws ExecutionException, InterruptedException {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try(Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("UPDATE Teaching_Materials SET " + "Title = ?, "
+                    + "PDF_Path = ?, " + "Target_Group_ID = ? " + "WHERE ID = ?");
 
+                    preparedStatement.setString(1, undervisningsmateriale.getTitle());
+                    preparedStatement.setString(2, undervisningsmateriale.getPdf().getAbsolutePath());
+                    preparedStatement.setInt(3, undervisningsmateriale.getMålgruppeId());
+                    preparedStatement.setInt(4, undervisningsmateriale.getId());
+                    preparedStatement.executeUpdate();
+
+                } catch( SQLException e) {
+                    System.out.println("Opdatering af undervisningsmateriale i databasen lykkes ikke");
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
     }
 
     @Override
@@ -337,6 +404,7 @@ public class DAOImplementation implements DAO {
                     preparedStatement.setBoolean(1, true);
                     preparedStatement.setString(2, kunstværk.getId());
                     preparedStatement.executeUpdate();
+
                 } catch (SQLException e) {
                     System.out.println("Fejl ved tilføjelse af favorit i databasen");
                     throw new RuntimeException(e);
@@ -358,6 +426,7 @@ public class DAOImplementation implements DAO {
                     preparedStatement.setBoolean(1, false);
                     preparedStatement.setString(2, kunstværk.getId());
                     preparedStatement.executeUpdate();
+
                 } catch (SQLException e) {
                     System.out.println("Fejl ved fjernelse af favorit i databasen");
                     throw new RuntimeException(e);
@@ -396,9 +465,10 @@ public class DAOImplementation implements DAO {
 
                         kunstværker.add(kunstværk);
                     }
+
                 } catch (SQLException e) {
                     System.out.println("Fejl ved hentning af favoritter i databasen");
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
             }
         };
