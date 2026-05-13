@@ -10,12 +10,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +22,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.concurrent.ExecutionException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -77,33 +74,20 @@ public class WatanabeSamlingenController {
 
     @FXML
     public void initialize() {
-        // Henter kunstværkerne fra Databasen og viser dem
+        // Henter kunstværkerne fra Databasen og viser kunstværkerne
         try {
             dao.hentAlleKunstværker(kunstværker);
+            visKunstværk();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         searchField.textProperty().addListener(
-                (observable, oldValue, newValue) -> soegKunstvaerk(newValue)
-        );
+                (observable, oldValue, newValue) -> soegKunstvaerk(newValue));
     }
 
-    private void indlaesBilleder() {
-        var stream = getClass().getResourceAsStream(
-                "/com/example/eksamensprojekt/Billeder/watanabe.jpg"
-        );
-
-        if (stream == null) {
-            System.out.println("Billede blev ikke fundet: watanabe.jpg");
-            return;
-        }
-
-        Image billede = new Image(stream);
-
-        for (ImageView imageView : billeder) {
-            imageView.setImage(billede);
-        }
+    public void visKunstværk() {
+        
     }
 
     private void opdaterVisningNormal() {
