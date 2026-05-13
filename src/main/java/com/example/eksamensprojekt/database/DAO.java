@@ -35,7 +35,7 @@ public interface DAO {
     public boolean opretBruger(AdminLogin adminLogin) throws ExecutionException, InterruptedException;
 
     // Favoritter
-    public void tilføjFavorit(int brugerID, int kunstværkID) throws ExecutionException, InterruptedException;
-    public void fjernFavorit(int brugerID, int kunstværkID) throws ExecutionException, InterruptedException;
-    public void hentFavoritter(int userID, ObservableList<Kunstværk> kunstværker) throws ExecutionException, InterruptedException;
+    public void tilføjFavorit(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
+    public void fjernFavorit(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
+    public void hentFavoritter(ObservableList<Kunstværk> kunstværker) throws ExecutionException, InterruptedException;
 }

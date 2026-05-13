@@ -331,17 +331,82 @@ public class DAOImplementation implements DAO {
     }
 
     @Override
-    public void tilføjFavorit(int brugerID, int kunstværkID) throws ExecutionException, InterruptedException {
-
+    public void tilføjFavorit(Kunstværk kunstværk) throws ExecutionException, InterruptedException {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try(Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("UPDATE Art_Pieces SET Favorite = ? WHERE ID = ?");
+                    preparedStatement.setBoolean(1, true);
+                    preparedStatement.setString(2, kunstværk.getId());
+                    preparedStatement.executeUpdate();
+                } catch (SQLException e) {
+                    System.out.println("Fejl ved tilføjelse af favorit i databasen");
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
     }
 
     @Override
-    public void fjernFavorit(int brugerID, int kunstværkID) throws ExecutionException, InterruptedException {
-
+    public void fjernFavorit(Kunstværk kunstværk) throws ExecutionException, InterruptedException {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try(Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("UPDATE Art_Pieces SET Favorite = ? WHERE ID = ?");
+                    preparedStatement.setBoolean(1, false);
+                    preparedStatement.setString(2, kunstværk.getId());
+                    preparedStatement.executeUpdate();
+                } catch (SQLException e) {
+                    System.out.println("Fejl ved fjernelse af favorit i databasen");
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
     }
 
     @Override
-    public void hentFavoritter(int userID, ObservableList<Kunstværk> kunstværker) throws ExecutionException, InterruptedException {
+    public void hentFavoritter( ObservableList<Kunstværk> kunstværker) throws ExecutionException, InterruptedException {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try(Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("SELECT * FROM Art_Pieces WHERE Favorite = 1");
+                    ResultSet resultSet = preparedStatement.executeQuery();
 
+                    while(resultSet.next()) {
+                        String id = resultSet.getString("ID");
+                        String serieNummer = resultSet.getString("Serial_Number");
+                        String titel = resultSet.getString("Title");
+                        int årstal = resultSet.getInt("Year");
+                        String kunstner = resultSet.getString("Artist");
+                        String størrelseMedRamme = resultSet.getString("Size_With_Frame");
+                        String størrelseUdenRamme = resultSet.getString("Size_Without_Frame");
+                        String beskrivelse = resultSet.getString("Description");
+                        byte[] billedeData = resultSet.getBytes("Image_Data");
+                        int temaId = resultSet.getInt("ThemeID");
+                        boolean favorit = resultSet.getBoolean("Favorite");
+
+                        Kunstværk kunstværk = new Kunstværk(id, serieNummer, titel, kunstner, årstal,
+                                størrelseMedRamme, størrelseUdenRamme, beskrivelse, billedeData, temaId, favorit);
+
+                        kunstværker.add(kunstværk);
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Fejl ved hentning af favoritter i databasen");
+                    e.printStackTrace();
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
     }
 }
