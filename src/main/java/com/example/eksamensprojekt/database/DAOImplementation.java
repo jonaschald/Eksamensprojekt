@@ -122,11 +122,8 @@ public class DAOImplementation implements DAO {
             public void run() {
                 try (Connection forbindelse = kilde.getConnection()) {
                     PreparedStatement preparedStatement;
-
                     preparedStatement = forbindelse.prepareStatement("DELETE FROM Art_Pieces WHERE ID = ?");
-
                     preparedStatement.setString(1, kunstværk.getId());
-
                     preparedStatement.executeUpdate();
 
                     resultat.set(true);
@@ -151,7 +148,6 @@ public class DAOImplementation implements DAO {
             public void run() {
                 try (Connection forbindelse = kilde.getConnection()) {
                     PreparedStatement preparedStatement;
-
                     preparedStatement = forbindelse.prepareStatement("UPDATE Art_Pieces SET " + "Serial_Number = ?, " +
                             "Title = ?, " + "Year = ?, " + "Artist = ?, " + "Size_With_Frame = ?, " + "Size_Without_Frame = ?, " +
                             "Description = ?, " + "Image_Data = ?, " + "ThemeID = ?, " + "Favorite = ? " + "WHERE ID = ?");
