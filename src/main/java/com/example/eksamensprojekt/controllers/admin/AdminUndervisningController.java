@@ -114,7 +114,7 @@ public class AdminUndervisningController
         // Opretter et tomt PdfItem
         PdfItem item = new PdfItem("",null);
 
-        // Åbner redigeringsvinduet og fortæller vinduet at ingen checkboxes er valgt endnu
+        // Åbner redigeringsvinduet med det tomme PdfIrem og fortæller vinduet at ingen checkboxes er valgt endnu
         // Editing boolean sættes til status false, da vi er igang med at oprette ny PDF
         showPdfDialog(item, false, false, false, false, false);
     }
@@ -156,63 +156,85 @@ public class AdminUndervisningController
             return; // Metoden stoppes her
         }
 
-        // Opretter et popup vindue der spørger Admin om du er sikker på at du vil slette filen
+        // Opretter et popup vindue der spørger Admin: er du sikker på at du vil slette filen?
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Er du sikker på at du vil slette filen?");
         alert.setHeaderText(null);
         alert.setContentText("Slet \"" + item.getName() + "\" ?");
 
+        // Viser popup vinduet og stopper og venter på at brugeren klikker OK eller Cancel
         Optional<ButtonType> resultat = alert.showAndWait();
-        if(resultat.isPresent() && resultat.get() == ButtonType.OK) {
+
+        // Hvis brugeren klikker OK i redigeringsvinduet
+        if (resultat.isPresent() && resultat.get() == ButtonType.OK) {
 
             try {
-                // Tom variabel
+                // Opretter en tom variabel til et Undervisnings objekt
+                // Skal bruges til at finde det objekt der skal slettes fra databasen
                 Undervisningsmateriale valgtUndervisningsmateriale = null;
 
-                // Går igennem alle undervisningsmaterialerne en ad gangen og sammenligner navne
-                // mellem PdfItem (vores kode "item") og Undervisningsmateriale (Databasens kode "undervisningsmateriale")
-                // Hvis de matcher har vi fundet det rigtige objekt der skal slettes fra Databasen
-                for(Undervisningsmateriale undervisningsmateriale : undervisningsmaterialer) {
-                    if(undervisningsmateriale.getTitle().equals(item.getName())) {
+                // Går igennem alle undervisningsmaterialerne et ad gangen og sammenligner navnene
+                // mellem PdfItem (vores objekt "item") og Undervisningsmateriale
+                // Hvis navnene matcher har vi fundet det rigtige objekt der skal slettes fra databasen
+                for (Undervisningsmateriale undervisningsmateriale : undervisningsmaterialer) {
+                    if (undervisningsmateriale.getTitle().equals(item.getName())) {
                         valgtUndervisningsmateriale = undervisningsmateriale;
                         break; // Løkken stoppes så snart det rigtige undervisningsmateriale er fundet
                     }
                 }
 
-                // Slettes fra databasen
+                // Hvis der findes et valgtUndervisningsmateriale, så slettes det fra databasen og
+                // fra ObservableListen med alle undervisningsmaterialer
                 if(valgtUndervisningsmateriale != null) {
                     dao.sletUndervisningsmateriale(valgtUndervisningsmateriale);
                     undervisningsmaterialer.remove(valgtUndervisningsmateriale);
                 }
 
-                // Slettes fra listviews
+                // Undervisningsmaterialet slettes fra Listviews
                 indskolingData.getItems().remove(item);
                 mellemtrinData.getItems().remove(item);
                 udskolingData.getItems().remove(item);
                 konfirmationData.getItems().remove(item);
 
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                // Udskriver fejlen i konsollen
+                System.out.println("Fejl i sletning af undervisningsmateriale");
+                e.printStackTrace(); // Printer hele fejlen i konsollen
+
+                // Giver brugeren besked om fejlen
+                Alert alert1 = new Alert(Alert.AlertType.ERROR, "Fejl i sletning af undervisningsmateriale");
+                alert1.show();
             }
         }
     }
 
+    // Metode der åbner tilføj- eller redigerings-vinduet
     private void showPdfDialog(PdfItem pdfItem, boolean inIndskoling, boolean inMellemtrin,
             boolean inUdskoling, boolean inKonfirmation, boolean editing)
     {
+        // Opretter popup vindue
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.initOwner(pane.getScene().getWindow()); // Binder vinduet til hovedvinduet
-        dialog.setTitle(editing ? "Rediger PDF" : "Tilføj PDF");
 
+        // Binder vinduet til hovedvinduet, så det ikke forsvinder sig bag programmet
+        dialog.initOwner(pane.getScene().getWindow());
 
-        // Fil sti felt
+        // Titlen sættes enten til at men redigere eller tilføjer en PDF
+        if (editing) {
+            dialog.setTitle("Rediger PDF");
+        } else {
+            dialog.setTitle("Tilføj PDF");
+        }
+
+        // Opretter et tekstfelt til pdf-filen
         TextField fileField = new TextField();
-        fileField.setEditable(false);
+        fileField.setEditable(false); // Man skal ikke kunne skrive i dette felt
 
-        // Navn på filen
+        // Opretter et tekstfelt til navnet på PDF'en,
+        // hvor Admin selv kan bestemme hvad undervisningsmaterialet skal hedde
         TextField nameField = new TextField();
 
-        // Checkboksene
+        // Opretter checkboksene og giver dem et Id,
+        // så vi senere kan finde ud af hvilken målgruppe hver checkbox hører til
         CheckBox indskolingCheck = new CheckBox("Indskoling");
         indskolingCheck.setId("indskolingCheck");
         CheckBox mellemtrinCheck = new CheckBox("Mellemtrin");
@@ -222,7 +244,7 @@ public class AdminUndervisningController
         CheckBox konfirmationCheck = new CheckBox("Konfirmation");
         konfirmationCheck.setId("konfirmationCheck");
 
-        // Knap til at vælge fil
+        // Opretter en knap til at vælge en fil
         Button browseButton = new Button("Vælg fil");
 
         final File[] selectedFile = new File[1];
@@ -290,7 +312,6 @@ public class AdminUndervisningController
 
         if (resultat.isPresent() && resultat.get() == ButtonType.OK)
         {
-
             // Fortæller at du skal vælger en fil
             if(selectedFile[0] == null) {
                 showError("Vælg en PDF file");
