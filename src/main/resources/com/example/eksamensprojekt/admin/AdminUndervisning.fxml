@@ -15,7 +15,7 @@
 
 <ScrollPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="1400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.eksamensprojekt.controllers.admin.AdminUndervisningController">
    <content>
-      <VBox prefWidth="1400.0">
+      <VBox fx:id="pane" prefWidth="1400.0">
          <children>
             <HBox prefHeight="150.0">
                <children>
@@ -141,7 +141,7 @@
                               <Font size="32.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#sletUndervisningsmatriale" text="Slet på alle lister">
+                        <Button mnemonicParsing="false" onAction="#sletUndervisningsmatriale" text="Slet">
                            <font>
                               <Font size="32.0" />
                            </font>

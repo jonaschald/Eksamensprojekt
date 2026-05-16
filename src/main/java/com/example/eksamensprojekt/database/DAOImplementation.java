@@ -7,6 +7,7 @@ import com.example.eksamensprojekt.objekter.Undervisningsmateriale;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import javafx.collections.ObservableList;
 
+import java.io.*;
 import java.sql.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -307,10 +308,13 @@ public class DAOImplementation implements DAO {
                 try(Connection forbindelse = kilde.getConnection()) {
                     PreparedStatement preparedStatement;
                     preparedStatement = forbindelse.prepareStatement("INSERT INTO Teaching_Materials " +
-                            "(Title, PDF_Path, Target_Group_ID) " + "VALUES (?, ?, ?)");
+                            "(Title, PDF_Data, Target_Group_ID) " + "VALUES (?, ?, ?)");
+
+                    FileInputStream inputStream = new FileInputStream(undervisningsmateriale.getPdf());
+
 
                     preparedStatement.setString(1, undervisningsmateriale.getTitle());
-                    preparedStatement.setBytes(2, undervisningsmateriale.getPdf());
+                    preparedStatement.setBinaryStream(2, inputStream, undervisningsmateriale.getPdf().length());
                     preparedStatement.setInt(3, undervisningsmateriale.getMålgruppeId());
                     preparedStatement.executeUpdate();
 
@@ -319,6 +323,8 @@ public class DAOImplementation implements DAO {
                 } catch (SQLException e) {
                     System.out.println("Fejl ved oprettelse af pdf i databasen");
                     resultat.set(false);
+                    throw new RuntimeException(e);
+                } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -358,6 +364,43 @@ public class DAOImplementation implements DAO {
     }
 
     @Override
+    public void hentUndervisningsmateriale(ObservableList<Undervisningsmateriale> undervisningsmaterialer) throws ExecutionException, InterruptedException {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try(Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("SELECT * FROM Teaching_Materials");
+
+                    ResultSet resultSet = preparedStatement.executeQuery();
+
+                    while(resultSet.next()) {
+                        int id = resultSet.getInt("ID");
+                        String title = resultSet.getString("Title");
+                        byte[] pdfData = resultSet.getBytes("PDF_Data");
+                        int målgruppeId = resultSet.getInt("Target_Group_ID");
+
+                        File pdfFile = File.createTempFile("pdf_", ".pdf");
+                        FileOutputStream outputStream = new FileOutputStream(pdfFile);
+                        outputStream.write(pdfData);
+                        outputStream.close();
+
+                        Undervisningsmateriale undervisningsmateriale = new Undervisningsmateriale(id, title, pdfFile, målgruppeId);
+                        undervisningsmaterialer.add(undervisningsmateriale);
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Fejl ved indlæsning af undervisningsmaterialer fra databasen");
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
+    }
+
+    @Override
     public void opdaterUndervisningsmateriale(Undervisningsmateriale undervisningsmateriale) throws ExecutionException, InterruptedException {
         Runnable runnable = new Runnable() {
             @Override
@@ -365,16 +408,20 @@ public class DAOImplementation implements DAO {
                 try(Connection forbindelse = kilde.getConnection()) {
                     PreparedStatement preparedStatement;
                     preparedStatement = forbindelse.prepareStatement("UPDATE Teaching_Materials SET " + "Title = ?, "
-                    + "PDF_Path = ?, " + "Target_Group_ID = ? " + "WHERE ID = ?");
+                    + "PDF_Data = ?, " + "Target_Group_ID = ? " + "WHERE ID = ?");
+
+                    FileInputStream inputStream = new FileInputStream(undervisningsmateriale.getPdf());
 
                     preparedStatement.setString(1, undervisningsmateriale.getTitle());
-                    preparedStatement.setBytes(2, undervisningsmateriale.getPdf());
+                    preparedStatement.setBinaryStream(2, inputStream, undervisningsmateriale.getPdf().length());
                     preparedStatement.setInt(3, undervisningsmateriale.getMålgruppeId());
                     preparedStatement.setInt(4, undervisningsmateriale.getId());
                     preparedStatement.executeUpdate();
 
                 } catch( SQLException e) {
                     System.out.println("Opdatering af undervisningsmateriale i databasen lykkes ikke");
+                    throw new RuntimeException(e);
+                } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             }

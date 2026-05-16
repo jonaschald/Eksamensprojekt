@@ -1,7 +1,12 @@
 package com.example.eksamensprojekt.controllers;
 
 import com.example.eksamensprojekt.SceneManeger;
+import com.example.eksamensprojekt.database.DAO;
+import com.example.eksamensprojekt.database.DAOImplementation;
+import com.example.eksamensprojekt.objekter.Undervisningsmateriale;
 import com.example.eksamensprojekt.undervisning.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
@@ -9,10 +14,13 @@ import javafx.scene.input.MouseEvent;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
+import java.util.concurrent.ExecutionException;
 
 public class UndervisningController {
 
     SceneManeger sceneManeger = new SceneManeger();
+
+    DAO dao = new DAOImplementation();
 
     @FXML
     private ListView<PdfItem> indskolingData;
@@ -26,8 +34,16 @@ public class UndervisningController {
     @FXML
     private ListView<PdfItem> konfirmationData;
 
+    private ObservableList<Undervisningsmateriale> undervisningsmaterialer = FXCollections.observableArrayList();
+
     public void initialize() {
-    // Gør så listerne viser undervisningsmaterialet
+        DataDeling.indskolingList.clear();
+        DataDeling.mellemtrinList.clear();
+        DataDeling.udskolingList.clear();
+        DataDeling.konfirmationList.clear();
+        undervisningsmaterialer.clear();
+
+        // Gør så listerne viser undervisningsmaterialet
         indskolingData.setItems(DataDeling.indskolingList);
         mellemtrinData.setItems(DataDeling.mellemtrinList);
         udskolingData.setItems(DataDeling.udskolingList);
@@ -38,6 +54,35 @@ public class UndervisningController {
         setupPdfOpen(mellemtrinData);
         setupPdfOpen(udskolingData);
         setupPdfOpen(konfirmationData);
+
+        // Henter undervisningsmaterialerne fra databasen når programmet køres og kommer dem ind i de tilhørende ListViews
+        try {
+            dao.hentUndervisningsmateriale(undervisningsmaterialer);
+
+            for(Undervisningsmateriale undervisningsmateriale : undervisningsmaterialer) {
+                PdfItem item = new PdfItem(undervisningsmateriale.getTitle(), undervisningsmateriale.getPdf());
+
+                switch (undervisningsmateriale.getMålgruppeId())  {
+                    case 1:
+                        indskolingData.getItems().add(item);
+                        break;
+                    case 2:
+                        mellemtrinData.getItems().add(item);
+                        break;
+                    case 3:
+                        udskolingData.getItems().add(item);
+                        break;
+                    case 4:
+                        konfirmationData.getItems().add(item);
+                        break;
+                }
+            }
+
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // Gør så man kan åbne PDF filerne i computerens standard program

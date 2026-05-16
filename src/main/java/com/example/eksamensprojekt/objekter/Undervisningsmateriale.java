@@ -5,10 +5,10 @@ import java.io.File;
 public class Undervisningsmateriale {
     private int id;
     private String title;
-    private byte[] pdf;
+    private File pdf;
     private int målgruppeId;
 
-    public  Undervisningsmateriale(int id, String title, byte[] pdf, int målgruppeId) {
+    public  Undervisningsmateriale(int id, String title, File pdf, int målgruppeId) {
         this.id = id;
         this.title = title;
         this.pdf = pdf;
@@ -29,10 +29,10 @@ public class Undervisningsmateriale {
         this.title = title;
     }
 
-    public byte[] getPdf() {
+    public File getPdf() {
         return pdf;
     }
-    public void setPdf(byte[] pdf) {
+    public void setPdf(File pdf) {
         this.pdf = pdf;
     }
 
