@@ -110,8 +110,7 @@ public class AdminUndervisningController
             e.printStackTrace(); // Printer hele fejlen i konsollen
 
             // Giver Admin besked om fejlen
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Undervisningsmaterialerne kunne ikke hentes fra Databasen");
-            alert.show();
+            showError("Undervisningsmaterialerne kunne ikke hentes fra Databasen");
         }
     }
 
@@ -210,8 +209,7 @@ public class AdminUndervisningController
                 e.printStackTrace(); // Printer hele fejlen i konsollen
 
                 // Giver Admin besked om fejlen
-                Alert alert1 = new Alert(Alert.AlertType.ERROR, "Fejl i sletning af undervisningsmateriale");
-                alert1.show();
+                showError("Fejl i sletning af undervisningsmateriale");
             }
         }
     }
@@ -223,7 +221,7 @@ public class AdminUndervisningController
         // Opretter popup vindue
         Dialog<ButtonType> dialog = new Dialog<>();
 
-        // Binder vinduet til hovedvinduet, så det ikke forsvinder sig bag programmet
+        // Binder vinduet til hovedvinduet, så det ikke forsvinder bag programmet
         dialog.initOwner(pane.getScene().getWindow());
 
         // Titlen sættes enten til at men redigere eller tilføjer en PDF
@@ -383,7 +381,12 @@ public class AdminUndervisningController
                         dao.sletUndervisningsmateriale(undervisningsmateriale);
                         undervisningsmaterialer.remove(undervisningsmateriale);
                     } catch (Exception e) {
-                        throw new RuntimeException(e);
+                        // Udskriver fejlen i konsollen
+                        System.out.println("Kunne ikke slette gamle undervisningsmaterialer fra databasen");
+                        e.printStackTrace(); // Printer hele fejlen i konsollen
+
+                        // Giver Admin besked om fejlen
+                        showError("Kunne ikke slette gamle undervisningsmaterialer fra databasen");
                     }
                 }
             }
@@ -401,7 +404,12 @@ public class AdminUndervisningController
                     try {
                         dao.gemUndervisningsmateriale(undervisningsmateriale);
                     } catch (ExecutionException | InterruptedException e) {
-                        throw new RuntimeException(e);
+                        // Udskriver fejlen i konsollen
+                        System.out.println("Kunne ikke gemme undervisningsmaterialer i databasen");
+                        e.printStackTrace(); // Printer hele fejlen i konsollen
+
+                        // Giver Admin besked om fejlen
+                        showError("Kunne ikke gemme undervisningsmaterialer i databasen");
                     }
                 }
             }
@@ -411,7 +419,12 @@ public class AdminUndervisningController
                 undervisningsmaterialer.clear();
                 dao.hentUndervisningsmateriale(undervisningsmaterialer);
             } catch (ExecutionException | InterruptedException e) {
-                throw new RuntimeException(e);
+                // Udskriver fejlen i konsollen
+                System.out.println("Kunne ikke hente undervisningsmaterialer fra databasen");
+                e.printStackTrace(); // Printer hele fejlen i konsollen
+
+                // Giver Admin besked om fejlen
+                showError("Kunne ikke hente undervisningsmaterialer fra databasen");
             }
 
             // Opdatere listview, så det nye data kommer derind
@@ -426,6 +439,9 @@ public class AdminUndervisningController
     private void showError(String message)
     {
         Alert alert = new Alert(Alert.AlertType.ERROR);
+
+        // Binder error-popup-vinduet til hovedvinduet, så det ikke forsvinder bag programmet
+        alert.initOwner(pane.getScene().getWindow());
 
         alert.setHeaderText(null);
         alert.setContentText(message);
