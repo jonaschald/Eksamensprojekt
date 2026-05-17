@@ -52,7 +52,7 @@ public class AdminUndervisningController
     // ObservableList der kan indeholde alle Undervisningsmateriale objekter fra Databasen
     private ObservableList<Undervisningsmateriale> undervisningsmaterialer = FXCollections.observableArrayList();
 
-    // Variabel der gemmer den PDF-fil/undervisningsmateriale som brugeren vælger i redigeringsvinduet
+    // Variabel der gemmer den PDF-fil/undervisningsmateriale som Admin vælger i redigeringsvinduet
     private File selectedFile;
 
     // Variabel der husker det gamle PDF navn - vigtigt fordi Admin kan redigere i PDF navnet
@@ -109,7 +109,7 @@ public class AdminUndervisningController
                     "Kunne ikke hente undervisningsmaterialer fra databasen");
             e.printStackTrace(); // Printer hele fejlen i konsollen
 
-            // Giver brugeren besked om fejlen
+            // Giver Admin besked om fejlen
             Alert alert = new Alert(Alert.AlertType.ERROR, "Undervisningsmaterialerne kunne ikke hentes fra Databasen");
             alert.show();
         }
@@ -131,10 +131,10 @@ public class AdminUndervisningController
     @FXML
     void redigerUndervisningsmatriale(ActionEvent event)
     {
-        // Henter den PdfItem som brugeren har markeret
+        // Henter den PdfItem som Admin har markeret
         PdfItem item = getSelectedItem();
 
-        // Hvis brugeren ikke har valgt en PdfItem
+        // Hvis Admin ikke har valgt en PdfItem
         if (item == null) {
             showError ("Vælg en fil først"); // Brugeren får vejledning i en popup
             return; // Metoden stoppes her
@@ -146,7 +146,7 @@ public class AdminUndervisningController
         boolean inUdskoling = udskolingData.getItems().contains(item);
         boolean inKonfirmation = konfirmationData.getItems().contains(item);
 
-        // Åbner redigeringsvinduet hvori alt info om PDF'en vises, så brugeren kan rette ønsket information
+        // Åbner redigeringsvinduet hvori alt info om PDF'en vises, så Admin kan rette ønsket information
         // Editing boolean sættes til status true, da vi er igang med redigeringen
         showPdfDialog(item, inInskoling, inMellemtrin, inUdskoling, inKonfirmation, true);
     }
@@ -170,7 +170,7 @@ public class AdminUndervisningController
         alert.setHeaderText(null);
         alert.setContentText("Slet \"" + item.getName() + "\" ?");
 
-        // Viser popup vinduet og stopper og venter på at brugeren klikker OK eller Cancel
+        // Viser popup vinduet og stopper og venter på at Admin klikker OK eller Cancel
         Optional<ButtonType> resultat = alert.showAndWait();
 
         // Hvis Admin klikker OK i redigeringsvinduet
@@ -209,7 +209,7 @@ public class AdminUndervisningController
                 System.out.println("Fejl i sletning af undervisningsmateriale");
                 e.printStackTrace(); // Printer hele fejlen i konsollen
 
-                // Giver brugeren besked om fejlen
+                // Giver Admin besked om fejlen
                 Alert alert1 = new Alert(Alert.AlertType.ERROR, "Fejl i sletning af undervisningsmateriale");
                 alert1.show();
             }
@@ -344,7 +344,7 @@ public class AdminUndervisningController
             pdfItem.setName(nameField.getText());
             pdfItem.setpdfFile(selectedFile);
 
-            // Fjerner fra alle listerne først
+            // Fjerner Pdf'en fra alle listerne først - for at undgå dubletter
             indskolingData.getItems().remove(pdfItem);
             mellemtrinData.getItems().remove(pdfItem);
             udskolingData.getItems().remove(pdfItem);
@@ -354,29 +354,30 @@ public class AdminUndervisningController
             if (indskolingCheck.isSelected()) {
                 indskolingData.getItems().add(pdfItem);
             }
-
             if (mellemtrinCheck.isSelected()) {
                 mellemtrinData.getItems().add(pdfItem);
             }
-
             if (udskolingCheck.isSelected()) {
                 udskolingData.getItems().add(pdfItem);
             }
-
             if (konfirmationCheck.isSelected()) {
                 konfirmationData.getItems().add(pdfItem);
             }
 
-            // Slet gamle rækker fra databasen
+            // Hvis vi redigere - så skal gamle rækker fra databasen slettes først
             if (editing) {
+                // Opretter en tom liste til de undervisningsmaterialer der skal slettes i databasen pga. redigering
                 List<Undervisningsmateriale> undervisningsmaterialerDerSkalSlettes = new ArrayList<>();
 
+                // Går alle undervisningsmaterialerne igennem og finder de rækker i databasen der matcher det gamle navn
+                // og tilføjer dem til listen
                 for (Undervisningsmateriale undervisningsmateriale : undervisningsmaterialer) {
                     if (undervisningsmateriale.getTitle().equals(gammeltPDFNavn)) {
                         undervisningsmaterialerDerSkalSlettes.add(undervisningsmateriale);
                     }
                 }
 
+                // Sletter de gamler rækker fra databasen
                 for (Undervisningsmateriale undervisningsmateriale : undervisningsmaterialerDerSkalSlettes) {
                     try {
                         dao.sletUndervisningsmateriale(undervisningsmateriale);
@@ -387,11 +388,16 @@ public class AdminUndervisningController
                 }
             }
 
-            for (CheckBox checkbox : checkboxes) {
-                if (checkbox.isSelected()) {
+            // Går igennem alle checkboxes og tjekker hvilke der er valgt
+            // Under de checkboxes der er valgt, oprettes der et nyt undervisningsmateriale objekt
+            for (CheckBox checkbox : checkboxes)
+            {
+                if (checkbox.isSelected())
+                {
                     Undervisningsmateriale undervisningsmateriale = new Undervisningsmateriale(
                             0, pdfItem.getName(), pdfItem.getpdfFile(), Målgruppe.convertToId(checkbox.getId()));
 
+                    // Det nye undervisningsmateriale objekt gemmes i databasen
                     try {
                         dao.gemUndervisningsmateriale(undervisningsmateriale);
                     } catch (ExecutionException | InterruptedException e) {
@@ -400,6 +406,7 @@ public class AdminUndervisningController
                 }
             }
 
+            // Henter det nyeste data fra databasen og sætter det ind i listen med alle undervisningsmaterialer
             try {
                 undervisningsmaterialer.clear();
                 dao.hentUndervisningsmateriale(undervisningsmaterialer);
@@ -407,6 +414,7 @@ public class AdminUndervisningController
                 throw new RuntimeException(e);
             }
 
+            // Opdatere listview, så det nye data kommer derind
             indskolingData.refresh();
             mellemtrinData.refresh();
             udskolingData.refresh();
@@ -414,7 +422,9 @@ public class AdminUndervisningController
         }
     }
 
-    private void showError(String message) {
+    // Metode til at vise fejl-meddelelser i et popup vindue
+    private void showError(String message)
+    {
         Alert alert = new Alert(Alert.AlertType.ERROR);
 
         alert.setHeaderText(null);
@@ -423,20 +433,19 @@ public class AdminUndervisningController
         alert.showAndWait();
     }
 
-    private PdfItem getSelectedItem() {
-        for (ListView<PdfItem> list :  allLists) {
+    // Metode der kigger alle vores klassetrins lister igennem og finder den Pdf brugeren har markeret
+    private PdfItem getSelectedItem()
+    {
+        for (ListView<PdfItem> list : allLists) // Tager en liste ad gangen og kigger dem alle igennem
+        {
+            // Henter det objekt Admin har klikket på i en af listerne
             PdfItem pdfItem = list.getSelectionModel().getSelectedItem();
 
             if (pdfItem != null) {
-                return pdfItem;
+                return pdfItem; // Returnere det objekt Admin har markeret
             }
         }
-        return null;
-    }
-
-    @FXML
-    void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
-
+        return null; // null returneres hvis ingen pdf er valgt/fundet
     }
 
     // Skifter scenen til Admin Om Os
@@ -456,7 +465,6 @@ public class AdminUndervisningController
     void temaerKnap(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Temaer.fxml");
     }
-
 
     // Skifter scene til Admin Samlingen
     @FXML

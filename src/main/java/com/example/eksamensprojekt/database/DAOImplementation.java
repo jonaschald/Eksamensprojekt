@@ -401,36 +401,6 @@ public class DAOImplementation implements DAO {
     }
 
     @Override
-    public void opdaterUndervisningsmateriale(Undervisningsmateriale undervisningsmateriale) throws ExecutionException, InterruptedException {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                try(Connection forbindelse = kilde.getConnection()) {
-                    PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("UPDATE Teaching_Materials SET " + "Title = ?, "
-                    + "PDF_Data = ?, " + "Target_Group_ID = ? " + "WHERE ID = ?");
-
-                    FileInputStream inputStream = new FileInputStream(undervisningsmateriale.getPdf());
-
-                    preparedStatement.setString(1, undervisningsmateriale.getTitle());
-                    preparedStatement.setBinaryStream(2, inputStream, undervisningsmateriale.getPdf().length());
-                    preparedStatement.setInt(3, undervisningsmateriale.getMålgruppeId());
-                    preparedStatement.setInt(4, undervisningsmateriale.getId());
-                    preparedStatement.executeUpdate();
-
-                } catch( SQLException e) {
-                    System.out.println("Opdatering af undervisningsmateriale i databasen lykkes ikke");
-                    throw new RuntimeException(e);
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        };
-        Future future = executor.submit(runnable);
-        future.get();
-    }
-
-    @Override
     public boolean login(String username, String password) throws ExecutionException, InterruptedException {
         return false;
     }

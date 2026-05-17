@@ -29,9 +29,7 @@ public class Undervisningsmateriale {
         this.title = title;
     }
 
-    public File getPdf() {
-        return pdf;
-    }
+    public File getPdf() { return pdf; }
     public void setPdf(File pdf) {
         this.pdf = pdf;
     }

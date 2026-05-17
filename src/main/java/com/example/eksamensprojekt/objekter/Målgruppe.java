@@ -25,6 +25,8 @@ public class Målgruppe
         this.type = type;
     }
 
+    // Metode til at konvertere Id mellem Java og databasen
+    // Finder målgruppe-ID (database) ud fra checkboxens ID (Java)
     public static int convertToId(String checkboxId) {
         switch (checkboxId) {
             case "indskolingCheck":
