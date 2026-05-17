@@ -52,6 +52,14 @@ public class AdminUndervisningController
     // ObservableList der kan indeholde alle Undervisningsmateriale objekter fra Databasen
     private ObservableList<Undervisningsmateriale> undervisningsmaterialer = FXCollections.observableArrayList();
 
+    // Variabel der gemmer den PDF-fil/undervisningsmateriale som brugeren vælger i redigeringsvinduet
+    private File selectedFile;
+
+    // Variabel der husker det gamle PDF navn - vigtigt fordi Admin kan redigere i PDF navnet
+    // og så skal vi stadig kunne finde elementet i databasen (som er gemt under det gamle navn),
+    // sådan så elementet i databasen kan opdateres eller slettes
+    private String gammeltPDFNavn;
+
     public void initialize()
     {
         // Nulstiller ObservableLister i DataDeling - for at undgå dubletter ved sceneskift
@@ -147,10 +155,10 @@ public class AdminUndervisningController
     @FXML
     void sletUndervisningsmatriale(ActionEvent event)
     {
-        // Henter den PdfItem som brugeren har markeret
+        // Henter den PdfItem som Admin har markeret
         PdfItem item = getSelectedItem();
 
-        // Hvis brugeren ikke har valgt en PdfItem
+        // Hvis Admin ikke har valgt en PdfItem
         if (item == null) {
             showError("Vælg en fil først"); // Brugeren får vejledning i en popup
             return; // Metoden stoppes her
@@ -165,7 +173,7 @@ public class AdminUndervisningController
         // Viser popup vinduet og stopper og venter på at brugeren klikker OK eller Cancel
         Optional<ButtonType> resultat = alert.showAndWait();
 
-        // Hvis brugeren klikker OK i redigeringsvinduet
+        // Hvis Admin klikker OK i redigeringsvinduet
         if (resultat.isPresent() && resultat.get() == ButtonType.OK) {
 
             try {
@@ -247,13 +255,11 @@ public class AdminUndervisningController
         // Opretter en knap til at vælge en fil
         Button browseButton = new Button("Vælg fil");
 
-        final File[] selectedFile = new File[1];
-        final String[] gammeltNavnPDF = new String[1];
-
-        // Hvis rediger, udfylder felterne for dig
-        if(editing && pdfItem !=null) {
-            gammeltNavnPDF[0] = pdfItem.getName();
-            selectedFile[0] = pdfItem.getpdfFile();
+        // Hvis Admin redigerer et undervisningsmateriale,
+        // så udfyldes redigeringsvinduet med de gamle oplysninger
+        if(editing && pdfItem != null) {
+            gammeltPDFNavn = pdfItem.getName();
+            selectedFile = pdfItem.getpdfFile();
             fileField.setText(pdfItem.getpdfFile().getName());
             nameField.setText(pdfItem.getName());
 
@@ -263,29 +269,29 @@ public class AdminUndervisningController
             konfirmationCheck.setSelected(inKonfirmation);
         }
 
-        browseButton.setOnAction(e -> {
+        // Hvis Admin klikker på Vælg fil knap åbnes der et filvælger-vindue
+        browseButton.setOnAction(e ->
+        {
             FileChooser chooser = new FileChooser();
-
             chooser.setTitle("Vælg PDF");
-
             chooser.getExtensionFilters().add(
                     new FileChooser.ExtensionFilter(
-                            "PDF file", "*.pdf"));
-
+                            "PDF file", "*.pdf")); // Skal være PDF
             File file = chooser.showOpenDialog(pane.getScene().getWindow());
 
+            // Hvis der er valgt en Pdf fil
             if (file != null) {
-                selectedFile[0] = file;
-                fileField.setText(file.getAbsolutePath());
+                selectedFile = file; // Gemmer den valgte fil
+                fileField.setText(file.getAbsolutePath()); // Viser i tekstfeltet at man har valgt
 
                 // Sætter automatisk navn til filens navn
-                if(nameField.getText().isBlank()) {
+                if (nameField.getText().isBlank()) {
                     nameField.setText(file.getName());
                 }
             }
         });
 
-        // Layout
+        // Layout til tilføj- og redigeringsvinduet
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
         gridPane.setVgap(10);
@@ -310,30 +316,33 @@ public class AdminUndervisningController
 
         Optional<ButtonType> resultat = dialog.showAndWait();
 
+        // Hvis Admin klikker ok i dialog vinduet når en PDF skal tilføjes eller redigeres
         if (resultat.isPresent() && resultat.get() == ButtonType.OK)
         {
-            // Fortæller at du skal vælger en fil
-            if(selectedFile[0] == null) {
-                showError("Vælg en PDF file");
-                return;
+            // Hvis der ikke er valgt en fil
+            if (selectedFile == null) {
+                showError("Vælg en PDF file"); // Brugeren får vejledning i en popup
+                return; // Metoden stoppes her
             }
 
-            if(!indskolingCheck.isSelected()
-                    && !mellemtrinCheck.isSelected()
-                    && !udskolingCheck.isSelected()
-                    && !konfirmationCheck.isSelected()) {
-                showError("Vælg mindst én liste");
-                return;
+            // Hvis der ikke er valgt mindst en checkbox
+            if(!indskolingCheck.isSelected() && !mellemtrinCheck.isSelected()
+                    && !udskolingCheck.isSelected() && !konfirmationCheck.isSelected()) {
+                showError("Vælg mindst én liste"); // Brugeren får vejledning i en popup
+                return; // Metoden stoppes her
             }
 
+            // Samler alle checkboxes i en liste,
+            // så vi senere kan lave en for-løkke og slipper for at skrive 4 if-sætninger
             List<CheckBox> checkboxes = new ArrayList<>();
             checkboxes.add(indskolingCheck);
             checkboxes.add(mellemtrinCheck);
             checkboxes.add(udskolingCheck);
             checkboxes.add(konfirmationCheck);
 
+            // Opdatere PdfItem med filen og dens navn
             pdfItem.setName(nameField.getText());
-            pdfItem.setpdfFile(selectedFile[0]);
+            pdfItem.setpdfFile(selectedFile);
 
             // Fjerner fra alle listerne først
             indskolingData.getItems().remove(pdfItem);
@@ -363,7 +372,7 @@ public class AdminUndervisningController
                 List<Undervisningsmateriale> undervisningsmaterialerDerSkalSlettes = new ArrayList<>();
 
                 for (Undervisningsmateriale undervisningsmateriale : undervisningsmaterialer) {
-                    if (undervisningsmateriale.getTitle().equals(gammeltNavnPDF[0])) {
+                    if (undervisningsmateriale.getTitle().equals(gammeltPDFNavn)) {
                         undervisningsmaterialerDerSkalSlettes.add(undervisningsmateriale);
                     }
                 }
