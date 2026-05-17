@@ -15,8 +15,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class DAOImplementation implements DAO {
-
+public class DAOImplementation implements DAO
+{
     private SQLServerDataSource kilde;
     private ExecutorService executor = Executors.newFixedThreadPool(10);
 
@@ -299,7 +299,7 @@ public class DAOImplementation implements DAO {
     }
 
     @Override
-    public boolean gemUndervisningsmateriale(Undervisningsmateriale undervisningsmateriale) throws ExecutionException, InterruptedException {
+    public void gemUndervisningsmateriale(Undervisningsmateriale undervisningsmateriale) throws ExecutionException, InterruptedException {
         AtomicBoolean resultat = new AtomicBoolean(false);
 
         Runnable runnable = new Runnable() {
@@ -332,11 +332,11 @@ public class DAOImplementation implements DAO {
         Future future = executor.submit(runnable);
         future.get();
 
-        return resultat.get();
+        resultat.get();
     }
 
     @Override
-    public boolean sletUndervisningsmateriale(Undervisningsmateriale undervisningsmateriale) throws ExecutionException, InterruptedException {
+    public void sletUndervisningsmateriale(Undervisningsmateriale undervisningsmateriale) throws ExecutionException, InterruptedException {
         AtomicBoolean resultat = new AtomicBoolean(false);
 
         Runnable runnable = new Runnable() {
@@ -360,7 +360,7 @@ public class DAOImplementation implements DAO {
         Future future = executor.submit(runnable);
         future.get();
 
-        return resultat.get();
+        resultat.get();
     }
 
     @Override
