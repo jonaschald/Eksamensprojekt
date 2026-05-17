@@ -8,6 +8,7 @@ import com.example.eksamensprojekt.undervisning.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
@@ -16,12 +17,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.concurrent.ExecutionException;
 
-public class UndervisningController {
-
-    SceneManeger sceneManeger = new SceneManeger();
-
-    DAO dao = new DAOImplementation();
-
+public class UndervisningController
+{
     @FXML
     private ListView<PdfItem> indskolingData;
 
@@ -34,71 +31,117 @@ public class UndervisningController {
     @FXML
     private ListView<PdfItem> konfirmationData;
 
+    // ObservableList der kan indeholde alle Undervisningsmateriale objekter fra Databasen
     private ObservableList<Undervisningsmateriale> undervisningsmaterialer = FXCollections.observableArrayList();
 
-    public void initialize() {
+    // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
+    SceneManeger sceneManeger = new SceneManeger();
+
+    // Opretter et DAO objekt - bruges til kommunikation med databasen
+    DAO dao = new DAOImplementation();
+
+    public void initialize()
+    {
+        // Nulstiller ObservableLister i DataDeling - for at undgå dubletter ved sceneskift
         DataDeling.indskolingList.clear();
         DataDeling.mellemtrinList.clear();
         DataDeling.udskolingList.clear();
         DataDeling.konfirmationList.clear();
         undervisningsmaterialer.clear();
 
-        // Gør så listerne viser undervisningsmaterialet
+        // Indsætter undervisningsmaterialerne fra hver liste ind i tilhørende Listview
         indskolingData.setItems(DataDeling.indskolingList);
         mellemtrinData.setItems(DataDeling.mellemtrinList);
         udskolingData.setItems(DataDeling.udskolingList);
         konfirmationData.setItems(DataDeling.konfirmationList);
 
-        // Gør så man kan åbne PDF filerne
+        // Gør så PDF-filerne kan åbnes ved dobbeltklik i alle 4 ListViews
         setupPdfOpen(indskolingData);
         setupPdfOpen(mellemtrinData);
         setupPdfOpen(udskolingData);
         setupPdfOpen(konfirmationData);
 
-        // Henter undervisningsmaterialerne fra databasen når programmet køres og kommer dem ind i de tilhørende ListViews
-        try {
+        try
+        {
+            // Henter undervisningsmaterialerne fra Databasen og kommer dem ind i en ObservableList
             dao.hentUndervisningsmateriale(undervisningsmaterialer);
 
-            for(Undervisningsmateriale undervisningsmateriale : undervisningsmaterialer) {
+            // Går hvert undervisningsmateriale igennem i en for-løkke
+            for (Undervisningsmateriale undervisningsmateriale : undervisningsmaterialer) {
+
+                // Laver undervisningsmaterialerne fra databasen om til et PdfItem objekt
                 PdfItem item = new PdfItem(undervisningsmateriale.getTitle(), undervisningsmateriale.getPdf());
 
-                switch (undervisningsmateriale.getMålgruppeId())  {
-                    case 1:
-                        indskolingData.getItems().add(item);
-                        break;
-                    case 2:
-                        mellemtrinData.getItems().add(item);
-                        break;
-                    case 3:
-                        udskolingData.getItems().add(item);
-                        break;
-                    case 4:
-                        konfirmationData.getItems().add(item);
-                        break;
+                // Kommer objektet ind i den tilhørende ListView
+                if (undervisningsmateriale.getMålgruppeId() == 1) {
+                    indskolingData.getItems().add(item);
+                } else if (undervisningsmateriale.getMålgruppeId() == 2) {
+                    mellemtrinData.getItems().add(item);
+                } else if (undervisningsmateriale.getMålgruppeId() == 3) {
+                    udskolingData.getItems().add(item);
+                } else if (undervisningsmateriale.getMålgruppeId() == 4) {
+                    konfirmationData.getItems().add(item);
                 }
             }
 
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        }
+        catch (ExecutionException | InterruptedException e)
+        {
+            // Udskriver fejlen i konsollen
+            System.out.println("Fejl i Initialize i UndervisningsController: " +
+                    "Kunne ikke hente undervisningsmaterialer fra databasen");
+            e.printStackTrace(); // Printer hele fejlen i konsollen
+
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Undervisningsmaterialerne kunne ikke hentes fra Databasen");
+            alert.show();
         }
     }
 
-    // Gør så man kan åbne PDF filerne i computerens standard program
-    private void setupPdfOpen(ListView<PdfItem> listView) {
+    // Metode til at brugeren kan åbne et Undervisningsmateriale/PDF ved at dobbelt-klikke på det
+    private void setupPdfOpen(ListView<PdfItem> listView)
+    {
+        // Når brugeren dobbelt-klikker på listen kører denne kode
         listView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
+            if (event.getClickCount() == 2)
+            {
+                // Henter den Pdf brugeren har klikket på
                 PdfItem item = listView.getSelectionModel().getSelectedItem();
+
+                // Hvis brugeren har valgt en Pdf, så åbnes den i computerens standardprogram
                 if (item != null) {
                     try {
                         Desktop.getDesktop().open(item.getpdfFile());
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        // Udskriver fejlen i konsollen
+                        System.out.println("Kunne ikke åbne Pdf'en");
+                        e.printStackTrace(); // Printer hele fejlen i konsollen
+
+                        // Giver brugeren besked om fejlen
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke åbne Pdf'en");
+                        alert.show();
                     }
                 }
             }
         });
+    }
+
+    // Metode til at brugeren kan åbne Kunsthal Holmens hjemmeside i bundlinjen
+    @FXML
+    void besøgKunsthallensHjemmesideKnap(MouseEvent event)
+    {
+        try {
+            // Åbner hjemmesiden i computerens standardbrowser
+            Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
+        } catch (Exception e) {
+            // Udskriver fejlen i konsollen
+            System.out.println("Kunne ikke åbne Kunsthal Holmens hjemmeside");
+            e.printStackTrace(); // Printer hele fejlen i konsollen
+
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke åbne Kunsthal Holmens hjemmeside");
+            alert.show();
+        }
     }
 
     // Skifter scene til Admin Login
@@ -107,16 +150,7 @@ public class UndervisningController {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Login.fxml");
     }
 
-    @FXML
-    void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
-        try {
-            Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Skifter scenen til Farvoritter
+    // Skifter scenen til Favoritter
     @FXML
     void favoritterKnap(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Favoritter.fxml");

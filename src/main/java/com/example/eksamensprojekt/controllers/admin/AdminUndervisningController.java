@@ -40,12 +40,6 @@ public class AdminUndervisningController
     @FXML
     private ListView<PdfItem> konfirmationData;
 
-    // Opretter et DAO objekt - bruges til kommunikation med databasen
-    DAO dao = new DAOImplementation();
-
-    // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
-    SceneManeger sceneManeger = new SceneManeger();
-
     // Liste der indeholder alle 4 listviews med skoletrin
     private List<ListView<PdfItem>> allLists;
 
@@ -59,6 +53,12 @@ public class AdminUndervisningController
     // og så skal vi stadig kunne finde elementet i databasen (som er gemt under det gamle navn),
     // sådan så elementet i databasen kan opdateres eller slettes
     private String gammeltPDFNavn;
+
+    // Opretter et DAO objekt - bruges til kommunikation med databasen
+    DAO dao = new DAOImplementation();
+
+    // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
+    SceneManeger sceneManeger = new SceneManeger();
 
     public void initialize()
     {
@@ -130,7 +130,7 @@ public class AdminUndervisningController
     @FXML
     void redigerUndervisningsmatriale(ActionEvent event)
     {
-        // Henter den PdfItem som Admin har markeret
+        // Henter den Pdf som Admin har markeret
         PdfItem item = getSelectedItem();
 
         // Hvis Admin ikke har valgt en PdfItem
