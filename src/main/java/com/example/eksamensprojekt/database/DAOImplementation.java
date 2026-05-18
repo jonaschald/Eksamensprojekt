@@ -305,16 +305,6 @@ public class DAOImplementation implements DAO
     }
 
     @Override
-    public void søgKunstværk(String søgeTekst, ObservableList<Kunstværk> kunstværker) throws ExecutionException, InterruptedException {
-
-    }
-
-    @Override
-    public void filtrerKunstværkerEfterÅrstal(int årstal, ObservableList<Kunstværk> kunstværker) throws ExecutionException, InterruptedException {
-
-    }
-
-    @Override
     public void hentKunstværkerEfterTema(int temaId, ObservableList<Kunstværk> kunstværker) throws ExecutionException, InterruptedException {
 
     }
