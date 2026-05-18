@@ -7,6 +7,7 @@ module com.example.eksamensprojekt {
     requires java.sql;
     requires java.naming;
     requires javafx.base;
+    requires com.example.eksamensprojekt;
 
     opens com.example.eksamensprojekt to javafx.fxml;
     exports com.example.eksamensprojekt;

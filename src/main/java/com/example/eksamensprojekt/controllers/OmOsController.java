@@ -1,6 +1,7 @@
 package com.example.eksamensprojekt.controllers;
 
 import com.example.eksamensprojekt.SceneManeger;
+import com.example.eksamensprojekt.undervisning.DataDeling;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -16,25 +17,46 @@ public class OmOsController
     SceneManeger sceneManeger = new SceneManeger();
 
     @FXML
+    private Label adresseLabel;
+    @FXML
+    private Label telefonLabel;
+    @FXML
+    private Label emailLabel;
+
+    @FXML
+    private Label åbningstider;
+
+    @FXML
     private Label adresse;
-
     @FXML
-    private ImageView billedeBund;
-
-    @FXML
-    private ImageView billedeMidt;
-
-    @FXML
-    private ImageView billedeTop;
-
+    private Label telefon;
     @FXML
     private Label email;
 
     @FXML
-    private Label omOsTekst;
+    private ImageView billedeBund;
+    @FXML
+    private ImageView billedeMidt;
+    @FXML
+    private ImageView billedeTop;
 
     @FXML
-    private Label telefon;
+    private Label omOsTekst;
+
+    public void initialize () {
+        if (DataDeling.omOsTekst != null) { omOsTekst.setText(DataDeling.omOsTekst); }
+        if (DataDeling.omOsTopBilled != null) { billedeTop.setImage(DataDeling.omOsTopBilled); }
+        if (DataDeling.omOsMidtBilled != null) { billedeMidt.setImage(DataDeling.omOsMidtBilled); }
+        if (DataDeling.omOsBundBilled != null) { billedeBund.setImage(DataDeling.omOsBundBilled); }
+        if (DataDeling.omOsÅbningstider != null) { åbningstider.setText(DataDeling.omOsÅbningstider); }
+
+        adresse.textProperty().bind(DataDeling.omOsAdresse2());
+        adresseLabel.textProperty().bind(DataDeling.omOsAdresse2());
+        telefon.textProperty().bind(DataDeling.omOsTelefon2());
+        telefonLabel.textProperty().bind(DataDeling.omOsTelefon2());
+        email.textProperty().bind(DataDeling.omOsEmail2());
+        emailLabel.textProperty().bind(DataDeling.omOsEmail2());
+    }
 
     // Skifter scenen til Admin Login
     @FXML

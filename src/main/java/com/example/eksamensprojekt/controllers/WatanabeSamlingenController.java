@@ -4,6 +4,7 @@ import com.example.eksamensprojekt.SceneManeger;
 import com.example.eksamensprojekt.database.DAO;
 import com.example.eksamensprojekt.database.DAOImplementation;
 import com.example.eksamensprojekt.objekter.Kunstværk;
+import com.example.eksamensprojekt.undervisning.DataDeling;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,6 +27,16 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class WatanabeSamlingenController {
+
+    @FXML
+    private Label adresse;
+    @FXML
+    private Label telefon;
+    @FXML
+    private Label email;
+
+    @FXML
+    private Label åbningstider;
 
     SceneManeger sceneManeger = new SceneManeger();
 
@@ -84,6 +95,12 @@ public class WatanabeSamlingenController {
 
         searchField.textProperty().addListener(
                 (observable, oldValue, newValue) -> soegKunstvaerk(newValue));
+
+        // Så bundlinjen viser de informationer man som Admin sætter i Om Os
+        adresse.textProperty().bindBidirectional(DataDeling.omOsAdresse2());
+        telefon.textProperty().bindBidirectional(DataDeling.omOsTelefon2());
+        email.textProperty().bindBidirectional(DataDeling.omOsEmail2());
+        if (DataDeling.omOsÅbningstider != null) { åbningstider.setText(DataDeling.omOsÅbningstider); }
     }
 
     public void visKunstværk() {

@@ -3,7 +3,7 @@ package com.example.eksamensprojekt.controllers.admin;
 import com.example.eksamensprojekt.SceneManeger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -20,8 +20,21 @@ public class AdminOmSamlingenController {
     private ImageView billedeTop;
 
     @FXML
-    private Label omSadaoWatanabeTekst;
+    private TextArea redigerSadaoWatanabeText;
 
+    @FXML
+    void gemOmSadaoWatanabeTekst(ActionEvent event) {
+
+    }
+    @FXML
+    void redigerTopBillede(MouseEvent event) {
+
+    }
+
+    @FXML
+    void redigerBundBillede(MouseEvent event) {
+
+    }
 
     @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
@@ -32,11 +45,6 @@ public class AdminOmSamlingenController {
     @FXML
     void omOsKnap(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Om-Os.fxml");
-    }
-
-    @FXML
-    void redigerOmSadaoWatanabeTekst(ActionEvent event) {
-
     }
 
     // Skifter scenen til Admin Temaer
