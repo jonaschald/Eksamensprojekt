@@ -8,15 +8,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -27,174 +31,106 @@ import java.util.zip.ZipOutputStream;
 
 public class WatanabeSamlingenController {
 
+    // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
     SceneManeger sceneManeger = new SceneManeger();
 
+    // Opretter et DAO objekt - bruges til kommunikation med databasen
     DAO dao = new DAOImplementation();
 
+    // ObservableList der kan indeholde alle kunstværkerne fra Databasen
     ObservableList<Kunstværk> kunstværker = FXCollections.observableArrayList();
-
-    private ImageView[] billeder;
-    private Label[] beskrivelser;
-    private boolean omvendtSortering = false;
-
-    private final String[] titler = {
-            "Den gode hyrde", "Jesu fødsel", "Maria og barnet",
-            "Den sidste nadver", "Jesus på korset", "Opstandelsen",
-            "Moses", "Noas ark", "David og Goliat", "Englen Gabriel",
-            "Bøn", "Fred", "Tro", "Kærlighed", "Lys", "Håb",
-            "Jerusalem", "Påske", "Kristus", "Hyrden", "Bibelsk scene",
-            "Discipel", "Det hellige barn", "Profet", "Kirken",
-            "Velsignelse", "Troens vej", "Himlen", "Barmhjertighed",
-            "Visdom", "Evigt liv", "Sadao kunst", "Japansk tro",
-            "Fredens due", "Hellige ord", "Tro og håb"
-    };
 
     @FXML private TextField searchField;
 
     @FXML
-    private Label nummerLabel;
+    private GridPane billedeContainer;
 
     @FXML
-    private Label titelLabel;
-
-    @FXML
-    private Label årstalLabel;
-
-    @FXML
-    private VBox billedeContainer;
-
-    @FXML
-    private HBox billedeKolonne;
-
-    @FXML
-    private VBox kunstværkBilledeOgInfo;
-
-    @FXML
-    private ImageView kunstværkImageView;
-
-    @FXML
-    public void initialize() {
+    public void initialize()
+    {
         // Henter kunstværkerne fra Databasen og viser kunstværkerne
         try {
             dao.hentAlleKunstværker(kunstværker);
             visKunstværk();
         } catch (Exception e) {
-            e.printStackTrace();
-        }
+            // Udskriver fejlen i konsollen
+            System.out.println("Fejl i Initialize i WatanabeSamlingenController: " +
+                    "Kunne ikke hente Watanabe-samlingen fra databasen");
+            e.printStackTrace(); // Printer hele fejlen i konsollen
 
-        searchField.textProperty().addListener(
-                (observable, oldValue, newValue) -> soegKunstvaerk(newValue));
-    }
-
-    public void visKunstværk() {
-        
-    }
-
-    private void opdaterVisningNormal() {
-        omvendtSortering = false;
-        visAlle();
-
-        int startAar = 1965;
-
-        for (int i = 0; i < beskrivelser.length; i++) {
-            beskrivelser[i].setText(
-                    "Nr. " + (i + 1)
-                            + "\n" + titler[i]
-                            + "\nÅr: " + (startAar + i)
-            );
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunstværkerne kunne ikke hentes fra Databasen");
+            alert.show();
         }
     }
 
-    private void opdaterVisningOmvendt() {
-        omvendtSortering = true;
-        visAlle();
+    // Metode til at vise alle kunstværkerne fra databasen i et GridPane
+    public void visKunstværk()
+    {
+        // Fjerner alle elementer i vores GridPane - for at undgå dubletter
+        billedeContainer.getChildren().clear();
 
-        int startAar = 1965;
+        // Afstand mellem felterne
+        billedeContainer.setHgap(40);
+        billedeContainer.setVgap(40);
 
-        for (int i = 0; i < beskrivelser.length; i++) {
-            int originalIndex = beskrivelser.length - 1 - i;
+        // Bredden på vores GridPane
+        billedeContainer.setPrefWidth(1400);
 
-            beskrivelser[i].setText(
-                    "Nr. " + (originalIndex + 1)
-                            + "\n" + titler[originalIndex]
-                            + "\nÅr: " + (startAar + originalIndex)
-            );
-        }
-    }
+        // Opretter 2 variabler der holder styr på hvor kunstværkerne placeres i GridPane
+        int kolonne = 0;
+        int række = 0;
 
+        // Går alle kunstværkerne igennem og sætter hvert kunstværk op i GridPane
+        for (Kunstværk kunstværk : kunstværker)
+        {
+            // Opretter en VBox til at indeholde billedet og informationstekst
+            VBox vBox = new VBox();
+            vBox.setSpacing(5); // 5 pixels afstand mellem alle elementerne i hver VBox
+            vBox.setPrefWidth(290); // Bredden på VBoxen
+            vBox.setAlignment(Pos.TOP_LEFT); // Indholdet placeres øverst til venstre i VBoxen
 
+            // Henter billedet/kunstværket fra Databasen
+            // byteArrayInputStream kan omdanne binær data (byte[]) til et billede
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(kunstværk.getBilledeData());
 
-    private void soegKunstvaerk(String soegeTekst) {
-        int startAar = 1965;
+            // Opretter et JavaFX billede ud fra billeddataene
+            Image image = new Image(byteArrayInputStream);
 
-        if (soegeTekst == null || soegeTekst.isBlank()) {
-            if (omvendtSortering) {
-                opdaterVisningOmvendt();
-            } else {
-                opdaterVisningNormal();
+            // Opretter et ImageView der kan vise billedet på skærmen
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(290);
+            imageView.setFitHeight(390);
+            imageView.setPreserveRatio(true); // Bevarer billedet ratio, så det ikke strækkes/trækkes i
+
+            // Opretter labels med nummer, titel og årstal
+            Label nummer = new Label(kunstværk.getId());
+            Label titel = new Label(kunstværk.getTitel() + " - " + kunstværk.getÅrstal());
+            titel.setWrapText(true); // Hvis titlen er for lang, går teksten automatisk ned på næste linje
+
+            // Tilføjer billedet og labels i VBoxen
+            vBox.getChildren().addAll(imageView, nummer, titel);
+
+            // Tilføjer VBoxen i GridPane med placering fra "Kolonne" og "Række"
+            billedeContainer.add(vBox, kolonne, række);
+
+            // Hopper til næste kolonne, så næste kunstværk bliver placeret ved siden af
+            kolonne = kolonne + 1;
+
+            // Når der er 4 kunstværker på en række, nulstilles kolonnen til 0 igen og vi hopper en række ned
+            if (kolonne == 4) {
+                kolonne = 0;
+                række = række + 1;
             }
-            return;
-        }
-
-        String tekst = soegeTekst.toLowerCase();
-
-        for (int i = 0; i < billeder.length; i++) {
-            billeder[i].setVisible(false);
-            billeder[i].setManaged(false);
-            beskrivelser[i].setVisible(false);
-            beskrivelser[i].setManaged(false);
-        }
-
-        int visningsIndex = 0;
-
-        for (int i = 0; i < titler.length; i++) {
-            int originalIndex = omvendtSortering ? titler.length - 1 - i : i;
-
-            int nummer = originalIndex + 1;
-            int aar = startAar + originalIndex;
-            String titel = titler[originalIndex];
-
-            boolean matcher =
-                    String.valueOf(nummer).contains(tekst)
-                            || titel.toLowerCase().contains(tekst)
-                            || String.valueOf(aar).contains(tekst);
-
-            if (matcher && visningsIndex < billeder.length) {
-                billeder[visningsIndex].setVisible(true);
-                billeder[visningsIndex].setManaged(true);
-                beskrivelser[visningsIndex].setVisible(true);
-                beskrivelser[visningsIndex].setManaged(true);
-
-                beskrivelser[visningsIndex].setText(
-                        "Nr. " + nummer
-                                + "\n" + titel
-                                + "\nÅr: " + aar
-                );
-
-                visningsIndex++;
-            }
-        }
-    }
-
-    private void visAlle() {
-        for (int i = 0; i < billeder.length; i++) {
-            billeder[i].setVisible(true);
-            billeder[i].setManaged(true);
-            beskrivelser[i].setVisible(true);
-            beskrivelser[i].setManaged(true);
         }
     }
 
     @FXML
     void filterAarstalOp(ActionEvent event) {
-        opdaterVisningNormal();
-        searchField.clear();
     }
 
     @FXML
     void filterAarstalNed(ActionEvent event) {
-        opdaterVisningOmvendt();
-        searchField.clear();
     }
 
     @FXML
