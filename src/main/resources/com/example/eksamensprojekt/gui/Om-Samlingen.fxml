@@ -122,9 +122,9 @@
                         <Font size="64.0" />
                      </font>
                   </Label>
-                  <HBox prefHeight="1400.0" prefWidth="200.0">
+                  <HBox prefWidth="200.0" spacing="10.0">
                      <children>
-                        <VBox prefHeight="1400.0" prefWidth="750.0">
+                        <VBox prefWidth="750.0" spacing="10.0">
                            <children>
                               <Label text="Om Sadao Watanabe">
                                  <font>
@@ -137,7 +137,7 @@
                                     <Insets left="10.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="omSadaoWatanabeTekst" alignment="TOP_LEFT" maxHeight="1327.0" prefHeight="1327.0" prefWidth="800.0" text="Watanabe-samlingen er en samling af &#10;stenciltryk skabt af den japanske kunstner &#10;Sadao Watanabe. Trykkene er fremstillet i &#10;perioden fra 1961 til 1989.&#10;&#10;Sadao Watanabe troede på, at hvis hans værker &#10;blev skønne og brugbare, så var det fordi Guds &#10;kraft skinnede igennem værkernes naturlige &#10;materialer som en slags forbindelse mellem &#10;jord og himmel.&#10;&#10;Watanabe brugte en metode kaldet &#10;katazomemetoden, hvor der arbejdes med&#10;vandresistente stencils og naturlige farver.&#10;Papiret, han brugte, kom fra indersiden af &#10;morbærtræets bark. Papiret blev håndlavet af &#10;landmænd, der i århundreder havde &#10;specialiseret sig i at lave papir. Mange gange &#10;arbejdede Watanabe på krøllet morbærpapir &#10;kaldet momigami, som er meget stærkt og &#10;vandafvisende.&#10;&#10;Billedernes motiver er hentet fra biblen, &#10;primært det nye testamente.&#10;&#10;Stilen er stærkt stiliseret med hovedvægten lagt &#10;på fremstillingen af mennesker med Jesus som &#10;den centrale figur.&#10;&#10;Billederne er købt af Museet Holmen, nu &#10;Kunsthal Holmen, med støtte fra The&#10;Scandinavia-Japan Sasakawa Foundation.">
+                              <Label fx:id="omSadaoWatanabeTekst" alignment="TOP_LEFT" prefWidth="800.0" text="Watanabe-samlingen er en samling af &#10;stenciltryk skabt af den japanske kunstner &#10;Sadao Watanabe. Trykkene er fremstillet i &#10;perioden fra 1961 til 1989.&#10;&#10;Sadao Watanabe troede på, at hvis hans værker &#10;blev skønne og brugbare, så var det fordi Guds &#10;kraft skinnede igennem værkernes naturlige &#10;materialer som en slags forbindelse mellem &#10;jord og himmel.&#10;&#10;Watanabe brugte en metode kaldet &#10;katazomemetoden, hvor der arbejdes med&#10;vandresistente stencils og naturlige farver.&#10;Papiret, han brugte, kom fra indersiden af &#10;morbærtræets bark. Papiret blev håndlavet af &#10;landmænd, der i århundreder havde &#10;specialiseret sig i at lave papir. Mange gange &#10;arbejdede Watanabe på krøllet morbærpapir &#10;kaldet momigami, som er meget stærkt og &#10;vandafvisende.&#10;&#10;Billedernes motiver er hentet fra biblen, &#10;primært det nye testamente.&#10;&#10;Stilen er stærkt stiliseret med hovedvægten lagt &#10;på fremstillingen af mennesker med Jesus som &#10;den centrale figur.&#10;&#10;Billederne er købt af Museet Holmen, nu &#10;Kunsthal Holmen, med støtte fra The&#10;Scandinavia-Japan Sasakawa Foundation.">
                                  <font>
                                     <Font size="32.0" />
                                  </font>
@@ -150,10 +150,10 @@
                               </Label>
                            </children>
                            <padding>
-                              <Insets left="75.0" />
+                              <Insets left="10.0" />
                            </padding>
                         </VBox>
-                        <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="650.0">
+                        <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="650.0" spacing="10.0">
                            <children>
                               <ImageView fx:id="billedeTop" fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -197,7 +197,7 @@
                                     <Image url="@../Billeder/Lokation.png" />
                                  </image>
                               </ImageView>
-                              <Label text="Østergave 13&#10;DK-6240 Løgumkloster">
+                              <Label fx:id="adresse" text="Østergave 13&#10;DK-6240 Løgumkloster">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -217,7 +217,7 @@
                                     <Image url="@../Billeder/Telefon.png" />
                                  </image>
                               </ImageView>
-                              <Label text="Telefon: (+45) 74 74 41 65&#10;Mobil: (+45) 41 41 87 36">
+                              <Label fx:id="telefon" text="Telefon: (+45) 74 74 41 65&#10;Mobil: (+45) 41 41 87 36">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -237,7 +237,7 @@
                                     <Image url="@../Billeder/Mail.png" />
                                  </image>
                               </ImageView>
-                              <Label text="Email: info@kunsthalholmen.dk">
+                              <Label fx:id="email" text="Email: info@kunsthalholmen.dk">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
@@ -273,12 +273,7 @@
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </Label>
-                        <Label text="Torsdag - Søndag: kl. 13.00 - 17.00">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label text="Mandag - Onsdag: lukket">
+                        <Label fx:id="åbningstider" text="Torsdag - Søndag: kl. 13.00 - 17.00&#10;Mandag - Onsdag: lukket">
                            <font>
                               <Font size="20.0" />
                            </font>

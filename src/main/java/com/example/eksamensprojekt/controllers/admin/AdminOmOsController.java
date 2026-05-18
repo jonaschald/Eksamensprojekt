@@ -1,9 +1,9 @@
 package com.example.eksamensprojekt.controllers.admin;
 
 import com.example.eksamensprojekt.SceneManeger;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -14,46 +14,74 @@ public class AdminOmOsController {
     SceneManeger sceneManeger = new SceneManeger();
 
     @FXML
-    private Label adresse;
+    private Label adresseLabel;
+    @FXML
+    private Label telefonLabel;
+    @FXML
+    private Label emailLabel;
+
+    @FXML
+    private Label åbningstider;
+
+    @FXML
+    private TextArea adresseTextArea;
+    @FXML
+    private TextArea telefonTextArea;
+    @FXML
+    private TextArea emailTextArea;
 
     @FXML
     private ImageView billedeBund;
-
     @FXML
     private ImageView billedeMidt;
-
     @FXML
     private ImageView billedeTop;
 
     @FXML
-    private Label email;
+    private TextArea omOsTekst;
 
     @FXML
-    private Label omOsTekst;
+    private TextArea åbningstiderFelt;
 
     @FXML
-    private Label telefon;
+    void gemOmOsTekst(MouseEvent event) {
+
+    }
+
+    @FXML
+    void gemKontaktOplysninger(MouseEvent event) {
+
+    }
+
+    @FXML
+    void redigerTopBillede(MouseEvent event) {
+
+    }
+
+    @FXML
+    void redigerMidtBillede(MouseEvent event) {
+
+    }
+
+    @FXML
+    void redigerBundBillede(MouseEvent event) {
+
+    }
+
+    @FXML
+    void gemÅbningstider(MouseEvent event) {
+
+    }
 
     @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
 
     }
 
-
     // Skifter scene til Admin Om samlingen
     @FXML
     void omSamlingenKnap(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Om-Samlingen.fxml");
-    }
-
-    @FXML
-    void redigerKontaktOplysninger(ActionEvent event) {
-
-    }
-
-    @FXML
-    void redigerOmOsTekst(ActionEvent event) {
-
     }
 
     // Skifter scenen til Admin Temaer

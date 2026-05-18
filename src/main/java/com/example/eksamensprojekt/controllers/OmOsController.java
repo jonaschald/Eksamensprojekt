@@ -16,25 +16,31 @@ public class OmOsController
     SceneManeger sceneManeger = new SceneManeger();
 
     @FXML
+    private Label adresseLabel;
+    @FXML
+    private Label telefonLabel;
+    @FXML
+    private Label emailLabel;
+
+    @FXML
+    private Label åbningstider;
+
+    @FXML
     private Label adresse;
-
     @FXML
-    private ImageView billedeBund;
-
-    @FXML
-    private ImageView billedeMidt;
-
-    @FXML
-    private ImageView billedeTop;
-
+    private Label telefon;
     @FXML
     private Label email;
 
     @FXML
-    private Label omOsTekst;
+    private ImageView billedeBund;
+    @FXML
+    private ImageView billedeMidt;
+    @FXML
+    private ImageView billedeTop;
 
     @FXML
-    private Label telefon;
+    private Label omOsTekst;
 
     // Skifter scenen til Admin Login
     @FXML
