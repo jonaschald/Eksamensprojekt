@@ -375,7 +375,7 @@ public class AdminUndervisningController
                     }
                 }
 
-                // Sletter de gamler rækker fra databasen
+                // Sletter de gamle rækker fra databasen
                 for (Undervisningsmateriale undervisningsmateriale : undervisningsmaterialerDerSkalSlettes) {
                     try {
                         dao.sletUndervisningsmateriale(undervisningsmateriale);

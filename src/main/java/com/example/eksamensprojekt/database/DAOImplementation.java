@@ -15,11 +15,16 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+// Klasse der håndtere alt kommunikation med databasen
 public class DAOImplementation implements DAO
 {
+    // DataSource der bruges til at oprette forbindelse til databasen
     private SQLServerDataSource kilde;
+
+    // Sætter den op til at bruge 10 tråde til at lave database opgaver i baggrunden når programmet kører
     private ExecutorService executor = Executors.newFixedThreadPool(10);
 
+    // Konstruktør der opretter forbindelse til SQL databasen
     public DAOImplementation() {
         kilde = new SQLServerDataSource();
         kilde.setDatabaseName("EJMM_2SEM_EKSAMEN_2026");
