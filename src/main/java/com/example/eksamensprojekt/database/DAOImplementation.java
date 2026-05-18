@@ -1,9 +1,6 @@
 package com.example.eksamensprojekt.database;
 
-import com.example.eksamensprojekt.objekter.AdminLogin;
-import com.example.eksamensprojekt.objekter.Kunstværk;
-import com.example.eksamensprojekt.objekter.Tema;
-import com.example.eksamensprojekt.objekter.Undervisningsmateriale;
+import com.example.eksamensprojekt.objekter.*;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import javafx.collections.ObservableList;
 
@@ -68,9 +65,9 @@ public class DAOImplementation implements DAO
                     resultat.set(true);
 
                 } catch (SQLException e) {
-                    System.out.println("Fejl ved oprettelse af kunstværk i Databasen");
+                    System.out.println("Kunne ikke gemme kunstværk i databasen");
                     resultat.set(false);
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         };
@@ -110,8 +107,8 @@ public class DAOImplementation implements DAO
                     }
 
                 } catch (SQLException e) {
-                    System.out.println("Fejl ved indlæsning af kunstværker fra Databasen");
-                    throw new RuntimeException(e);
+                    System.out.println("Kunne ikke hente kunstværker fra databasen");
+                    e.printStackTrace();
                 }
             }
         };
@@ -135,9 +132,9 @@ public class DAOImplementation implements DAO
                     resultat.set(true);
 
                 } catch (SQLException e) {
-                    System.out.println("Sletning af kunstværket i databasen lykkes ikke");
+                    System.out.println("Kunne ikke slette kunstværket i databasen");
+                    e.printStackTrace();
                     resultat.set(false);
-                    throw new RuntimeException(e);
                 }
             }
         };
@@ -145,6 +142,131 @@ public class DAOImplementation implements DAO
         future.get();
 
         return resultat.get();
+    }
+
+    @Override
+    public void hentOmSamlingen(ObservableList<OmSamlingen> omSamlingen) throws ExecutionException, InterruptedException {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try (Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("SELECT * FROM About_Collection");
+
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()) {
+                        int id = resultSet.getInt("ID");
+                        String titel = resultSet.getString("Title");
+                        String beskrivelse = resultSet.getString("Description");
+                        byte[] billede1 = resultSet.getBytes("Image1");
+                        byte[] billede2 = resultSet.getBytes("Image2");
+
+                        OmSamlingen omSamlingenObjekt = new OmSamlingen(id, titel, beskrivelse, billede1, billede2);
+
+                        omSamlingen.add(omSamlingenObjekt);
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Kunne ikke hente Om Samlingen fra Databasen");
+                    e.printStackTrace();
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
+    }
+
+    @Override
+    public void opdaterOmSamlingen(OmSamlingen omSamlingen) throws ExecutionException, InterruptedException {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try (Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("UPDATE About_Collection SET Title = ?, " +
+                            "Description = ?, Image1 = ?, Image2 = ? WHERE ID = ?");
+
+                    preparedStatement.setString(1, omSamlingen.getTitle());
+                    preparedStatement.setString(2, omSamlingen.getBeskrivelse());
+                    preparedStatement.setBytes(3, omSamlingen.getImage1());
+                    preparedStatement.setBytes(4, omSamlingen.getImage2());
+                    preparedStatement.setInt(5, omSamlingen.getId());
+                    preparedStatement.executeUpdate();
+
+                } catch (SQLException e) {
+                    System.out.println("Kunne ikke opdatere Om Samlingen i Databasen");
+                    e.printStackTrace();
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
+    }
+
+    @Override
+    public void hentOmOs(ObservableList<OmOs> omOs) throws ExecutionException, InterruptedException {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try (Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("SELECT * FROM About_Us");
+
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()) {
+                        int id = resultSet.getInt("ID");
+                        String titel = resultSet.getString("Title");
+                        String beskrivelse = resultSet.getString("Description");
+                        String adresse = resultSet.getString("Address");
+                        String telefonnummer = resultSet.getString("Phone");
+                        String email = resultSet.getString("Email");
+                        byte[] billede1 = resultSet.getBytes("Image1");
+                        byte[] billede2 = resultSet.getBytes("Image2");
+                        byte[] billede3 = resultSet.getBytes("Image3");
+
+                        OmOs omOsObjekt = new OmOs(id, titel, beskrivelse, adresse, telefonnummer, email, billede1, billede2, billede3);
+
+                        omOs.add(omOsObjekt);
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Kunne ikke hente Om Os fra Databasen");
+                    e.printStackTrace();
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
+    }
+
+    @Override
+    public void opdaterOmOs(OmOs omOs) throws ExecutionException, InterruptedException {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try (Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("UPDATE About_Us SET Title = ?, " +
+                            "Description = ?, Address = ?, Phone = ?, Email = ?, Image1 = ?, Image2 = ?, " +
+                            "Image3 = ? WHERE ID = ?");
+
+                    preparedStatement.setString(1, omOs.getTitel());
+                    preparedStatement.setString(2, omOs.getBeskrivelse());
+                    preparedStatement.setString(3, omOs.getAdresse());
+                    preparedStatement.setString(4, omOs.getTelefonnummer());
+                    preparedStatement.setString(5, omOs.getEmail());
+                    preparedStatement.setBytes(6, omOs.getImage1());
+                    preparedStatement.setBytes(7, omOs.getImage2());
+                    preparedStatement.setBytes(8, omOs.getImage3());
+                    preparedStatement.setInt(9, omOs.getId());
+                    preparedStatement.executeUpdate();
+
+                } catch (SQLException e) {
+                    System.out.println("Kunne ikke opdatere Om Os i Databasen");
+                    e.printStackTrace();
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
     }
 
     @Override
@@ -173,8 +295,8 @@ public class DAOImplementation implements DAO
                     preparedStatement.executeUpdate();
 
                 } catch (SQLException e) {
-                    System.out.println("Opdatering af kunstværket i databasen lykkes ikke");
-                    throw new RuntimeException(e);
+                    System.out.println("Kunne ikke opdatere kunstværket i databasen");
+                    e.printStackTrace();
                 }
             }
         };
@@ -214,9 +336,9 @@ public class DAOImplementation implements DAO
                     resultat.set(true);
 
                 } catch (SQLException e) {
-                    System.out.println("Oprettelse af tema i databasen lykkes ikke");
+                    System.out.println("Kunne ikke gamme temaet i databasen");
                     resultat.set(false);
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         };
@@ -244,8 +366,8 @@ public class DAOImplementation implements DAO
                         temaer.add(tema);
                     }
                 } catch (SQLException e) {
-                    System.out.println("Fejl ved indlæsning af temaer fra databasen");
-                    throw new RuntimeException(e);
+                    System.out.println("Kunne ikke hente temaer fra databasen");
+                    e.printStackTrace();
                 }
             }
         };
@@ -270,9 +392,9 @@ public class DAOImplementation implements DAO
                     resultat.set(true);
 
                 } catch (SQLException e) {
-                    System.out.println("Sletning af tema lykkes ikke i databasen");
+                    System.out.println("Kunne ikke slette temaet i databasen");
                     resultat.set(false);
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         };
@@ -295,7 +417,7 @@ public class DAOImplementation implements DAO
                     preparedStatement.executeUpdate();
                 } catch (SQLException e) {
                     System.out.println("Opdatering af tema lykkes ikke i databasen");
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         };
@@ -326,11 +448,11 @@ public class DAOImplementation implements DAO
                     resultat.set(true);
 
                 } catch (SQLException e) {
-                    System.out.println("Fejl ved oprettelse af pdf i databasen");
+                    System.out.println("Kunne ikke gemme undervisningsmaterialet i databasen");
                     resultat.set(false);
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         };
@@ -356,9 +478,9 @@ public class DAOImplementation implements DAO
                     resultat.set(true);
 
                 } catch (SQLException e) {
-                    System.out.println("Sletning af undervisningsmateriale i databasen lykkes ikke");
+                    System.out.println("Kunne ikke slette undervisningsmaterialet i databasen");
                     resultat.set(false);
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         };
@@ -394,10 +516,10 @@ public class DAOImplementation implements DAO
                         undervisningsmaterialer.add(undervisningsmateriale);
                     }
                 } catch (SQLException e) {
-                    System.out.println("Fejl ved indlæsning af undervisningsmaterialer fra databasen");
-                    throw new RuntimeException(e);
+                    System.out.println("Kunne ikke hente undervisningsmaterialer fra databasen");
+                    e.printStackTrace();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         };
@@ -428,8 +550,8 @@ public class DAOImplementation implements DAO
                     preparedStatement.executeUpdate();
 
                 } catch (SQLException e) {
-                    System.out.println("Fejl ved tilføjelse af favorit i databasen");
-                    throw new RuntimeException(e);
+                    System.out.println("Kunne ikke tilføje kunstværket som favorit i databasen");
+                    e.printStackTrace();
                 }
             }
         };
@@ -450,8 +572,8 @@ public class DAOImplementation implements DAO
                     preparedStatement.executeUpdate();
 
                 } catch (SQLException e) {
-                    System.out.println("Fejl ved fjernelse af favorit i databasen");
-                    throw new RuntimeException(e);
+                    System.out.println("Kunne ikke fjerne kunstværket som favorit i databasen");
+                    e.printStackTrace();
                 }
             }
         };
@@ -489,8 +611,8 @@ public class DAOImplementation implements DAO
                     }
 
                 } catch (SQLException e) {
-                    System.out.println("Fejl ved hentning af favoritter i databasen");
-                    throw new RuntimeException(e);
+                    System.out.println("Kunne ikke hente favoritter fra databasen");
+                    e.printStackTrace();
                 }
             }
         };
