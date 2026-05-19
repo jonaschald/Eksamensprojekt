@@ -14,7 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.awt.*;
@@ -31,27 +31,11 @@ public class FavoritterController
     private Label telefon;
     @FXML
     private Label email;
-
     @FXML
     private Label åbningstider;
 
     @FXML
-    private VBox billedeContainer;
-
-    @FXML
-    private VBox eksempel;
-
-    @FXML
-    private ImageView eksempelBillede;
-
-    @FXML
-    private HBox eksempelKolonne;
-
-    @FXML
-    private Label eksempelNummer;
-
-    @FXML
-    private Label eksempelTitel;
+    private GridPane billedeContainer;
 
     // ObservableList der kan indeholde alle kunstværker som er sat til favoritter i Databasen
     private ObservableList<Kunstværk> favoritter = FXCollections.observableArrayList();
@@ -136,8 +120,11 @@ public class FavoritterController
                     // Skifter til Pop-up siden, hvor kunstværket vises i større format
                     sceneManeger.skiftSceneTilbage(event,
                             "/com/example/eksamensprojekt/gui/Favoritter.fxml",
-                            "/com/example/eksamensprojekt/gui/Pop-Up.fxml"
-                    );
+                            "/com/example/eksamensprojekt/gui/Pop-Up.fxml");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
 
             // Opretter labels med nummer, titel og årstal
             Label nummer = new Label(kunstværk.getId());

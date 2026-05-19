@@ -266,14 +266,14 @@
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </HBox>
-                        <HBox fx:id="email" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../Billeder/Mail.png" />
                                  </image>
                               </ImageView>
-                              <Label text="Email: info@kunsthalholmen.dk">
+                              <Label fx:id="email" text="Email: info@kunsthalholmen.dk">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
