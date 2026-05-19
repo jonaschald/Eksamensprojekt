@@ -29,15 +29,14 @@ import java.nio.file.Path;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public class WatanabeSamlingenController {
-
+public class WatanabeSamlingenController
+{
     @FXML
     private Label adresse;
     @FXML
     private Label telefon;
     @FXML
     private Label email;
-
     @FXML
     private Label åbningstider;
 
