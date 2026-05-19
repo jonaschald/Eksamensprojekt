@@ -15,7 +15,9 @@ public class Kunstværk
     private boolean favorit;
 
     // Konstruktør
-    public Kunstværk (String id, String serieNummer, String titel, String kunstner, int årstal, String størrelseMedRamme, String størrelseUdenRamme, String beskrivelse, byte[] billedeData, int  temaId, boolean favorit) {
+    public Kunstværk (String id, String serieNummer, String titel, String kunstner, int årstal,
+                      String størrelseMedRamme, String størrelseUdenRamme, String beskrivelse,
+                      byte[] billedeData, int  temaId, boolean favorit) {
         this.id = id;
         this.serieNummer = serieNummer;
         this.titel = titel;

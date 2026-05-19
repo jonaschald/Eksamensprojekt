@@ -223,7 +223,8 @@ public class DAOImplementation implements DAO
                         byte[] billede2 = resultSet.getBytes("Image2");
                         byte[] billede3 = resultSet.getBytes("Image3");
 
-                        OmOs omOsObjekt = new OmOs(id, titel, beskrivelse, adresse, telefonnummer, email, billede1, billede2, billede3);
+                        OmOs omOsObjekt = new OmOs(id, titel, beskrivelse, adresse,
+                                telefonnummer, email, billede1, billede2, billede3);
 
                         omOs.add(omOsObjekt);
                     }
@@ -306,7 +307,42 @@ public class DAOImplementation implements DAO
 
     @Override
     public void hentKunstværkerEfterTema(int temaId, ObservableList<Kunstværk> kunstværker) throws ExecutionException, InterruptedException {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try(Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("SELECT * FROM Art_Pieces WHERE ThemeID = ?");
+                    preparedStatement.setInt(1, temaId);
 
+                    ResultSet resultSet = preparedStatement.executeQuery();
+
+                    while (resultSet.next()) {
+                        String id = resultSet.getString("ID");
+                        String serieNummer = resultSet.getString("Serial_Number");
+                        String titel = resultSet.getString("Title");
+                        int årstal = resultSet.getInt("Year");
+                        String kunstner = resultSet.getString("Artist");
+                        String størrelseMedRamme = resultSet.getString("Size_With_Frame");
+                        String størrelseUdenRamme = resultSet.getString("Size_Without_Frame");
+                        String beskrivelse = resultSet.getString("Description");
+                        byte[] billedeData = resultSet.getBytes("Image_Data");
+                        int temaID = resultSet.getInt("ThemeID");
+                        boolean favorit = resultSet.getBoolean("Favorite");
+
+                        Kunstværk kunstværk = new Kunstværk(id, serieNummer, titel, kunstner, årstal,
+                                størrelseMedRamme, størrelseUdenRamme, beskrivelse, billedeData, temaID, favorit);
+
+                        kunstværker.add(kunstværk);
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Kunne ikke hente temaer fra databasen");
+                    e.printStackTrace();
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
     }
 
     @Override

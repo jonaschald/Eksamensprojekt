@@ -37,10 +37,10 @@ public interface DAO
     public boolean sletKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
 
     // Metoder til redigering af tekst og billeder på Forsiden Admin
-    // Skal laves database tabeller og metoder
+    // Der skal laves database tabeller og database metoder til det
 
     // Metoder til redigering af tekst og billeder på Pop-up siden Admin (det enkelte kunstværks nummer, titel osv.)
-    // Skal laves database tabeller og metoder
+    // Der skal laves database tabeller og database metoder til det
     public void opdaterKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
 
     // Metoder til redigering af tekst og billeder i Om Samlingen Admin

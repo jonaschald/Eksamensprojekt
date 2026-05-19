@@ -28,8 +28,8 @@ import java.nio.file.Path;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public class WatanabeSamlingenController {
-
+public class WatanabeSamlingenController
+{
     // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
     SceneManeger sceneManeger = new SceneManeger();
 
@@ -50,27 +50,16 @@ public class WatanabeSamlingenController {
     {
         // Henter kunstværkerne fra Databasen og viser kunstværkerne
         try {
-
             dao.hentAlleKunstværker(kunstværker);
-
-            visKunstværk();
-
+            visKunstværker(kunstværker);
         } catch (Exception e) {
-
             // Udskriver fejlen i konsollen
-            System.out.println(
-                    "Fejl i Initialize i WatanabeSamlingenController: " +
-                            "Kunne ikke hente Watanabe-samlingen fra databasen"
-            );
-
+            System.out.println("Fejl i Initialize i WatanabeSamlingenController: " +
+                            "Kunne ikke hente Watanabe-samlingen fra databasen");
             e.printStackTrace();
 
             // Giver brugeren besked om fejlen
-            Alert alert = new Alert(
-                    Alert.AlertType.ERROR,
-                    "Kunstværkerne kunne ikke hentes fra Databasen"
-            );
-
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunstværkerne kunne ikke hentes fra Databasen");
             alert.show();
         }
 
@@ -81,14 +70,8 @@ public class WatanabeSamlingenController {
     }
 
     // Metode til at vise alle kunstværkerne fra databasen i et GridPane
-    public void visKunstværk()
-    {
-        visKunstværkerListe(kunstværker);
-    }
-
-    // Viser en bestemt liste af kunstværker i GridPane.
     // Bruges både til at vise hele samlingen og søgeresultater.
-    private void visKunstværkerListe(ObservableList<Kunstværk> liste)
+    private void visKunstværker(ObservableList<Kunstværk> kunstværker)
     {
         // Fjerner alle elementer i vores GridPane - for at undgå dubletter
         billedeContainer.getChildren().clear();
@@ -105,31 +88,24 @@ public class WatanabeSamlingenController {
         int række = 0;
 
         // Går alle kunstværkerne igennem og sætter hvert kunstværk op i GridPane
-        for (Kunstværk kunstværk : liste)
+        for (Kunstværk kunstværk : kunstværker)
         {
             // Opretter en VBox til at indeholde billedet og informationstekst
             VBox vBox = new VBox();
-
             vBox.setSpacing(5);
-
             vBox.setPrefWidth(290);
-
             vBox.setAlignment(Pos.TOP_LEFT);
 
             // Henter billedet/kunstværket fra Databasen
-            ByteArrayInputStream byteArrayInputStream =
-                    new ByteArrayInputStream(kunstværk.getBilledeData());
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(kunstværk.getBilledeData());
 
             // Opretter et JavaFX billede ud fra billeddataene
             Image image = new Image(byteArrayInputStream);
 
             // Opretter et ImageView der kan vise billedet på skærmen
             ImageView imageView = new ImageView(image);
-
             imageView.setFitWidth(290);
-
             imageView.setFitHeight(390);
-
             imageView.setPreserveRatio(true);
 
             // Gør billedet klikbart for brugeren
@@ -154,10 +130,8 @@ public class WatanabeSamlingenController {
                         kunstværk.getBeskrivelse();
 
                 try {
-
                     // Skifter til Pop-up siden, hvor kunstværket vises i større format
-                    sceneManeger.skiftSceneTilbage(
-                            event,
+                    sceneManeger.skiftSceneTilbage(event,
                             "/com/example/eksamensprojekt/gui/Watanabe-samlingen.fxml",
                             "/com/example/eksamensprojekt/gui/Pop-Up.fxml"
                     );
@@ -169,13 +143,7 @@ public class WatanabeSamlingenController {
 
             // Opretter labels med nummer, titel og årstal
             Label nummer = new Label(kunstværk.getId());
-
-            Label titel = new Label(
-                    kunstværk.getTitel()
-                            + " - "
-                            + kunstværk.getÅrstal()
-            );
-
+            Label titel = new Label(kunstværk.getTitel() + " - " + kunstværk.getÅrstal());
             titel.setWrapText(true);
 
             // Tilføjer billedet og labels i VBoxen
@@ -189,9 +157,7 @@ public class WatanabeSamlingenController {
 
             // Når der er 4 kunstværker på en række
             if (kolonne == 4) {
-
                 kolonne = 0;
-
                 række = række + 1;
             }
         }
@@ -201,8 +167,9 @@ public class WatanabeSamlingenController {
     private void soegKunstvaerk(String soegeTekst) {
 
         // Hvis søgefeltet er tomt, vises hele samlingen igen
-        if (soegeTekst == null || soegeTekst.isBlank()) {
-            visKunstværk();
+        if (soegeTekst == null || soegeTekst.isBlank())
+        {
+            visKunstværker(kunstværker);
             return;
         }
 
@@ -213,12 +180,11 @@ public class WatanabeSamlingenController {
         ObservableList<Kunstværk> filtreretListe = FXCollections.observableArrayList();
 
         // Gennemgår alle kunstværker og tjekker om ID, titel eller årstal matcher søgeteksten
-        for (Kunstværk kunstværk : kunstværker) {
-
-            boolean matcher =
-                    kunstværk.getId().toLowerCase().contains(tekst)
-                            || kunstværk.getTitel().toLowerCase().contains(tekst)
-                            || String.valueOf(kunstværk.getÅrstal()).contains(tekst);
+        for (Kunstværk kunstværk : kunstværker)
+        {
+            boolean matcher = kunstværk.getId().toLowerCase().contains(tekst)
+                    || kunstværk.getTitel().toLowerCase().contains(tekst)
+                    || String.valueOf(kunstværk.getÅrstal()).contains(tekst);
 
             // Hvis kunstværket matcher søgningen, tilføjes det til søgeresultatet
             if (matcher) {
@@ -227,64 +193,52 @@ public class WatanabeSamlingenController {
         }
 
         // Viser kun de kunstværker, der matcher søgningen
-        visKunstværkerListe(filtreretListe);
+        visKunstværker(filtreretListe);
     }
 
     // Sorterer kunstværker fra ældste til nyeste årstal
     @FXML
-    void filterAarstalOp(ActionEvent event) {
-
-        FXCollections.sort(
-                kunstværker,
-                (a, b) -> Integer.compare(a.getÅrstal(), b.getÅrstal())
-        );
+    void filterAarstalOp(ActionEvent event)
+    {
+        FXCollections.sort(kunstværker, (a, b) -> Integer.compare(a.getÅrstal(), b.getÅrstal()));
 
         // Rydder søgefeltet, så hele den sorterede liste vises
         searchField.clear();
 
         // Viser den sorterede liste
-        visKunstværk();
+        visKunstværker(kunstværker);
     }
 
     // Sorterer kunstværker fra nyeste til ældste årstal
     @FXML
     void filterAarstalNed(ActionEvent event) {
 
-        FXCollections.sort(
-                kunstværker,
-                (a, b) -> Integer.compare(b.getÅrstal(), a.getÅrstal())
-        );
+        FXCollections.sort(kunstværker, (a, b) -> Integer.compare(b.getÅrstal(), a.getÅrstal()));
 
         // Rydder søgefeltet, så hele den sorterede liste vises
         searchField.clear();
 
         // Viser den sorterede liste
-        visKunstværk();
+        visKunstværker(kunstværker);
     }
 
     // Downloader hele Watanabe-samlingen som en ZIP-fil
     @FXML
-    void downloadHeleSamlingen(ActionEvent event) {
-
+    void downloadHeleSamlingen(ActionEvent event)
+    {
         System.out.println("Downloader en test fil i .zip format");
 
         String sti = "/com/example/eksamensprojekt/Billeder";
-
         String zipNavn = "Watanabe_Samling";
-
         File fil;
 
         try {
-
             // Finder mappen i resources
-            File malerier =
-                    new File(getClass().getResource(sti).toURI());
+            File malerier = new File(getClass().getResource(sti).toURI());
 
             // Er mappen en mappe?
             if (!malerier.isDirectory()) {
-
                 System.out.println("Malerier eksisterer ikke");
-
                 return;
             }
 
@@ -299,8 +253,8 @@ public class WatanabeSamlingenController {
             // Skab en ny zip fil
             fil = new File(downloadSti, zipNavn + ".zip");
 
-            if (fil.exists()) {
-
+            if (fil.exists())
+            {
                 int svar = JOptionPane.showConfirmDialog(
                         null,
                         "Filen findes allerede. Overskriv?",
@@ -314,38 +268,27 @@ public class WatanabeSamlingenController {
             }
 
             try {
-
                 downloadTilZip(malerier.toPath(), fil.toPath());
-
             } catch (IOException | UncheckedIOException e) {
-
                 throw new RuntimeException(e.getMessage());
             }
 
         } catch (URISyntaxException | RuntimeException e) {
-
-            System.out.println(
-                    "Fejl med download: " + e.getMessage()
-            );
+            System.out.println("Fejl med download: " + e.getMessage());
         }
     }
 
     // Skab et vindue der giver brugeren muligheden for at angive hvor
     // Watanabe Samlingen skal downloades
-    private File spørgEfterDownloadSti() {
-
+    private File spørgEfterDownloadSti()
+    {
         JFileChooser jfc = new JFileChooser();
-
-        jfc.setFileSelectionMode(
-                JFileChooser.DIRECTORIES_ONLY
-        );
-
+        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         jfc.setAcceptAllFileFilterUsed(false);
-
         int result = jfc.showSaveDialog(null);
 
-        if (result == JFileChooser.APPROVE_OPTION) {
-
+        if (result == JFileChooser.APPROVE_OPTION)
+        {
             return jfc.getSelectedFile();
         }
 
@@ -353,144 +296,88 @@ public class WatanabeSamlingenController {
     }
 
     // Download alle filer i en mappe til en zip fil
-    private void downloadTilZip(Path kilde, Path zipFil)
-            throws IOException {
+    private void downloadTilZip(Path kilde, Path zipFil) throws IOException {
+        try (FileOutputStream fos = new FileOutputStream(zipFil.toFile());
+             ZipOutputStream zipOut = new ZipOutputStream(fos))
+        {
+            Files.walk(kilde).filter(Files::isRegularFile).forEach(path ->
+            {
+                        Path relativ = kilde.relativize(path);
 
-        try (
-                FileOutputStream fos =
-                        new FileOutputStream(zipFil.toFile());
-
-                ZipOutputStream zipOut =
-                        new ZipOutputStream(fos)
-        ) {
-
-            Files.walk(kilde)
-
-                    .filter(Files::isRegularFile)
-
-                    .forEach(path -> {
-
-                        Path relativ =
-                                kilde.relativize(path);
-
-                        try (
-                                InputStream in =
-                                        Files.newInputStream(path)
-                        ) {
-
-                            ZipEntry entry =
-                                    new ZipEntry(
-                                            relativ.toString()
-                                                    .replace("\\", "/")
-                                    );
-
+                        try (InputStream in = Files.newInputStream(path))
+                        {
+                            ZipEntry entry = new ZipEntry(relativ.toString().replace("\\", "/"));
                             zipOut.putNextEntry(entry);
 
                             byte[] buffer = new byte[8192];
 
                             int len;
 
-                            while ((len = in.read(buffer)) > 0) {
-
+                            while ((len = in.read(buffer)) > 0)
+                            {
                                 zipOut.write(buffer, 0, len);
                             }
 
                             zipOut.closeEntry();
 
                         } catch (IOException e) {
-
                             throw new UncheckedIOException(e);
                         }
                     });
 
             zipOut.finish();
-
             Desktop.getDesktop().open(zipFil.toFile());
         }
     }
 
     @FXML
-    void adminKnap(MouseEvent event)
-            throws IOException {
-
-        sceneManeger.skiftSceneMouse(
-                event,
-                "/com/example/eksamensprojekt/gui/Login.fxml"
-        );
+    void adminKnap(MouseEvent event) throws IOException
+    {
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Login.fxml");
     }
 
     @FXML
-    void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
-
+    void besøgKunsthallensHjemmesideKnap(MouseEvent event)
+    {
         try {
-
-            Desktop.getDesktop().browse(
-                    new URI("https://kunsthalholmen.dk/")
-            );
-
+            Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
         } catch (Exception e) {
-
             e.printStackTrace();
         }
     }
 
     @FXML
-    void favoritterKnap(MouseEvent event)
-            throws IOException {
-
-        sceneManeger.skiftSceneMouse(
-                event,
-                "/com/example/eksamensprojekt/gui/Favoritter.fxml"
-        );
+    void favoritterKnap(MouseEvent event) throws IOException
+    {
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Favoritter.fxml");
     }
 
     @FXML
-    void omOsKnap(MouseEvent event)
-            throws IOException {
-
-        sceneManeger.skiftSceneMouse(
-                event,
-                "/com/example/eksamensprojekt/gui/Om-Os.fxml"
-        );
+    void omOsKnap(MouseEvent event) throws IOException
+    {
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Om-Os.fxml");
     }
 
     @FXML
-    void omSamlingenKnap(MouseEvent event)
-            throws IOException {
-
-        sceneManeger.skiftSceneMouse(
-                event,
-                "/com/example/eksamensprojekt/gui/Om-Samlingen.fxml"
-        );
+    void omSamlingenKnap(MouseEvent event) throws IOException
+    {
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Om-Samlingen.fxml");
     }
 
     @FXML
-    void temaerKnap(MouseEvent event)
-            throws IOException {
-
-        sceneManeger.skiftSceneMouse(
-                event,
-                "/com/example/eksamensprojekt/gui/Temaer.fxml"
-        );
+    void temaerKnap(MouseEvent event) throws IOException {
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Temaer.fxml");
     }
 
     @FXML
-    void undervisningKnap(MouseEvent event)
-            throws IOException {
-
-        sceneManeger.skiftSceneMouse(
-                event,
-                "/com/example/eksamensprojekt/gui/Undervisning.fxml"
-        );
+    void undervisningKnap(MouseEvent event) throws IOException
+    {
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Undervisning.fxml");
     }
 
     @FXML
-    void tilStartSide(MouseEvent event)
-            throws IOException {
-
-        sceneManeger.skiftSceneMouse(
-                event,
-                "/com/example/eksamensprojekt/gui/Forside.fxml"
-        );
+    void tilStartSide(MouseEvent event) throws IOException
+    {
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Forside.fxml");
     }
 }
