@@ -30,8 +30,6 @@ public class DAOImplementation implements DAO
         kilde.setPortNumber(1433);
         kilde.setServerName("10.176.111.34");
         kilde.setTrustServerCertificate(true);
-
-        System.out.println("Database: " + kilde.getDatabaseName());
     }
 
     @Override
