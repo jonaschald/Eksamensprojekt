@@ -1,6 +1,7 @@
 package com.example.eksamensprojekt.controllers;
 
 import com.example.eksamensprojekt.*;
+import com.example.eksamensprojekt.undervisning.DataDeling;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -21,6 +22,16 @@ import java.net.URI;
 import java.util.Objects;
 
 public class TemaController {
+
+    @FXML
+    private Label adresse;
+    @FXML
+    private Label telefon;
+    @FXML
+    private Label email;
+
+    @FXML
+    private Label åbningstider;
 
     @FXML
     private VBox billedeContainer;
@@ -160,6 +171,11 @@ public class TemaController {
     // Kører automatisk når siden åbnes
     public void initialize() {
 
+        // Så bundlinjen viser de informationer man som Admin sætter i Om Os
+        adresse.textProperty().bindBidirectional(DataDeling.omOsAdresse2());
+        telefon.textProperty().bindBidirectional(DataDeling.omOsTelefon2());
+        email.textProperty().bindBidirectional(DataDeling.omOsEmail2());
+        if (DataDeling.omOsÅbningstider != null) { åbningstider.setText(DataDeling.omOsÅbningstider); }
     }
 
     // Midlertidig testknap der tilføjer et kunstværk til siden

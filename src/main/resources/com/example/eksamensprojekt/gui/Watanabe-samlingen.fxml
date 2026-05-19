@@ -233,7 +233,7 @@
                                     <Image url="@../Billeder/Lokation.png" />
                                  </image>
                               </ImageView>
-                              <Label text="Østergave 13&#10;DK-6240 Løgumkloster">
+                              <Label fx:id="adresse" text="Østergave 13&#10;DK-6240 Løgumkloster">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -253,7 +253,7 @@
                                     <Image url="@../Billeder/Telefon.png" />
                                  </image>
                               </ImageView>
-                              <Label text="Telefon: (+45) 74 74 41 65&#10;Mobil: (+45) 41 41 87 36">
+                              <Label fx:id="telefon" text="Telefon: (+45) 74 74 41 65&#10;Mobil: (+45) 41 41 87 36">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -266,7 +266,7 @@
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                        <HBox fx:id="email" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -309,12 +309,7 @@
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </Label>
-                        <Label text="Torsdag - Søndag: kl. 13.00 - 17.00">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label text="Mandag - Onsdag: lukket">
+                        <Label fx:id="åbningstider" text="Torsdag - Søndag: kl. 13.00 - 17.00&#10;Mandag - Onsdag: lukket">
                            <font>
                               <Font size="20.0" />
                            </font>

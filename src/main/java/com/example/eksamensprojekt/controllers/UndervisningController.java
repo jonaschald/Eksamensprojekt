@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
@@ -19,6 +20,16 @@ import java.util.concurrent.ExecutionException;
 
 public class UndervisningController
 {
+    @FXML
+    private Label adresse;
+    @FXML
+    private Label telefon;
+    @FXML
+    private Label email;
+
+    @FXML
+    private Label åbningstider;
+
     @FXML
     private ListView<PdfItem> indskolingData;
 
@@ -96,6 +107,12 @@ public class UndervisningController
             Alert alert = new Alert(Alert.AlertType.ERROR, "Undervisningsmaterialerne kunne ikke hentes fra Databasen");
             alert.show();
         }
+
+        // Så bundlinjen viser de informationer man som Admin sætter i Om Os
+        adresse.textProperty().bindBidirectional(DataDeling.omOsAdresse2());
+        telefon.textProperty().bindBidirectional(DataDeling.omOsTelefon2());
+        email.textProperty().bindBidirectional(DataDeling.omOsEmail2());
+        if (DataDeling.omOsÅbningstider != null) { åbningstider.setText(DataDeling.omOsÅbningstider); }
     }
 
     // Metode til at brugeren kan åbne et Undervisningsmateriale/PDF ved at dobbelt-klikke på det

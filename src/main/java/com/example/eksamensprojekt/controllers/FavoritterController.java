@@ -1,6 +1,7 @@
 package com.example.eksamensprojekt.controllers;
 
 import com.example.eksamensprojekt.SceneManeger;
+import com.example.eksamensprojekt.undervisning.DataDeling;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -16,10 +17,19 @@ import javafx.scene.text.TextAlignment;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Objects;
 
 public class FavoritterController
 {
+    @FXML
+    private Label adresse;
+    @FXML
+    private Label telefon;
+    @FXML
+    private Label email;
+
+    @FXML
+    private Label åbningstider;
+
     @FXML
     private VBox billedeContainer;
 
@@ -87,6 +97,12 @@ public class FavoritterController
     }
 
     public void initialize() {
+        // Så bundlinjen viser de informationer man som Admin sætter i Om Os
+        adresse.textProperty().bindBidirectional(DataDeling.omOsAdresse2());
+        telefon.textProperty().bindBidirectional(DataDeling.omOsTelefon2());
+        email.textProperty().bindBidirectional(DataDeling.omOsEmail2());
+        if (DataDeling.omOsÅbningstider != null) { åbningstider.setText(DataDeling.omOsÅbningstider); }
+
         if (!billedeContainer.getChildren().isEmpty()) {
             ufyldtRække = (HBox) billedeContainer.getChildren().getFirst();
         }

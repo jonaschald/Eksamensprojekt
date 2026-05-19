@@ -16,8 +16,17 @@ public class OmSamlingenController {
     SceneManeger sceneManeger = new SceneManeger();
 
     @FXML
-    private ImageView billedeBund;
+    private Label adresseLabel;
+    @FXML
+    private Label telefonLabel;
+    @FXML
+    private Label emailLabel;
 
+    @FXML
+    private Label åbningstider;
+
+    @FXML
+    private ImageView billedeBund;
     @FXML
     private ImageView billedeTop;
 
