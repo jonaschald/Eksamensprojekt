@@ -334,51 +334,66 @@ public class WatanabeSamlingenController
         }
     }
 
+    // Skifter scenen til Admin Login
     @FXML
     void adminKnap(MouseEvent event) throws IOException
     {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Login.fxml");
     }
 
+    // Metode til at brugeren kan åbne Kunsthal Holmens hjemmeside i bundlinjen
     @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event)
     {
         try {
+            // Åbner hjemmesiden i computerens standardbrowser
             Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
         } catch (Exception e) {
-            e.printStackTrace();
+            // Udskriver fejlen i konsollen
+            System.out.println("Kunne ikke åbne Kunsthal Holmens hjemmeside");
+            e.printStackTrace(); // Printer hele fejlen i konsollen
+
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke åbne Kunsthal Holmens hjemmeside");
+            alert.show();
         }
     }
 
+    // Skifter scenen til Favoritter
     @FXML
     void favoritterKnap(MouseEvent event) throws IOException
     {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Favoritter.fxml");
     }
 
+    // Skifter scenen til Om Os
     @FXML
     void omOsKnap(MouseEvent event) throws IOException
     {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Om-Os.fxml");
     }
 
+    // Skifter scenen til Om Samlingen
     @FXML
     void omSamlingenKnap(MouseEvent event) throws IOException
     {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Om-Samlingen.fxml");
     }
 
+    // Skifter scenen til Temaer
     @FXML
     void temaerKnap(MouseEvent event) throws IOException {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Temaer.fxml");
     }
 
+    // Skifter scenen til Undervisningssiden
     @FXML
     void undervisningKnap(MouseEvent event) throws IOException
     {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Undervisning.fxml");
     }
 
+    // Skifter scenen til Startsiden
     @FXML
     void tilStartSide(MouseEvent event) throws IOException
     {

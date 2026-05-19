@@ -155,13 +155,21 @@ public class FavoritterController
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Login.fxml");
     }
 
+    // Metode til at brugeren kan åbne Kunsthal Holmens hjemmeside i bundlinjen
     @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event)
     {
         try {
+            // Åbner hjemmesiden i computerens standardbrowser
             Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
         } catch (Exception e) {
-            e.printStackTrace();
+            // Udskriver fejlen i konsollen
+            System.out.println("Kunne ikke åbne Kunsthal Holmens hjemmeside");
+            e.printStackTrace(); // Printer hele fejlen i konsollen
+
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke åbne Kunsthal Holmens hjemmeside");
+            alert.show();
         }
     }
 
