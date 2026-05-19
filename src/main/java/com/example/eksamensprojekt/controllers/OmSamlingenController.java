@@ -11,8 +11,9 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 
-public class OmSamlingenController {
-
+public class OmSamlingenController
+{
+    // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
     SceneManeger sceneManeger = new SceneManeger();
 
     @FXML
@@ -27,13 +28,9 @@ public class OmSamlingenController {
     @FXML
     public void initialize() {
 
-        Image topBillede = hentBillede(
-                "/com/example/eksamensprojekt/Billeder/watanabeTop.jpg"
-        );
+        Image topBillede = hentBillede("/com/example/eksamensprojekt/Billeder/watanabeTop.jpg");
 
-        Image bundBillede = hentBillede(
-                "/com/example/eksamensprojekt/Billeder/watanabeBund.jpg"
-        );
+        Image bundBillede = hentBillede("/com/example/eksamensprojekt/Billeder/watanabeBund.jpg");
 
         if (topBillede != null) {
             billedeTop.setImage(topBillede);
@@ -69,18 +66,13 @@ public class OmSamlingenController {
     // Skifter scenen til Admin Login
     @FXML
     void adminKnap(MouseEvent event) throws IOException {
-        sceneManeger.skiftSceneMouse(event,
-                "/com/example/eksamensprojekt/gui/Login.fxml");
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Login.fxml");
     }
 
     @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
-
         try {
-            Desktop.getDesktop().browse(
-                    new URI("https://kunsthalholmen.dk/")
-            );
-
+            Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,48 +81,36 @@ public class OmSamlingenController {
     // Skifter scenen til Favoritter
     @FXML
     void favoritterKnap(MouseEvent event) throws IOException {
-
-        sceneManeger.skiftSceneMouse(event,
-                "/com/example/eksamensprojekt/gui/Favoritter.fxml");
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Favoritter.fxml");
     }
 
     // Skifter scenen til Om Os
     @FXML
     void omOsKnap(MouseEvent event) throws IOException {
-
-        sceneManeger.skiftSceneMouse(event,
-                "/com/example/eksamensprojekt/gui/Om-Os.fxml");
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Om-Os.fxml");
     }
 
     // Skifter scenen til Startsiden
     @FXML
     void tilStartSide(MouseEvent event) throws IOException {
-
-        sceneManeger.skiftSceneMouse(event,
-                "/com/example/eksamensprojekt/gui/Forside.fxml");
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Forside.fxml");
     }
 
     // Skifter scenen til Temaer
     @FXML
     void temaerKnap(MouseEvent event) throws IOException {
-
-        sceneManeger.skiftSceneMouse(event,
-                "/com/example/eksamensprojekt/gui/Temaer.fxml");
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Temaer.fxml");
     }
 
     // Skifter scenen til Undervisning
     @FXML
     void undervisningKnap(MouseEvent event) throws IOException {
-
-        sceneManeger.skiftSceneMouse(event,
-                "/com/example/eksamensprojekt/gui/Undervisning.fxml");
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Undervisning.fxml");
     }
 
     // Skifter scenen til Samlingen
     @FXML
     void watanabeSamlingenKnap(MouseEvent event) throws IOException {
-
-        sceneManeger.skiftSceneMouse(event,
-                "/com/example/eksamensprojekt/gui/Watanabe-samlingen.fxml");
+        sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Watanabe-samlingen.fxml");
     }
 }
