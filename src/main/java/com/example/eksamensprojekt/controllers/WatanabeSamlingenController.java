@@ -41,8 +41,6 @@ public class WatanabeSamlingenController {
     @FXML
     private Label åbningstider;
 
-public class WatanabeSamlingenController
-{
     // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
     SceneManeger sceneManeger = new SceneManeger();
 
@@ -85,8 +83,6 @@ public class WatanabeSamlingenController
         telefon.textProperty().bindBidirectional(DataDeling.omOsTelefon2());
         email.textProperty().bindBidirectional(DataDeling.omOsEmail2());
         if (DataDeling.omOsÅbningstider != null) { åbningstider.setText(DataDeling.omOsÅbningstider); }
-                (observable, oldValue, newValue) -> soegKunstvaerk(newValue)
-        );
     }
 
     // Metode til at vise alle kunstværkerne fra databasen i et GridPane
