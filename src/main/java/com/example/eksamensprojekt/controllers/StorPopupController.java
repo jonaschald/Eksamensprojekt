@@ -8,8 +8,9 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
-public class StorPopupController {
-
+public class StorPopupController
+{
+    // Opretter et SceneManeger objekt - bruges til at skifte mellem FXML sider
     SceneManeger sceneManeger = new SceneManeger();
 
     @FXML

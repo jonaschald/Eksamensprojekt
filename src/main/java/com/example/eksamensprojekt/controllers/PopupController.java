@@ -13,26 +13,19 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 public class PopupController
 {
+    // Gemmer det valgte kunstværk, så informationerne kan bruges i Pop-up siden
     public static Kunstværk valgtKunstværk;
-
-    // Gemmer billedet fra det valgte kunstværk
-    public static Image valgtBillede;
-
-    // Gemmer titlen fra det valgte kunstværk
-    public static String valgtTitel;
-
-    // Gemmer årstallet fra det valgte kunstværk
-    public static String valgtÅrstal;
-
-    // Gemmer beskrivelsen fra det valgte kunstværk
-    public static String valgtBeskrivelse;
 
     // Opretter et SceneManeger objekt - bruges til at skifte mellem FXML sider
     SceneManeger sceneManeger = new SceneManeger();
+
+    // Opretter et DAO objekt - bruges til kommunikation med databasen
+    DAO dao = new DAOImplementation();
 
     @FXML
     private Label InfoLabel;
@@ -52,23 +45,27 @@ public class PopupController
     @FXML
     private Button favoritKnap;
 
-    // Opretter et DAO objekt - bruges til kommunikation med databasen
-    DAO dao = new DAOImplementation();
-
     @FXML
-    public void initialize() {
-
+    public void initialize()
+    {
         // Viser det valgte billede i Pop-up vinduet
-        popupBillede.setImage(valgtBillede);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(valgtKunstværk.getBilledeData());
+        Image image = new Image(byteArrayInputStream);
+        popupBillede.setImage(image);
 
         // Viser titlen på det valgte kunstværk
-        titleLabel.setText(valgtTitel);
+        titleLabel.setText(valgtKunstværk.getTitel());
 
         // Viser årstallet på det valgte kunstværk
-        årstalLabel.setText(valgtÅrstal);
+        årstalLabel.setText(String.valueOf(valgtKunstværk.getÅrstal()));
 
         // Viser beskrivelsen på det valgte kunstværk
-        besktivelseLabel.setText(valgtBeskrivelse);
+        besktivelseLabel.setText(valgtKunstværk.getBeskrivelse());
+
+        // Viser kunstværkets nummer og størrelse
+        InfoLabel.setText("Nr: " + valgtKunstværk.getId() +
+                "\nStr. m/ramme: " + valgtKunstværk.getStørrelseMedRamme() +
+                "\nStr. u/ramme: " + valgtKunstværk.getStørrelseUdenRamme());
 
         // Hvis et billede er sat som favorit, så ændres knappens udseende til "- fjern fra favoritter"
         if(valgtKunstværk.isFavorit()) {

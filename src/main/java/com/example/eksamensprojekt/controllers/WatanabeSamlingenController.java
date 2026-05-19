@@ -86,7 +86,7 @@ public class WatanabeSamlingenController {
     }
 
     // Metode til at vise alle kunstværkerne fra databasen i et GridPane
-    // Bruges både til at vise hele samlingen og søgeresultater.
+    // Bruges både til at vise hele samlingen og søgeresultater
     private void visKunstværker(ObservableList<Kunstværk> kunstværker)
     {
         // Fjerner alle elementer i vores GridPane - for at undgå dubletter
@@ -133,18 +133,6 @@ public class WatanabeSamlingenController {
                 // Gemmer det valgte kunstværk i PopUpController
                 // så brugeren kan tilføje eller fjerne kunstværket som favorit
                 PopupController.valgtKunstværk = kunstværk;
-
-                // Gemmer det valgte billede, så Pop-up siden kan vise det
-                PopupController.valgtBillede = image;
-
-                // Gemmer titlen på det valgte kunstværk
-                PopupController.valgtTitel = kunstværk.getTitel();
-
-                // Gemmer årstallet på det valgte kunstværk
-                PopupController.valgtÅrstal = String.valueOf(kunstværk.getÅrstal());
-
-                // Gemmer beskrivelsen på det valgte kunstværk
-                PopupController.valgtBeskrivelse = kunstværk.getBeskrivelse();
 
                 try {
                     // Skifter til Pop-up siden, hvor kunstværket vises i større format

@@ -58,8 +58,8 @@ public class TemaController {
     private HBox ufyldtRække;
 
     // Skaber et nyt kunstværk-kort med billede, nummer og titel
-    private VBox nyMaleriKnap(String billedSti, String nummer, String titel) {
-
+    private VBox nyMaleriKnap(String billedSti, String nummer, String titel)
+    {
         VBox vBox = new VBox();
 
         // Sætter størrelse på boksen
@@ -81,24 +81,16 @@ public class TemaController {
 
         // Opretter label til kunstværkets nummer
         Label maleriNummer = new Label();
-
         maleriNummer.setText(nummer);
-
         maleriNummer.setFont(Font.font("System", FontWeight.BOLD, 20));
-
         maleriNummer.setTextAlignment(TextAlignment.LEFT);
-
         maleriNummer.setPrefWidth(290);
 
         // Opretter label til kunstværkets titel
         Label maleriTitel = new Label();
-
         maleriTitel.setText(titel);
-
         maleriTitel.setFont(Font.font("System", FontWeight.BOLD, 20));
-
         maleriTitel.setTextAlignment(TextAlignment.LEFT);
-
         maleriTitel.setPrefWidth(290);
 
         // Tilføjer billede og labels til VBoxen
@@ -127,8 +119,8 @@ public class TemaController {
     }
 
     // Tilføjer et kunstværk til den nuværende række
-    private void tilføjMaleri(String billedSti, String nummer, String titel) {
-
+    private void tilføjMaleri(String billedSti, String nummer, String titel)
+    {
         // Hvis der endnu ikke findes en række, oprettes en ny
         if (ufyldtRække == null) {
             nyRække();
@@ -153,17 +145,13 @@ public class TemaController {
     private void visMaleri(MouseEvent event) {
 
         try {
-
-            sceneManager.skiftSceneTilbage(
-                    event,
+            sceneManager.skiftSceneTilbage(event,
                     "/com/example/eksamensprojekt/gui/Temaer.fxml",
                     "/com/example/eksamensprojekt/gui/Pop-Up.fxml"
             );
 
         } catch (IOException e) {
-
             e.printStackTrace();
-
             throw new RuntimeException(e);
         }
     }
@@ -180,17 +168,11 @@ public class TemaController {
 
     // Midlertidig testknap der tilføjer et kunstværk til siden
     @FXML
-    void temaFilter(ActionEvent event) {
-
-        tilføjMaleri(
-                Objects.requireNonNull(
-                        getClass().getResource(
-                                "/com/example/eksamensprojekt/Billeder/Billede.png"
-                        )
-                ).toExternalForm(),
-                "test nummer",
-                "test titel"
-        );
+    void temaFilter(ActionEvent event)
+    {
+        tilføjMaleri(Objects.requireNonNull(getClass().getResource(
+                "/com/example/eksamensprojekt/Billeder/Billede.png")).toExternalForm(),
+                "test nummer", "test titel");
     }
 
     @FXML
@@ -200,87 +182,63 @@ public class TemaController {
 
     // Skifter scenen til Admin Login
     @FXML
-    void adminKnap(MouseEvent event) throws IOException {
-
-        sceneManager.skiftSceneMouse(
-                event,
-                "/com/example/eksamensprojekt/gui/Login.fxml"
+    void adminKnap(MouseEvent event) throws IOException
+    {
+        sceneManager.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Login.fxml"
         );
     }
 
     // Åbner Kunsthal Holmens hjemmeside i browseren
     @FXML
-    void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
-
+    void besøgKunsthallensHjemmesideKnap(MouseEvent event)
+    {
         try {
-
-            Desktop.getDesktop().browse(
-                    new URI("https://kunsthalholmen.dk/")
-            );
-
+            Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
         } catch (Exception e) {
-
             e.printStackTrace();
         }
     }
 
     // Skifter scenen til Favoritter
     @FXML
-    void favoritterKnap(MouseEvent event) throws IOException {
-
-        sceneManager.skiftSceneMouse(
-                event,
-                "/com/example/eksamensprojekt/gui/Favoritter.fxml"
-        );
+    void favoritterKnap(MouseEvent event) throws IOException
+    {
+        sceneManager.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Favoritter.fxml");
     }
 
     // Skifter scenen til Om Os
     @FXML
-    void omOsKnap(MouseEvent event) throws IOException {
-
-        sceneManager.skiftSceneMouse(
-                event,
-                "/com/example/eksamensprojekt/gui/Om-Os.fxml"
-        );
+    void omOsKnap(MouseEvent event) throws IOException
+    {
+        sceneManager.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Om-Os.fxml");
     }
 
     // Skifter scenen til Om Samlingen
     @FXML
-    void omSamlingenKnap(MouseEvent event) throws IOException {
-
-        sceneManager.skiftSceneMouse(
-                event,
-                "/com/example/eksamensprojekt/gui/Om-Samlingen.fxml"
-        );
+    void omSamlingenKnap(MouseEvent event) throws IOException
+    {
+        sceneManager.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Om-Samlingen.fxml");
     }
 
     // Skifter scenen til Undervisning
     @FXML
-    void undervisningKnap(MouseEvent event) throws IOException {
-
-        sceneManager.skiftSceneMouse(
-                event,
-                "/com/example/eksamensprojekt/gui/Undervisning.fxml"
+    void undervisningKnap(MouseEvent event) throws IOException
+    {
+        sceneManager.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Undervisning.fxml"
         );
     }
 
     // Skifter scenen til Watanabe-samlingen
     @FXML
-    void watanabeSamlingenKnap(MouseEvent event) throws IOException {
-
-        sceneManager.skiftSceneMouse(
-                event,
-                "/com/example/eksamensprojekt/gui/Watanabe-samlingen.fxml"
-        );
+    void watanabeSamlingenKnap(MouseEvent event) throws IOException
+    {
+        sceneManager.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Watanabe-samlingen.fxml");
     }
 
     // Skifter scenen tilbage til Forsiden
     @FXML
-    void tilStartSide(MouseEvent event) throws IOException {
-
-        sceneManager.skiftSceneMouse(
-                event,
-                "/com/example/eksamensprojekt/gui/Forside.fxml"
-        );
+    void tilStartSide(MouseEvent event) throws IOException
+    {
+        sceneManager.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Forside.fxml");
     }
 }
