@@ -18,15 +18,6 @@ import java.io.IOException;
 
 public class PopupController
 {
-    // Gemmer det valgte kunstværk, så informationerne kan bruges i Pop-up siden
-    public static Kunstværk valgtKunstværk;
-
-    // Opretter et SceneManeger objekt - bruges til at skifte mellem FXML sider
-    SceneManeger sceneManeger = new SceneManeger();
-
-    // Opretter et DAO objekt - bruges til kommunikation med databasen
-    DAO dao = new DAOImplementation();
-
     @FXML
     private Label InfoLabel;
 
@@ -45,7 +36,16 @@ public class PopupController
     @FXML
     private Button favoritKnap;
 
-    @FXML
+    // Gemmer det valgte kunstværk, så informationerne kan bruges i Pop-up siden
+    public static Kunstværk valgtKunstværk;
+
+    // Opretter et SceneManeger objekt - bruges til at skifte mellem FXML sider
+    SceneManeger sceneManeger = new SceneManeger();
+
+    // Opretter et DAO objekt - bruges til kommunikation med databasen
+    DAO dao = new DAOImplementation();
+
+    // Kører automatisk når FXML siden åbnes
     public void initialize()
     {
         // Viser det valgte billede i Pop-up vinduet
@@ -93,7 +93,8 @@ public class PopupController
 
     // Metode til at brugeren kan tilføje eller fjerne et kunstværk som favorit via. Favorit knappen
     @FXML
-    void tilføjTilFavoritterKnap(ActionEvent event) {
+    void tilføjTilFavoritterKnap(ActionEvent event)
+    {
         try {
             // Hvis kunstværket er markeret som favorit og brugeren klikker på knappen
             if(valgtKunstværk.isFavorit()) {
@@ -127,8 +128,7 @@ public class PopupController
     @FXML
     void tilStorPopUp(MouseEvent event) throws IOException
     {
-        sceneManeger.skiftSceneTilbage(event,
-                "/com/example/eksamensprojekt/gui/Pop-Up.fxml",
+        sceneManeger.skiftSceneTilbage(event, "/com/example/eksamensprojekt/gui/Pop-Up.fxml",
                 "/com/example/eksamensprojekt/gui/Stor-Pop-up.fxml");
     }
 }

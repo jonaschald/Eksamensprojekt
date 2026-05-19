@@ -22,6 +22,7 @@ public class HelloApplication extends Application
         // Lukker programmet pænt når man klikker på krydset
         stage.setOnCloseRequest((e) -> {
             Platform.exit();
+            System.exit(0);
         });
     }
 }

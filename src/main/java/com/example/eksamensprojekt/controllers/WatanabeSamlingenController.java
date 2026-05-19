@@ -4,7 +4,7 @@ import com.example.eksamensprojekt.SceneManeger;
 import com.example.eksamensprojekt.database.DAO;
 import com.example.eksamensprojekt.database.DAOImplementation;
 import com.example.eksamensprojekt.objekter.Kunstværk;
-import com.example.eksamensprojekt.undervisning.DataDeling;
+import com.example.eksamensprojekt.objekter.OmOs;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -40,6 +40,12 @@ public class WatanabeSamlingenController
     @FXML
     private Label åbningstider;
 
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private GridPane billedeContainer;
+
     // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
     SceneManeger sceneManeger = new SceneManeger();
 
@@ -49,13 +55,10 @@ public class WatanabeSamlingenController
     // ObservableList der kan indeholde alle kunstværkerne fra Databasen
     ObservableList<Kunstværk> kunstværker = FXCollections.observableArrayList();
 
-    @FXML
-    private TextField searchField;
+    // ObservableList der kan indeholde Om Os fra Databasen
+    private ObservableList<OmOs> omOsListe = FXCollections.observableArrayList();
 
-    @FXML
-    private GridPane billedeContainer;
-
-    @FXML
+    // Kører automatisk når FXML siden åbnes
     public void initialize()
     {
         // Henter kunstværkerne fra Databasen og viser kunstværkerne
@@ -73,15 +76,34 @@ public class WatanabeSamlingenController
             alert.show();
         }
 
+        // Henter kontaktoplysninger til bundlinjen fra databasen
+        try {
+            // Henter data fra databasen som et OmOs objekt og ligger det i omOsListe
+            dao.hentOmOs(omOsListe);
+
+            // Henter OmOs objektet fra listen
+            OmOs omOs = omOsListe.get(0);
+
+            // Sætter data fra objektet ind i de forskellige labels
+            adresse.setText(omOs.getAdresse());
+            telefon.setText(omOs.getTelefonnummer());
+            email.setText(omOs.getEmail());
+            åbningstider.setText(omOs.getÅbningstider());
+
+        } catch (Exception e) {
+            // Udskriver fejlen i konsollen
+            System.out.println("Kunne ikke hente Om Os fra databasen");
+            e.printStackTrace();
+
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente Om Os fra databasen");
+            alert.show();
+        }
+
         // Lytter efter tekst i søgefeltet og filtrerer kunstværkerne automatisk
         searchField.textProperty().addListener(
                 (observable, oldValue, newValue) -> soegKunstvaerk(newValue));
 
-        // Så bundlinjen viser de informationer man som Admin sætter i Om Os
-        adresse.textProperty().bindBidirectional(DataDeling.omOsAdresse2());
-        telefon.textProperty().bindBidirectional(DataDeling.omOsTelefon2());
-        email.textProperty().bindBidirectional(DataDeling.omOsEmail2());
-        if (DataDeling.omOsÅbningstider != null) { åbningstider.setText(DataDeling.omOsÅbningstider); }
     }
 
     // Metode til at vise alle kunstværkerne fra databasen i et GridPane
@@ -168,8 +190,8 @@ public class WatanabeSamlingenController
     }
 
     // Søger efter kunstværker ud fra ID, titel eller årstal
-    private void soegKunstvaerk(String soegeTekst) {
-
+    private void soegKunstvaerk(String soegeTekst)
+    {
         // Hvis søgefeltet er tomt, vises hele samlingen igen
         if (soegeTekst == null || soegeTekst.isBlank())
         {
@@ -215,8 +237,8 @@ public class WatanabeSamlingenController
 
     // Sorterer kunstværker fra nyeste til ældste årstal
     @FXML
-    void filterAarstalNed(ActionEvent event) {
-
+    void filterAarstalNed(ActionEvent event)
+    {
         FXCollections.sort(kunstværker, (a, b) -> Integer.compare(b.getÅrstal(), a.getÅrstal()));
 
         // Rydder søgefeltet, så hele den sorterede liste vises
@@ -299,8 +321,9 @@ public class WatanabeSamlingenController
         return null;
     }
 
-    // Download alle filer i en mappe til en zip fil
-    private void downloadTilZip(Path kilde, Path zipFil) throws IOException {
+    // Download hele Watanabe-samlingen i en mappe som en zip fil
+    private void downloadTilZip(Path kilde, Path zipFil) throws IOException
+    {
         try (FileOutputStream fos = new FileOutputStream(zipFil.toFile());
              ZipOutputStream zipOut = new ZipOutputStream(fos))
         {
@@ -312,16 +335,12 @@ public class WatanabeSamlingenController
                         {
                             ZipEntry entry = new ZipEntry(relativ.toString().replace("\\", "/"));
                             zipOut.putNextEntry(entry);
-
                             byte[] buffer = new byte[8192];
-
                             int len;
 
-                            while ((len = in.read(buffer)) > 0)
-                            {
+                            while ((len = in.read(buffer)) > 0) {
                                 zipOut.write(buffer, 0, len);
                             }
-
                             zipOut.closeEntry();
 
                         } catch (IOException e) {
@@ -382,7 +401,8 @@ public class WatanabeSamlingenController
 
     // Skifter scenen til Temaer
     @FXML
-    void temaerKnap(MouseEvent event) throws IOException {
+    void temaerKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Temaer.fxml");
     }
 

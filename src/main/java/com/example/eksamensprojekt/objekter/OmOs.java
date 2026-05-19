@@ -8,18 +8,20 @@ public class OmOs
     private String adresse;
     private String telefonnummer;
     private String email;
+    private String åbningstider;
     private byte[] image1;
     private byte[] image2;
     private byte[] image3;
 
     public OmOs(int id, String titel, String beskrivelse, String adresse,
-                String telefonnummer, String email, byte[] image1, byte[] image2, byte[] image3)
+                String telefonnummer, String email, String åbningstider, byte[] image1, byte[] image2, byte[] image3)
     {
         this.id = id;
         this.titel = titel;
         this.beskrivelse = beskrivelse;
         this.adresse = adresse;
         this.telefonnummer = telefonnummer;
+        this.åbningstider = åbningstider;
         this.email = email;
         this.image1 = image1;
         this.image2 = image2;
@@ -73,6 +75,10 @@ public class OmOs
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getÅbningstider() {return åbningstider;}
+
+    public void setÅbningstider(String åbningstider) {this.åbningstider = åbningstider;}
 
     public byte[] getImage1() {
         return image1;

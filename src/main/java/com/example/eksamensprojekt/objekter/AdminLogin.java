@@ -5,7 +5,8 @@ public class AdminLogin {
     private String password;
     private String passwordHash;
 
-    public AdminLogin(String email, String password, String passwordHash) {
+    public AdminLogin(String email, String password, String passwordHash)
+    {
         this.email = email;
         this.password = password;
         this.passwordHash = passwordHash;

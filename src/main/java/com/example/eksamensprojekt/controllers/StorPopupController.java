@@ -10,14 +10,14 @@ import java.io.IOException;
 
 public class StorPopupController
 {
-    // Opretter et SceneManeger objekt - bruges til at skifte mellem FXML sider
-    SceneManeger sceneManeger = new SceneManeger();
-
     @FXML
     private ImageView storPopupBillede;
 
     @FXML
     private Label title;
+
+    // Opretter et SceneManeger objekt - bruges til at skifte mellem FXML sider
+    SceneManeger sceneManeger = new SceneManeger();
 
     @FXML
     void forrigeBilledeKnap(MouseEvent event) {
@@ -30,8 +30,8 @@ public class StorPopupController
     }
 
     @FXML
-    void tilbageKnap(MouseEvent event) throws IOException {
+    void tilbageKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.tilbage(event);
     }
-
 }

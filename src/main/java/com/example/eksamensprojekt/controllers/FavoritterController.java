@@ -4,9 +4,9 @@ import com.example.eksamensprojekt.SceneManeger;
 import com.example.eksamensprojekt.database.DAO;
 import com.example.eksamensprojekt.database.DAOImplementation;
 import com.example.eksamensprojekt.objekter.Kunstværk;
+import com.example.eksamensprojekt.objekter.OmOs;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import com.example.eksamensprojekt.undervisning.DataDeling;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -46,14 +46,13 @@ public class FavoritterController
     // Opretter et DAO objekt - bruges til kommunikation med databasen
     DAO dao = new DAOImplementation();
 
+    // ObservableList der kan indeholde Om Os fra Databasen
+    private ObservableList<OmOs> omOsListe = FXCollections.observableArrayList();
+
+    // Kører automatisk når FXML siden åbnes
     public void initialize()
     {
-        // Så bundlinjen viser de informationer man som Admin sætter i Om Os
-        adresse.textProperty().bindBidirectional(DataDeling.omOsAdresse2());
-        telefon.textProperty().bindBidirectional(DataDeling.omOsTelefon2());
-        email.textProperty().bindBidirectional(DataDeling.omOsEmail2());
-        if (DataDeling.omOsÅbningstider != null) { åbningstider.setText(DataDeling.omOsÅbningstider); }
-
+        // Henter favoritkunstværkerne fra databasen, gemmer dem i listen favoritter og viser dem på siden
         try {
             dao.hentFavoritter(favoritter);
             visFavoritter(favoritter);
@@ -67,6 +66,30 @@ public class FavoritterController
             Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente favoritter fra databasen");
             alert.show();
         }
+
+        // Henter kontaktoplysninger til bundlinjen fra databasen
+        try {
+            // Henter Om Os data fra databasen som et OmOs objekt og ligger det i omOsListe
+            dao.hentOmOs(omOsListe);
+
+            // Henter OmOs objektet fra listen
+            OmOs omOs = omOsListe.get(0);
+
+            // Sætter data fra OmOs objektet ind i de forskellige labels
+            adresse.setText(omOs.getAdresse());
+            telefon.setText(omOs.getTelefonnummer());
+            email.setText(omOs.getEmail());
+            åbningstider.setText(omOs.getÅbningstider());
+
+        } catch (Exception e) {
+            // Udskriver fejlen i konsollen
+            System.out.println("Kunne ikke hente Om Os fra databasen");
+            e.printStackTrace();
+
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente Om Os fra databasen");
+            alert.show();
+        }
     }
 
     // Metode til at vise alle favorit-kunstværkerne fra databasen i et GridPane
@@ -75,7 +98,7 @@ public class FavoritterController
         // Fjerner alle elementer i vores GridPane - for at undgå dubletter
         billedeContainer.getChildren().clear();
 
-        // Afstand mellem felterne
+        // Afstand mellem elementerne i GridPane
         billedeContainer.setHgap(40);
         billedeContainer.setVgap(40);
 
@@ -98,7 +121,7 @@ public class FavoritterController
             // Henter billedet/kunstværket fra Databasen
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(kunstværk.getBilledeData());
 
-            // Opretter et JavaFX billede ud fra billeddataene
+            // Opretter et JavaFX billede ud fra den binær billede data
             javafx.scene.image.Image image = new Image(byteArrayInputStream);
 
             // Opretter et ImageView der kan vise billedet på skærmen
@@ -113,7 +136,7 @@ public class FavoritterController
             // Når brugeren klikker på billedet, sendes informationerne videre til Pop-up siden
             imageView.setOnMouseClicked(event -> {
 
-                // Gemmer valgt kunstværk
+                // Gemmer det valgte kunstværk
                 PopupController.valgtKunstværk = kunstværk;
 
                 try {

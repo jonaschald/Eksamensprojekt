@@ -146,6 +146,9 @@
                                  <font>
                                     <Font name="Georgia" size="40.0" />
                                  </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
                               </Label>
                               <Label fx:id="omOsTekst" layoutX="10.0" layoutY="10.0" prefHeight="611.0" prefWidth="513.0" text="Kunsthal Holmen er en lille perle af et udstillingssted. Kunsthallen præsenterer et ambitiøst udstillingsprogram med samtidskunst, som byder på erkendelsesmæssige, æstetiske og sanselige oplevelser. Der vises tre skiftende udstillinger om året. Kunsthallen er placeret i den smukke gamle slægtsgård Holmen i Løgumkloster – blot få kilometer nord for Tønder. Sammen med Løgumkloster Refugium, Løgumkloster Højskole, Løgumkloster Kirke, Folkekirkens Uddannelses- og Videnscenter samt Kirkemusikskolen er Kunsthal Holmen en aktiv del af byen og af kommunens rige kulturliv. Tønder Kommune er kunsthallens hovedtilskudsgiver." wrapText="true">
                                  <font>

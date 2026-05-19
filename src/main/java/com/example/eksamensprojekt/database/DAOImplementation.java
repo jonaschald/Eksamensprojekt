@@ -217,12 +217,13 @@ public class DAOImplementation implements DAO
                         String adresse = resultSet.getString("Address");
                         String telefonnummer = resultSet.getString("Phone");
                         String email = resultSet.getString("Email");
+                        String åbningstider = resultSet.getString("OpeningHours");
                         byte[] billede1 = resultSet.getBytes("Image1");
                         byte[] billede2 = resultSet.getBytes("Image2");
                         byte[] billede3 = resultSet.getBytes("Image3");
 
                         OmOs omOsObjekt = new OmOs(id, titel, beskrivelse, adresse,
-                                telefonnummer, email, billede1, billede2, billede3);
+                                telefonnummer, email, åbningstider, billede1, billede2, billede3);
 
                         omOs.add(omOsObjekt);
                     }
@@ -245,7 +246,7 @@ public class DAOImplementation implements DAO
                     PreparedStatement preparedStatement;
                     preparedStatement = forbindelse.prepareStatement("UPDATE About_Us SET Title = ?, " +
                             "Description = ?, Address = ?, Phone = ?, Email = ?, Image1 = ?, Image2 = ?, " +
-                            "Image3 = ? WHERE ID = ?");
+                            "Image3 = ?, OpeningHours = ? WHERE ID = ?");
 
                     preparedStatement.setString(1, omOs.getTitel());
                     preparedStatement.setString(2, omOs.getBeskrivelse());
@@ -255,7 +256,8 @@ public class DAOImplementation implements DAO
                     preparedStatement.setBytes(6, omOs.getImage1());
                     preparedStatement.setBytes(7, omOs.getImage2());
                     preparedStatement.setBytes(8, omOs.getImage3());
-                    preparedStatement.setInt(9, omOs.getId());
+                    preparedStatement.setString(9, omOs.getÅbningstider());
+                    preparedStatement.setInt(10, omOs.getId());
                     preparedStatement.executeUpdate();
 
                 } catch (SQLException e) {

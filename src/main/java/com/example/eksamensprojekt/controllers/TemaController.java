@@ -1,10 +1,15 @@
 package com.example.eksamensprojekt.controllers;
 
 import com.example.eksamensprojekt.*;
-import com.example.eksamensprojekt.undervisning.DataDeling;
+import com.example.eksamensprojekt.database.DAO;
+import com.example.eksamensprojekt.database.DAOImplementation;
+import com.example.eksamensprojekt.objekter.OmOs;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -21,8 +26,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Objects;
 
-public class TemaController {
-
+public class TemaController
+{
     @FXML
     private Label adresse;
     @FXML
@@ -51,11 +56,44 @@ public class TemaController {
     @FXML
     private HBox temaKnapper;
 
-    // Opretter et SceneManeger objekt - bruges til at skifte mellem FXML sider
-    private SceneManeger sceneManager = new SceneManeger();
+    // Opretter et sceneManager objekt - bruges til at skrifte mellem FXML sider
+    SceneManeger sceneManager = new SceneManeger();
+
+    // Opretter et DAO objekt - bruges til kommunikation med databasen
+    DAO dao = new DAOImplementation();
+
+    // ObservableList der kan indeholde Om Os fra Databasen
+    private ObservableList<OmOs> omOsListe = FXCollections.observableArrayList();
 
     // Variabel der holder styr på den nuværende række af kunstværker
     private HBox ufyldtRække;
+
+    // Kører automatisk når FXML siden åbnes
+    public void initialize()
+    {
+        // Henter kontaktoplysninger til bundlinjen fra databasen
+        try {
+            // Henter data fra databasen som et OmOs objekt og ligger det i omOsListe
+            dao.hentOmOs(omOsListe);
+
+            // Henter OmOs objektet fra listen
+            OmOs omOs = omOsListe.get(0);
+
+            // Sætter data fra objektet ind i de forskellige labels
+            adresse.setText(omOs.getAdresse());
+            telefon.setText(omOs.getTelefonnummer());
+            email.setText(omOs.getEmail());
+            åbningstider.setText(omOs.getÅbningstider());
+        } catch (Exception e) {
+            // Udskriver fejlen i konsollen
+            System.out.println("Kunne ikke hente Om Os fra databasen");
+            e.printStackTrace();
+
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente Om Os fra databasen");
+            alert.show();
+        }
+    }
 
     // Skaber et nyt kunstværk-kort med billede, nummer og titel
     private VBox nyMaleriKnap(String billedSti, String nummer, String titel)
@@ -156,16 +194,6 @@ public class TemaController {
         }
     }
 
-    // Kører automatisk når siden åbnes
-    public void initialize() {
-
-        // Så bundlinjen viser de informationer man som Admin sætter i Om Os
-        adresse.textProperty().bindBidirectional(DataDeling.omOsAdresse2());
-        telefon.textProperty().bindBidirectional(DataDeling.omOsTelefon2());
-        email.textProperty().bindBidirectional(DataDeling.omOsEmail2());
-        if (DataDeling.omOsÅbningstider != null) { åbningstider.setText(DataDeling.omOsÅbningstider); }
-    }
-
     // Midlertidig testknap der tilføjer et kunstværk til siden
     @FXML
     void temaFilter(ActionEvent event)
@@ -188,14 +216,21 @@ public class TemaController {
         );
     }
 
-    // Åbner Kunsthal Holmens hjemmeside i browseren
+    // Metode til at brugeren kan åbne Kunsthal Holmens hjemmeside i bundlinjen
     @FXML
     void besøgKunsthallensHjemmesideKnap(MouseEvent event)
     {
         try {
+            // Åbner hjemmesiden i computerens standardbrowser
             Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
         } catch (Exception e) {
-            e.printStackTrace();
+            // Udskriver fejlen i konsollen
+            System.out.println("Kunne ikke åbne Kunsthal Holmens hjemmeside");
+            e.printStackTrace(); // Printer hele fejlen i konsollen
+
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke åbne Kunsthal Holmens hjemmeside");
+            alert.show();
         }
     }
 

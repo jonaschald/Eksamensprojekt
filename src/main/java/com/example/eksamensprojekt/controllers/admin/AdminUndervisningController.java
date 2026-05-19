@@ -60,6 +60,7 @@ public class AdminUndervisningController
     // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
     SceneManeger sceneManeger = new SceneManeger();
 
+    // Kører automatisk når FXML siden åbnes
     public void initialize()
     {
         // Nulstiller ObservableLister i DataDeling - for at undgå dubletter ved sceneskift
@@ -466,37 +467,43 @@ public class AdminUndervisningController
 
     // Skifter scenen til Admin Om Os
     @FXML
-    void omOsKnap(MouseEvent event) throws IOException {
+    void omOsKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Om-Om.fxml");
     }
 
     // Skifter scenen til Admin Om Samlingen
     @FXML
-    void omSamlingenKnap(MouseEvent event) throws IOException {
+    void omSamlingenKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Om-Samlingen.fxml");
     }
 
     // Skiftet scenen til Admin Temaer
     @FXML
-    void temaerKnap(MouseEvent event) throws IOException {
+    void temaerKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Temaer.fxml");
     }
 
     // Skifter scene til Admin Samlingen
     @FXML
-    void watanabeSamlingenKnap(MouseEvent event) throws IOException {
+    void watanabeSamlingenKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Watanabe-samlingen.fxml");
     }
 
     // Skifter scenen til Admin Startsiden
     @FXML
-    void tilStartSide(MouseEvent event) throws IOException {
+    void tilStartSide(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/AdminForside.fxml");
     }
 
     // Skifter scene til Forsiden
     @FXML
-    void logudKnap(MouseEvent event) throws IOException {
+    void logudKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Forside.fxml");
     }
 }

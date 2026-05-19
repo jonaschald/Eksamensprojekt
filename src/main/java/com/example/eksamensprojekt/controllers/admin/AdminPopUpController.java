@@ -9,8 +9,6 @@ import javafx.scene.input.MouseEvent;
 
 public class AdminPopUpController {
 
-    SceneManeger sceneManeger = new SceneManeger();
-
     @FXML
     private Label InfoLabel;
 
@@ -25,6 +23,15 @@ public class AdminPopUpController {
 
     @FXML
     private Label årstalLabel;
+
+    // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
+    SceneManeger sceneManeger = new SceneManeger();
+
+    // Kører automatisk når FXML siden åbnes
+    public void initialize()
+    {
+
+    }
 
     @FXML
     void forrigeBilledeKnap(MouseEvent event) {
@@ -50,5 +57,4 @@ public class AdminPopUpController {
     void tilStorPopUp(MouseEvent event) {
 
     }
-
 }

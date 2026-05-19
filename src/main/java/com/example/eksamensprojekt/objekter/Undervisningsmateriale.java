@@ -8,7 +8,8 @@ public class Undervisningsmateriale {
     private File pdf;
     private int målgruppeId;
 
-    public  Undervisningsmateriale(int id, String title, File pdf, int målgruppeId) {
+    public  Undervisningsmateriale(int id, String title, File pdf, int målgruppeId)
+    {
         this.id = id;
         this.title = title;
         this.pdf = pdf;

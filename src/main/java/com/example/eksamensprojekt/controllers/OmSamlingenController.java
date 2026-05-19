@@ -2,6 +2,7 @@ package com.example.eksamensprojekt.controllers;
 
 import com.example.eksamensprojekt.SceneManeger;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,9 +14,6 @@ import java.net.URI;
 
 public class OmSamlingenController
 {
-    // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
-    SceneManeger sceneManeger = new SceneManeger();
-
     @FXML
     private Label adresseLabel;
     @FXML
@@ -34,9 +32,13 @@ public class OmSamlingenController
     @FXML
     private Label omSadaoWatanabeTekst;
 
-    @FXML
-    public void initialize() {
+    // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
+    SceneManeger sceneManeger = new SceneManeger();
 
+    // Kører automatisk når FXML siden åbnes
+    @FXML
+    public void initialize()
+    {
         Image topBillede = hentBillede("/com/example/eksamensprojekt/Billeder/watanabeTop.jpg");
 
         Image bundBillede = hentBillede("/com/example/eksamensprojekt/Billeder/watanabeBund.jpg");
@@ -74,52 +76,68 @@ public class OmSamlingenController
 
     // Skifter scenen til Admin Login
     @FXML
-    void adminKnap(MouseEvent event) throws IOException {
+    void adminKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Login.fxml");
     }
 
+    // Metode til at brugeren kan åbne Kunsthal Holmens hjemmeside i bundlinjen
     @FXML
-    void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
+    void besøgKunsthallensHjemmesideKnap(MouseEvent event)
+    {
         try {
+            // Åbner hjemmesiden i computerens standardbrowser
             Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
         } catch (Exception e) {
-            e.printStackTrace();
+            // Udskriver fejlen i konsollen
+            System.out.println("Kunne ikke åbne Kunsthal Holmens hjemmeside");
+            e.printStackTrace(); // Printer hele fejlen i konsollen
+
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke åbne Kunsthal Holmens hjemmeside");
+            alert.show();
         }
     }
 
     // Skifter scenen til Favoritter
     @FXML
-    void favoritterKnap(MouseEvent event) throws IOException {
+    void favoritterKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Favoritter.fxml");
     }
 
     // Skifter scenen til Om Os
     @FXML
-    void omOsKnap(MouseEvent event) throws IOException {
+    void omOsKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Om-Os.fxml");
     }
 
     // Skifter scenen til Startsiden
     @FXML
-    void tilStartSide(MouseEvent event) throws IOException {
+    void tilStartSide(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Forside.fxml");
     }
 
     // Skifter scenen til Temaer
     @FXML
-    void temaerKnap(MouseEvent event) throws IOException {
+    void temaerKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Temaer.fxml");
     }
 
     // Skifter scenen til Undervisning
     @FXML
-    void undervisningKnap(MouseEvent event) throws IOException {
+    void undervisningKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Undervisning.fxml");
     }
 
     // Skifter scenen til Samlingen
     @FXML
-    void watanabeSamlingenKnap(MouseEvent event) throws IOException {
+    void watanabeSamlingenKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Watanabe-samlingen.fxml");
     }
 }

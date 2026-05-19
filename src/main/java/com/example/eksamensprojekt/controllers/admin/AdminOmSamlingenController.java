@@ -9,10 +9,8 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
-public class AdminOmSamlingenController {
-
-    SceneManeger sceneManeger = new SceneManeger();
-
+public class AdminOmSamlingenController
+{
     @FXML
     private ImageView billedeBund;
 
@@ -21,6 +19,15 @@ public class AdminOmSamlingenController {
 
     @FXML
     private TextArea redigerSadaoWatanabeText;
+
+    // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
+    SceneManeger sceneManeger = new SceneManeger();
+
+    // Kører automatisk når FXML siden åbnes
+    public void initialize()
+    {
+
+    }
 
     @FXML
     void gemOmSadaoWatanabeTekst(ActionEvent event) {
@@ -36,44 +43,45 @@ public class AdminOmSamlingenController {
 
     }
 
-    @FXML
-    void besøgKunsthallensHjemmesideKnap(MouseEvent event) {
-
-    }
-
     // Skifter scenen til Admin Om Os
     @FXML
-    void omOsKnap(MouseEvent event) throws IOException {
+    void omOsKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Om-Os.fxml");
     }
 
     // Skifter scenen til Admin Temaer
     @FXML
-    void temaerKnap(MouseEvent event) throws IOException {
+    void temaerKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Temaer.fxml");
     }
 
     // Skifter scenen til Admin Undervisning
     @FXML
-    void undervisningKnap(MouseEvent event) throws IOException {
+    void undervisningKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/AdminUndervisning.fxml");
     }
 
     // Skifter scenen til Admin Samlingen
     @FXML
-    void watanabeSamlingenKnap(MouseEvent event) throws IOException {
+    void watanabeSamlingenKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Watanabe-samlingen.fxml");
     }
 
     // Skifter scenen til Admin Startsiden
     @FXML
-    void tilStartSide(MouseEvent event) throws IOException {
+    void tilStartSide(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/AdminForside.fxml");
     }
 
     // Skifter scene til Forsiden
     @FXML
-    void logudKnap(MouseEvent event) throws IOException {
+    void logudKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Forside.fxml");
     }
 }

@@ -3,6 +3,7 @@ package com.example.eksamensprojekt.controllers;
 import com.example.eksamensprojekt.SceneManeger;
 import com.example.eksamensprojekt.database.DAO;
 import com.example.eksamensprojekt.database.DAOImplementation;
+import com.example.eksamensprojekt.objekter.OmOs;
 import com.example.eksamensprojekt.objekter.Undervisningsmateriale;
 import com.example.eksamensprojekt.undervisning.*;
 import javafx.collections.FXCollections;
@@ -45,12 +46,16 @@ public class UndervisningController
     // ObservableList der kan indeholde alle Undervisningsmateriale objekter fra Databasen
     private ObservableList<Undervisningsmateriale> undervisningsmaterialer = FXCollections.observableArrayList();
 
+    // ObservableList der kan indeholde Om Os fra Databasen
+    private ObservableList<OmOs> omOsListe = FXCollections.observableArrayList();
+
     // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
     SceneManeger sceneManeger = new SceneManeger();
 
     // Opretter et DAO objekt - bruges til kommunikation med databasen
     DAO dao = new DAOImplementation();
 
+    // Kører automatisk når FXML siden åbnes
     public void initialize()
     {
         // Nulstiller ObservableLister i DataDeling - for at undgå dubletter ved sceneskift
@@ -108,11 +113,29 @@ public class UndervisningController
             alert.show();
         }
 
-        // Så bundlinjen viser de informationer man som Admin sætter i Om Os
-        adresse.textProperty().bindBidirectional(DataDeling.omOsAdresse2());
-        telefon.textProperty().bindBidirectional(DataDeling.omOsTelefon2());
-        email.textProperty().bindBidirectional(DataDeling.omOsEmail2());
-        if (DataDeling.omOsÅbningstider != null) { åbningstider.setText(DataDeling.omOsÅbningstider); }
+        // Henter kontaktoplysninger til bundlinjen fra databasen
+        try {
+            // Henter data fra databasen som et OmOs objekt og ligger det i omOsListe
+            dao.hentOmOs(omOsListe);
+
+            // Henter OmOs objektet fra listen
+            OmOs omOs = omOsListe.get(0);
+
+            // Sætter data fra objektet ind i de forskellige labels
+            adresse.setText(omOs.getAdresse());
+            telefon.setText(omOs.getTelefonnummer());
+            email.setText(omOs.getEmail());
+            åbningstider.setText(omOs.getÅbningstider());
+
+        } catch (Exception e) {
+            // Udskriver fejlen i konsollen
+            System.out.println("Kunne ikke hente Om Os fra databasen");
+            e.printStackTrace();
+
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente Om Os fra databasen");
+            alert.show();
+        }
     }
 
     // Metode til at brugeren kan åbne et Undervisningsmateriale/PDF ved at dobbelt-klikke på det
@@ -163,43 +186,50 @@ public class UndervisningController
 
     // Skifter scene til Admin Login
     @FXML
-    void adminKnap(MouseEvent event) throws IOException {
+    void adminKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Login.fxml");
     }
 
     // Skifter scenen til Favoritter
     @FXML
-    void favoritterKnap(MouseEvent event) throws IOException {
+    void favoritterKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Favoritter.fxml");
     }
 
     // Skifter scenen til Om Os
     @FXML
-    void omOsKnap(MouseEvent event) throws IOException {
+    void omOsKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Om-Os.fxml");
     }
 
     // Skifter scenen til Om Samlingen
     @FXML
-    void omSamlingenKnap(MouseEvent event) throws IOException {
+    void omSamlingenKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Om-Samlingen.fxml");
     }
 
     // Skifter scenen til Temaer
     @FXML
-    void temaerKnap(MouseEvent event) throws IOException {
+    void temaerKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Temaer.fxml");
     }
 
     // Skifter scenen til Samlingen
     @FXML
-    void watanabeSamlingenKnap(MouseEvent event) throws IOException {
+    void watanabeSamlingenKnap(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Watanabe-samlingen.fxml");
     }
 
     // Skifter scenen til Startsiden
     @FXML
-    void tilStartSide(MouseEvent event) throws IOException {
+    void tilStartSide(MouseEvent event) throws IOException
+    {
         sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/gui/Forside.fxml");
     }
 }

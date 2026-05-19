@@ -1,10 +1,12 @@
 package com.example.eksamensprojekt.objekter;
 
-public class Tema {
+public class Tema
+{
     private int id;
     private String navn;
 
-    public Tema(int id, String navn) {
+    public Tema(int id, String navn)
+    {
         this.id = id;
         this.navn = navn;
     }

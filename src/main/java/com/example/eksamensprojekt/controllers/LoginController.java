@@ -9,10 +9,8 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-public class LoginController {
-
-    SceneManeger sceneManeger = new SceneManeger();
-
+public class LoginController
+{
     @FXML
     private TextField emailField;
 
@@ -22,11 +20,13 @@ public class LoginController {
     @FXML
     private PasswordField passwordFiels;
 
+    // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
+    SceneManeger sceneManeger = new SceneManeger();
+
     // Skifter scenen til Admin Forside
     @FXML
-    void login(ActionEvent event) throws IOException {
+    void login(ActionEvent event) throws IOException
+    {
         sceneManeger.skiftSceneAction (event, "/com/example/eksamensprojekt/admin/AdminForside.fxml");
-
     }
-
 }

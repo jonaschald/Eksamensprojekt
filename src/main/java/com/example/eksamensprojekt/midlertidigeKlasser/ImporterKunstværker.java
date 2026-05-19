@@ -1,6 +1,5 @@
 package com.example.eksamensprojekt.midlertidigeKlasser;
 
-
 // Klasse til at oprette de 30 kunstværker fra Watanabe-Samlingen
 public class ImporterKunstværker {
     /*

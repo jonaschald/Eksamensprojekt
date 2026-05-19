@@ -11,8 +11,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Stack;
 
-public class SceneManeger {
-
+public class SceneManeger
+{
     private int maxX = 1400;
     private int maxY = 800;
     private static final Stack<String> historie = new Stack<>();
