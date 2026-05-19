@@ -20,9 +20,6 @@ import java.util.Objects;
 
 public class FavoritterController
 {
-
-    SceneManeger sceneManeger = new SceneManeger();
-
     @FXML
     private VBox billedeContainer;
 
@@ -40,6 +37,9 @@ public class FavoritterController
 
     @FXML
     private Label eksempelTitel;
+
+    // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
+    SceneManeger sceneManeger = new SceneManeger();
 
     // Skab rækker og kolonner af malerier
     private HBox ufyldtRække;

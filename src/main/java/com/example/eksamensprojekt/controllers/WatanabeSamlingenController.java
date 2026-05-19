@@ -112,22 +112,23 @@ public class WatanabeSamlingenController
             imageView.setStyle("-fx-cursor: hand;");
 
             // Når brugeren klikker på billedet, sendes informationerne videre til Pop-up siden
-            imageView.setOnMouseClicked(event -> {
+            imageView.setOnMouseClicked(event ->
+            {
+                // Gemmer det valgte kunstværk i PopUpController
+                // så brugeren kan tilføje eller fjerne kunstværket som favorit
+                PopupController.valgtKunstværk = kunstværk;
 
                 // Gemmer det valgte billede, så Pop-up siden kan vise det
                 PopupController.valgtBillede = image;
 
                 // Gemmer titlen på det valgte kunstværk
-                PopupController.valgtTitel =
-                        kunstværk.getTitel();
+                PopupController.valgtTitel = kunstværk.getTitel();
 
                 // Gemmer årstallet på det valgte kunstværk
-                PopupController.valgtÅrstal =
-                        String.valueOf(kunstværk.getÅrstal());
+                PopupController.valgtÅrstal = String.valueOf(kunstværk.getÅrstal());
 
                 // Gemmer beskrivelsen på det valgte kunstværk
-                PopupController.valgtBeskrivelse =
-                        kunstværk.getBeskrivelse();
+                PopupController.valgtBeskrivelse = kunstværk.getBeskrivelse();
 
                 try {
                     // Skifter til Pop-up siden, hvor kunstværket vises i større format
