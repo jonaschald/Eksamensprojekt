@@ -3,33 +3,36 @@ package com.example.eksamensprojekt.controllers.admin;
 import com.example.eksamensprojekt.SceneManeger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
+
 public class AdminPopUpController {
-
-    @FXML
-    private Label InfoLabel;
-
-    @FXML
-    private Label besktivelseLabel;
 
     @FXML
     private ImageView popupBillede;
 
     @FXML
-    private Label titleLabel;
+    private TextField titleFelt;
 
     @FXML
-    private Label årstalLabel;
+    private TextField årstalFelt;
+
+    @FXML
+    private TextArea InfoFelt;
+
+    @FXML
+    private TextArea besktivelseFelt;
+
 
     // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
     SceneManeger sceneManeger = new SceneManeger();
 
     // Kører automatisk når FXML siden åbnes
-    public void initialize()
-    {
+    public void initialize() {
 
     }
 
@@ -49,12 +52,12 @@ public class AdminPopUpController {
     }
 
     @FXML
-    void tilbageTilOversigtKnap(MouseEvent event) {
+    void tilføjTilTema(ActionEvent event) {
 
     }
 
     @FXML
-    void tilStorPopUp(MouseEvent event) {
-
+    void tilbageTilOversigtKnap(MouseEvent event) throws IOException {
+        sceneManeger.tilbage(event);
     }
 }

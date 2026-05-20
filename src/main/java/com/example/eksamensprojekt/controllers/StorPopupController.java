@@ -30,8 +30,7 @@ public class StorPopupController
     }
 
     @FXML
-    void tilbageKnap(MouseEvent event) throws IOException
-    {
+    void tilbageKnap(MouseEvent event) throws IOException {
         sceneManeger.tilbage(event);
     }
 }

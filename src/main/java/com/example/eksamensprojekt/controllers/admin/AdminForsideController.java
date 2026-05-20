@@ -4,6 +4,7 @@ import com.example.eksamensprojekt.SceneManeger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -18,13 +19,13 @@ public class AdminForsideController
     private ImageView kunsthalHolmenTopBillede;
 
     @FXML
-    private Label omOsTekst;
+    private TextArea watanabeSamlingTekst;
+
+    @FXML
+    private TextArea omOsTekst;
 
     @FXML
     private ImageView watanabeSamlingBillede;
-
-    @FXML
-    private Label watanabeSamlingTekst;
 
     // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
     SceneManeger sceneManeger = new SceneManeger();
