@@ -53,7 +53,7 @@ public class OmOsController
     // Opretter et DAO objekt - bruges til kommunikation med databasen
     DAO dao = new DAOImplementation();
 
-    // ObservableList der kan indeholde Om Os fra Databasen
+    // ObservableList der kan indeholde Om Os Data fra Databasen
     private ObservableList<OmOs> omOsListe = FXCollections.observableArrayList();
 
     // Kører automatisk når FXML siden åbnes
