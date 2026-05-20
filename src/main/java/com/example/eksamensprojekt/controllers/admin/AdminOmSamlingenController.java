@@ -84,11 +84,13 @@ public class AdminOmSamlingenController
         }
     }
 
+    // Når Admin klikker på rediger knappen gemmes tekst ændringerne i databasen
     @FXML
     void gemOmSadaoWatanabeTekst(ActionEvent event)
     {
         gemOmSamlingen();
     }
+
     @FXML
     void redigerTopBillede(MouseEvent event)
     {

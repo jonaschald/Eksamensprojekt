@@ -36,12 +36,9 @@ public interface DAO
     public boolean gemKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
     public boolean sletKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
 
-    // Metoder til redigering af tekst og billeder på Forsiden Admin
-    // Der skal laves database tabeller og database metoder til det
-
-    // Metoder til redigering af tekst og billeder på Pop-up siden Admin (det enkelte kunstværks nummer, titel osv.)
-    // Der skal laves database tabeller og database metoder til det
-    public void opdaterKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
+    // Metoder til redigering af tekst og billeder på Forsiden til Admin
+    public void hentForside(ObservableList<Forside> forside) throws ExecutionException, InterruptedException;
+    public void opdaterForside(Forside forside) throws ExecutionException, InterruptedException;
 
     // Metoder til redigering af tekst og billeder i Om Samlingen Admin
     public void hentOmSamlingen(ObservableList<OmSamlingen> omSamlingen) throws ExecutionException, InterruptedException;
@@ -50,4 +47,8 @@ public interface DAO
     // Metoder til redigering af tekst og billeder i Om Os Admin
     public void hentOmOs(ObservableList<OmOs> omOs) throws ExecutionException, InterruptedException;
     public void opdaterOmOs(OmOs omOs) throws ExecutionException, InterruptedException;
+
+    // Metoder til redigering af tekst og billeder på Pop-up siden Admin (det enkelte kunstværks nummer, titel osv.)
+    // Der skal laves database tabeller og database metoder til det
+    public void opdaterKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
 }

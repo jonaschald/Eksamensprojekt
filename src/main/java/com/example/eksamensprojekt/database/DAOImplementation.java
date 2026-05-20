@@ -143,6 +143,71 @@ public class DAOImplementation implements DAO
     }
 
     @Override
+    public void hentForside(ObservableList<Forside> forside) throws ExecutionException, InterruptedException {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try (Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("SELECT * FROM Front_Page");
+
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()) {
+                        int id = resultSet.getInt("ID");
+                        String titel1 = resultSet.getString("Title1");
+                        String beskrivelse1 = resultSet.getString("Description1");
+                        byte[] billede1 = resultSet.getBytes("Image1");
+                        String titel2 = resultSet.getString("Title2");
+                        String beskrivelse2 = resultSet.getString("Description2");
+                        byte[] billede2a = resultSet.getBytes("Image2a");
+                        byte[] billede2b = resultSet.getBytes("Image2b");
+
+                        Forside forsideObjekt = new Forside(id, titel1, beskrivelse1, billede1, titel2, beskrivelse2, billede2a, billede2b);
+
+                        forside.add(forsideObjekt);
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Kunne ikke hente Forsiden fra Databasen");
+                    e.printStackTrace();
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
+    }
+
+    @Override
+    public void opdaterForside(Forside forside) throws ExecutionException, InterruptedException {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try (Connection forbindelse = kilde.getConnection()) {
+                    PreparedStatement preparedStatement;
+                    preparedStatement = forbindelse.prepareStatement("UPDATE Front_Page SET Title1 = ?, " +
+                            "Description1 = ?, Image1 = ?, Title2 = ?, Description2 = ?, Image2a = ?, Image2b = ? WHERE ID = ?");
+
+                    preparedStatement.setString(1, forside.getTitel_1());
+                    preparedStatement.setString(2, forside.getBeskrivelse_1());
+                    preparedStatement.setBytes(3, forside.getBillede_1());
+                    preparedStatement.setString(4, forside.getTitel_2());
+                    preparedStatement.setString(5, forside.getBeskrivelse_2());
+                    preparedStatement.setBytes(6, forside.getBillede_2a());
+                    preparedStatement.setBytes(7, forside.getBillede_2b());
+                    preparedStatement.setInt(8, forside.getId());
+                    preparedStatement.executeUpdate();
+
+                } catch (SQLException e) {
+                    System.out.println("Kunne ikke opdatere Forsiden i Databasen");
+                    e.printStackTrace();
+                }
+            }
+        };
+        Future future = executor.submit(runnable);
+        future.get();
+
+    }
+
+    @Override
     public void hentOmSamlingen(ObservableList<OmSamlingen> omSamlingen) throws ExecutionException, InterruptedException {
         Runnable runnable = new Runnable() {
             @Override
