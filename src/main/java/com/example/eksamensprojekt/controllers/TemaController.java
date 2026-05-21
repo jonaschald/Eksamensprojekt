@@ -24,6 +24,7 @@ import javafx.scene.text.TextAlignment;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class TemaController
@@ -60,7 +61,7 @@ public class TemaController
     SceneManeger sceneManager = new SceneManeger();
 
     // Opretter et DAO objekt - bruges til kommunikation med databasen
-    DAO dao = new DAOImplementation();
+    DAO dao = DAOImplementation.getInstance();
 
     // ObservableList der kan indeholde Om Os fra Databasen
     private ObservableList<OmOs> omOsListe = FXCollections.observableArrayList();
@@ -72,27 +73,36 @@ public class TemaController
     public void initialize()
     {
         // Henter kontaktoplysninger til bundlinjen fra databasen
-        try {
-            // Henter data fra databasen som et OmOs objekt og ligger det i omOsListe
-            dao.hentOmOs(omOsListe);
+        AsyncTask.run(
+                () -> {
+                    try {
+                        return dao.hentOmOs();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                },
+                result -> {
+                    // Set data
+                    omOsListe.setAll(result);
 
-            // Henter OmOs objektet fra listen
-            OmOs omOs = omOsListe.get(0);
+                    // Henter OmOs objektet fra listen
+                    OmOs omOs = omOsListe.getFirst();
 
-            // Sætter data fra objektet ind i de forskellige labels
-            adresse.setText(omOs.getAdresse());
-            telefon.setText(omOs.getTelefonnummer());
-            email.setText(omOs.getEmail());
-            åbningstider.setText(omOs.getÅbningstider());
-        } catch (Exception e) {
-            // Udskriver fejlen i konsollen
-            System.out.println("Kunne ikke hente Om Os fra databasen");
-            e.printStackTrace();
+                    // Sætter data fra OmOs objektet ind i de forskellige labels
+                    adresse.setText(omOs.getAdresse());
+                    telefon.setText(omOs.getTelefonnummer());
+                    email.setText(omOs.getEmail());
+                    åbningstider.setText(omOs.getÅbningstider());
+                },
+                error -> {
+                    System.out.println("Kunne ikke hente Om Os fra databasen");
+                    error.printStackTrace();
 
-            // Giver brugeren besked om fejlen
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente Om Os fra databasen");
-            alert.show();
-        }
+                    // Giver brugeren besked om fejlen
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente Om Os fra databasen");
+                    alert.show();
+                }
+        );
     }
 
     // Skaber et nyt kunstværk-kort med billede, nummer og titel

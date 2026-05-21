@@ -1,10 +1,13 @@
 package com.example.eksamensprojekt.controllers;
 
+import com.example.eksamensprojekt.AsyncTask;
 import com.example.eksamensprojekt.SceneManeger;
 import com.example.eksamensprojekt.database.DAO;
 import com.example.eksamensprojekt.database.DAOImplementation;
 import com.example.eksamensprojekt.objekter.Kunstværk;
 import com.example.eksamensprojekt.objekter.OmOs;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,6 +29,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.SQLException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -50,7 +54,7 @@ public class WatanabeSamlingenController
     SceneManeger sceneManeger = new SceneManeger();
 
     // Opretter et DAO objekt - bruges til kommunikation med databasen
-    DAO dao = new DAOImplementation();
+    DAO dao = DAOImplementation.getInstance();
 
     // ObservableList der kan indeholde alle kunstværkerne fra Databasen
     ObservableList<Kunstværk> kunstværker = FXCollections.observableArrayList();
@@ -62,43 +66,60 @@ public class WatanabeSamlingenController
     public void initialize()
     {
         // Henter kunstværkerne fra Databasen og viser kunstværkerne
-        try {
-            dao.hentAlleKunstværker(kunstværker);
-            visKunstværker(kunstværker);
-        } catch (Exception e) {
-            // Udskriver fejlen i konsollen
-            System.out.println("Fejl i Initialize i WatanabeSamlingenController: " +
+        AsyncTask.run(
+                () -> {
+                    try {
+                        return dao.hentAlleKunstværker();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                },
+                result -> {
+                    kunstværker.setAll(result);
+                    visKunstværker(kunstværker);
+                },
+                error -> {
+                    System.out.println("Fejl i Initialize i WatanabeSamlingenController: " +
                             "Kunne ikke hente Watanabe-samlingen fra databasen");
-            e.printStackTrace();
+                    error.printStackTrace();
 
-            // Giver brugeren besked om fejlen
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunstværkerne kunne ikke hentes fra Databasen");
-            alert.show();
-        }
+                    // Giver brugeren besked om fejlen
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Kunstværkerne kunne ikke hentes fra Databasen");
+                    alert.show();
+                }
+        );
 
         // Henter kontaktoplysninger til bundlinjen fra databasen
-        try {
-            // Henter data fra databasen som et OmOs objekt og ligger det i omOsListe
-            dao.hentOmOs(omOsListe);
+        AsyncTask.run(
+                () -> {
+                    try {
+                        return dao.hentOmOs();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                },
+                result -> {
+                    // Set data
+                    omOsListe.setAll(result);
 
-            // Henter OmOs objektet fra listen
-            OmOs omOs = omOsListe.get(0);
+                    // Henter OmOs objektet fra listen
+                    OmOs omOs = omOsListe.getFirst();
 
-            // Sætter data fra objektet ind i de forskellige labels
-            adresse.setText(omOs.getAdresse());
-            telefon.setText(omOs.getTelefonnummer());
-            email.setText(omOs.getEmail());
-            åbningstider.setText(omOs.getÅbningstider());
+                    // Sætter data fra OmOs objektet ind i de forskellige labels
+                    adresse.setText(omOs.getAdresse());
+                    telefon.setText(omOs.getTelefonnummer());
+                    email.setText(omOs.getEmail());
+                    åbningstider.setText(omOs.getÅbningstider());
+                },
+                error -> {
+                    System.out.println("Kunne ikke hente Om Os fra databasen");
+                    error.printStackTrace();
 
-        } catch (Exception e) {
-            // Udskriver fejlen i konsollen
-            System.out.println("Kunne ikke hente Om Os fra databasen");
-            e.printStackTrace();
-
-            // Giver brugeren besked om fejlen
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente Om Os fra databasen");
-            alert.show();
-        }
+                    // Giver brugeren besked om fejlen
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente Om Os fra databasen");
+                    alert.show();
+                }
+        );
 
         // Lytter efter tekst i søgefeltet og filtrerer kunstværkerne automatisk
         searchField.textProperty().addListener(
@@ -133,39 +154,30 @@ public class WatanabeSamlingenController
             vBox.setPrefWidth(290);
             vBox.setAlignment(Pos.TOP_LEFT);
 
-            // Henter billedet/kunstværket fra Databasen
-            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(kunstværk.getBilledeData());
+            // Har vi et billede vi kan indlæse?
+            if (kunstværk.getImage() != null) {
+                // Tilføj billedet
+                ImageView imageView = addImage(kunstværk, kunstværk.getImage());
 
-            // Opretter et JavaFX billede ud fra billeddataene
-            Image image = new Image(byteArrayInputStream);
+                vBox.getChildren().addFirst(imageView);
+            } else {
+                // Vi lytter efter ændring i billede data og skifter til billedet kun én gang
+                ChangeListener<Image> listener = new ChangeListener<Image>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Image> observable, Image oldValue, Image newValue) {
+                        if (newValue == null) {
+                            return;
+                        }
 
-            // Opretter et ImageView der kan vise billedet på skærmen
-            ImageView imageView = new ImageView(image);
-            imageView.setFitWidth(290);
-            imageView.setFitHeight(390);
-            imageView.setPreserveRatio(true);
+                        ImageView imageView = addImage(kunstværk, newValue);
 
-            // Gør billedet klikbart for brugeren
-            imageView.setStyle("-fx-cursor: hand;");
+                        vBox.getChildren().addFirst(imageView);
+                        kunstværk.imageProperty().removeListener(this);
+                    }
+                };
 
-            // Når brugeren klikker på billedet, sendes informationerne videre til Pop-up siden
-            imageView.setOnMouseClicked(event ->
-            {
-                // Gemmer det valgte kunstværk i PopUpController
-                // så brugeren kan tilføje eller fjerne kunstværket som favorit
-                PopupController.valgtKunstværk = kunstværk;
-
-                try {
-                    // Skifter til Pop-up siden, hvor kunstværket vises i større format
-                    sceneManeger.skiftSceneTilbage(event,
-                            "/com/example/eksamensprojekt/gui/Watanabe-samlingen.fxml",
-                            "/com/example/eksamensprojekt/gui/Pop-Up.fxml"
-                    );
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+                kunstværk.imageProperty().addListener(listener);
+            }
 
             // Opretter labels med nummer, titel og årstal
             Label nummer = new Label(kunstværk.getId());
@@ -173,7 +185,7 @@ public class WatanabeSamlingenController
             titel.setWrapText(true);
 
             // Tilføjer billedet og labels i VBoxen
-            vBox.getChildren().addAll(imageView, nummer, titel);
+            vBox.getChildren().addAll(nummer, titel);
 
             // Tilføjer VBoxen i GridPane
             billedeContainer.add(vBox, kolonne, række);
@@ -187,6 +199,37 @@ public class WatanabeSamlingenController
                 række = række + 1;
             }
         }
+    }
+
+    private ImageView addImage(Kunstværk kunstværk, Image img) {
+        ImageView imageView = new ImageView(img);
+        imageView.setFitWidth(290);
+        imageView.setFitHeight(390);
+        imageView.setPreserveRatio(true);
+
+        // Gør billedet klikbart for brugeren
+        imageView.setStyle("-fx-cursor: hand;");
+
+        // Når brugeren klikker på billedet, sendes informationerne videre til Pop-up siden
+        imageView.setOnMouseClicked(event ->
+        {
+            // Gemmer det valgte kunstværk i PopUpController
+            // så brugeren kan tilføje eller fjerne kunstværket som favorit
+            PopupController.valgtKunstværk = kunstværk;
+
+            try {
+                // Skifter til Pop-up siden, hvor kunstværket vises i større format
+                sceneManeger.skiftSceneTilbage(event,
+                        "/com/example/eksamensprojekt/gui/Watanabe-samlingen.fxml",
+                        "/com/example/eksamensprojekt/gui/Pop-Up.fxml"
+                );
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        return imageView;
     }
 
     // Søger efter kunstværker ud fra ID, titel eller årstal

@@ -43,7 +43,7 @@ public class PopupController
     SceneManeger sceneManeger = new SceneManeger();
 
     // Opretter et DAO objekt - bruges til kommunikation med databasen
-    DAO dao = new DAOImplementation();
+    DAO dao = DAOImplementation.getInstance();
 
     // Kører automatisk når FXML siden åbnes
     public void initialize()

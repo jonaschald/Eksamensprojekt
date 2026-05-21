@@ -55,7 +55,7 @@ public class AdminUndervisningController
     private String gammeltPDFNavn;
 
     // Opretter et DAO objekt - bruges til kommunikation med databasen
-    DAO dao = new DAOImplementation();
+    DAO dao = DAOImplementation.getInstance();
 
     // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
     SceneManeger sceneManeger = new SceneManeger();

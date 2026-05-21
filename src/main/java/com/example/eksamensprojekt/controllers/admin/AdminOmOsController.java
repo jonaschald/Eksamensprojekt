@@ -1,5 +1,6 @@
 package com.example.eksamensprojekt.controllers.admin;
 
+import com.example.eksamensprojekt.AsyncTask;
 import com.example.eksamensprojekt.SceneManeger;
 import com.example.eksamensprojekt.database.DAO;
 import com.example.eksamensprojekt.database.DAOImplementation;
@@ -22,6 +23,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class AdminOmOsController
 {
@@ -56,7 +58,7 @@ public class AdminOmOsController
     SceneManeger sceneManeger = new SceneManeger();
 
     // Opretter et DAO objekt - bruges til kommunikation med databasen
-    DAO dao = new DAOImplementation();
+    DAO dao = DAOImplementation.getInstance();
 
     // ObservableList der kan indeholde Om Os fra Databasen
     private ObservableList<OmOs> omOsListe = FXCollections.observableArrayList();
@@ -69,48 +71,56 @@ public class AdminOmOsController
     // Kører automatisk når FXML siden åbnes
     public void initialize ()
     {
-        try {
-            // Henter Om Os data fra databasen som et OmOs objekt og ligger det i omOsListe
-            dao.hentOmOs(omOsListe);
+        // Henter kontaktoplysninger til bundlinjen fra databasen
+        AsyncTask.run(
+                () -> {
+                    try {
+                        return dao.hentOmOs();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                },
+                result -> {
+                    // Set data
+                    omOsListe.setAll(result);
 
-            // Henter OmOs objektet fra listen
-            OmOs omOs = omOsListe.get(0);
+                    // Henter OmOs objektet fra listen
+                    OmOs omOs = omOsListe.get(0);
 
-            // Sætter data fra OmOs objektet ind i de forskellige labels
-            omOsTekst.setText(omOs.getBeskrivelse());
-            adresseTextArea.setText(omOs.getAdresse());
-            telefonTextArea.setText(omOs.getTelefonnummer());
-            emailTextArea.setText(omOs.getEmail());
-            åbningstiderFelt.setText(omOs.getÅbningstider());
+                    // Sætter data fra OmOs objektet ind i de forskellige labels
+                    omOsTekst.setText(omOs.getBeskrivelse());
+                    adresseTextArea.setText(omOs.getAdresse());
+                    telefonTextArea.setText(omOs.getTelefonnummer());
+                    emailTextArea.setText(omOs.getEmail());
+                    åbningstiderFelt.setText(omOs.getÅbningstider());
 
-            // Henter billeder fra databasen (binær data bytes) og gemmer dem i hver deres variabel,
-            // så vi kan bruge dem herinde i Controlleren
-            billedeDataTop = omOs.getImage1();
-            billedeDataMidt = omOs.getImage2();
-            billedeDataBund = omOs.getImage3();
+                    // Henter billeder fra databasen (binær data bytes) og gemmer dem i hver deres variabel,
+                    // så vi kan bruge dem herinde i Controlleren
+                    billedeDataTop = omOs.getImage1();
+                    billedeDataMidt = omOs.getImage2();
+                    billedeDataBund = omOs.getImage3();
 
-            // Hvis der findes et billede i databasen, bliver billedets byte-data lavet om til et JavaFX billede
-            // som vises i hver deres ImageView
-            if (omOs.getImage1() != null) {
-                billedeTop.setImage(new Image(new ByteArrayInputStream(omOs.getImage1())));
-            }
-            if (omOs.getImage2() != null) {
-                billedeMidt.setImage(new Image(new ByteArrayInputStream(omOs.getImage2())));
-            }
-            if (omOs.getImage3() != null) {
-                billedeBund.setImage(new Image(new ByteArrayInputStream(omOs.getImage3())));
-            }
+                    // Hvis der findes et billede i databasen, bliver billedets byte-data lavet om til et JavaFX billede
+                    // som vises i hver deres ImageView
+                    if (omOs.getImage1() != null) {
+                        billedeTop.setImage(new Image(new ByteArrayInputStream(omOs.getImage1())));
+                    }
+                    if (omOs.getImage2() != null) {
+                        billedeMidt.setImage(new Image(new ByteArrayInputStream(omOs.getImage2())));
+                    }
+                    if (omOs.getImage3() != null) {
+                        billedeBund.setImage(new Image(new ByteArrayInputStream(omOs.getImage3())));
+                    }
+                },
+                error -> {
+                    System.out.println("Kunne ikke hente Om Os fra databasen");
+                    error.printStackTrace();
 
-        } catch (Exception e) {
-            // Udskriver fejlen i konsollen
-            System.out.println("Fejl i Initialize i AdminOmOsController: " +
-                    "Kunne ikke hente Om Os fra databasen");
-            e.printStackTrace();
-
-            // Giver brugeren besked om fejlen
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente Om Os fra databasen");
-            alert.show();
-        }
+                    // Giver brugeren besked om fejlen
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente Om Os fra databasen");
+                    alert.show();
+                }
+        );
     }
 
     // Når der klikkes på knappen Gem Om Os, opdateres Om Os oplysningerne i databasen

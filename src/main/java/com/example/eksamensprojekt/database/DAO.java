@@ -3,13 +3,15 @@ package com.example.eksamensprojekt.database;
 import com.example.eksamensprojekt.objekter.*;
 import javafx.collections.ObservableList;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 // Interface klasse der beskriver hvilke database metoder DAOImplementation skal have
 public interface DAO
 {
     // Kunstværker
-    public void hentAlleKunstværker(ObservableList<Kunstværk> kunstværker)  throws ExecutionException, InterruptedException;
+    public List<Kunstværk> hentAlleKunstværker() throws SQLException;
 
     // Temaer
     public boolean gemTema(Tema tema) throws ExecutionException, InterruptedException;
@@ -30,7 +32,7 @@ public interface DAO
     // Favoritter
     public void tilføjFavorit(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
     public void fjernFavorit(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
-    public void hentFavoritter(ObservableList<Kunstværk> kunstværker) throws ExecutionException, InterruptedException;
+    public List<Kunstværk> hentFavoritter() throws SQLException;
 
     // Metoder til redigering af tekst og billeder på Samlingens oversigt side i Admin
     public boolean gemKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
@@ -48,6 +50,6 @@ public interface DAO
     public void opdaterOmSamlingen(OmSamlingen omSamlingen) throws ExecutionException, InterruptedException;
 
     // Metoder til redigering af tekst og billeder i Om Os Admin
-    public void hentOmOs(ObservableList<OmOs> omOs) throws ExecutionException, InterruptedException;
+    public List<OmOs> hentOmOs() throws SQLException;
     public void opdaterOmOs(OmOs omOs) throws ExecutionException, InterruptedException;
 }

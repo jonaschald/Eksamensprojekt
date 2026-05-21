@@ -1,11 +1,14 @@
 package com.example.eksamensprojekt.database;
 
+import com.example.eksamensprojekt.AsyncTask;
 import com.example.eksamensprojekt.objekter.*;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,14 +18,24 @@ import java.util.concurrent.atomic.AtomicBoolean;
 // Klasse der håndtere alt kommunikation med databasen
 public class DAOImplementation implements DAO
 {
+    // Den instance af databasen, der hentes når den allerede eksistere
+    private static DAOImplementation instance;
+
     // DataSource der bruges til at oprette forbindelse til databasen
     private SQLServerDataSource kilde;
+
+    // Forbindelsen til databasen
+    private Connection connection;
 
     // Sætter den op til at bruge 10 tråde til at lave database opgaver i baggrunden når programmet kører
     private ExecutorService executor = Executors.newFixedThreadPool(10);
 
     // Konstruktør der opretter forbindelse til SQL databasen
-    public DAOImplementation() {
+    private DAOImplementation() {
+        if (instance != null) {
+            return;
+        }
+
         kilde = new SQLServerDataSource();
         kilde.setDatabaseName("EJMM_2SEM_EKSAMEN_2026");
         kilde.setUser("CS2025a_s_2");
@@ -30,6 +43,24 @@ public class DAOImplementation implements DAO
         kilde.setPortNumber(1433);
         kilde.setServerName("10.176.111.34");
         kilde.setTrustServerCertificate(true);
+
+        instance = this;
+    }
+
+    public static DAOImplementation getInstance() {
+        if (instance == null) {
+            instance = new DAOImplementation();
+        }
+
+        return instance;
+    }
+
+    public void initConnection() {
+        try {
+            connection = kilde.getConnection();
+        } catch (SQLException ex) {
+            throw new RuntimeException("Kunne ikke tilslutte til databasen. Er du tilsluttet til skolens netværk eller VPN?");
+        }
     }
 
     @Override
@@ -39,10 +70,10 @@ public class DAOImplementation implements DAO
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try (Connection forbindelse = kilde.getConnection()) {
+                try {
                     PreparedStatement preparedStatement;
 
-                    preparedStatement = forbindelse.prepareStatement("INSERT INTO Art_Pieces " +
+                    preparedStatement = connection.prepareStatement("INSERT INTO Art_Pieces " +
                             "(ID, Serial_Number, Title, Year, Artist, Size_With_Frame, Size_Without_Frame, Description, Image_Data, ThemeID, Favorite) "
                             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
@@ -76,42 +107,67 @@ public class DAOImplementation implements DAO
     }
 
     @Override
-    public void hentAlleKunstværker(ObservableList<Kunstværk> kunstværker) throws ExecutionException, InterruptedException {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                try (Connection forbindelse = kilde.getConnection()) {
-                    PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("SELECT * FROM Art_pieces");
-                    ResultSet resultSet = preparedStatement.executeQuery();
+    public List<Kunstværk> hentAlleKunstværker() throws SQLException {
+        List<Kunstværk> kunstværker = new ArrayList<>();
 
-                    while (resultSet.next()) {
-                        String id = resultSet.getString("ID");
-                        String serieNummer = resultSet.getString("Serial_Number");
-                        String titel = resultSet.getString("Title");
-                        int årstal = resultSet.getInt("Year");
-                        String kunstner = resultSet.getString("Artist");
-                        String størrelseMedRamme = resultSet.getString("Size_With_Frame");
-                        String størrelseUdenRamme = resultSet.getString("Size_Without_Frame");
-                        String beskrivelse = resultSet.getString("Description");
-                        byte[] billedeData = resultSet.getBytes("Image_Data");
-                        int temaId = resultSet.getInt("ThemeID");
-                        boolean favorit = resultSet.getBoolean("Favorite");
+        String sql = """
+            SELECT ID, Serial_Number, Title, Artist, Year,
+                Size_With_Frame, Size_Without_Frame,
+                Description, ThemeID, Favorite
+            FROM Art_pieces
+        """;
 
-                        Kunstværk kunstværk = new Kunstværk(id, serieNummer, titel, kunstner, årstal,
-                                størrelseMedRamme, størrelseUdenRamme, beskrivelse, billedeData, temaId, favorit);
+        try (PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
-                        kunstværker.add(kunstværk);
-                    }
+            while (rs.next()) {
+                String id = rs.getString("ID");
 
-                } catch (SQLException e) {
-                    System.out.println("Kunne ikke hente kunstværker fra databasen");
-                    e.printStackTrace();
-                }
+                Kunstværk kunst = new Kunstværk(
+                        id,
+                        rs.getString("Serial_Number"),
+                        rs.getString("Title"),
+                        rs.getString("Artist"),
+                        rs.getInt("Year"),
+                        rs.getString("Size_With_Frame"),
+                        rs.getString("Size_Without_Frame"),
+                        rs.getString("Description"),
+                        null, // billede bliver loadet u-synkront
+                        rs.getInt("ThemeID"),
+                        rs.getBoolean("Favorite")
+                );
+
+                kunstværker.add(kunst);
+
+                // Hent billede data udenfor tråden så vi ikke fryser JavaFX
+                AsyncTask.run(
+                        () -> {
+                            try (PreparedStatement prep = connection.prepareStatement(
+                                    "SELECT Image_Data FROM Art_pieces WHERE ID = ?")) {
+
+                                prep.setString(1, id);
+
+                                try (ResultSet res = prep.executeQuery()) {
+                                    if (res.next()) {
+                                        return res.getBytes("Image_Data");
+                                    }
+                                    return null;
+                                }
+
+                            } catch (SQLException e) {
+                                throw new RuntimeException(e);
+                            }
+                        },
+                        kunst::setBilledeData,
+                        error -> {
+                            System.out.println("Kunne ikke hente billede data fra databasen");
+                            error.printStackTrace();
+                        }
+                );
             }
-        };
-        Future future = executor.submit(runnable);
-        future.get();
+        }
+
+        return kunstværker;
     }
 
     @Override
@@ -121,9 +177,9 @@ public class DAOImplementation implements DAO
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try (Connection forbindelse = kilde.getConnection()) {
+                try {
                     PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("DELETE FROM Art_Pieces WHERE ID = ?");
+                    preparedStatement = connection.prepareStatement("DELETE FROM Art_Pieces WHERE ID = ?");
                     preparedStatement.setString(1, kunstværk.getId());
                     preparedStatement.executeUpdate();
 
@@ -147,9 +203,9 @@ public class DAOImplementation implements DAO
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try (Connection forbindelse = kilde.getConnection()) {
+                try {
                     PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("SELECT * FROM About_Collection");
+                    preparedStatement = connection.prepareStatement("SELECT * FROM About_Collection");
 
                     ResultSet resultSet = preparedStatement.executeQuery();
                     while (resultSet.next()) {
@@ -178,9 +234,9 @@ public class DAOImplementation implements DAO
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try (Connection forbindelse = kilde.getConnection()) {
+                try {
                     PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("UPDATE About_Collection SET Title = ?, " +
+                    preparedStatement = connection.prepareStatement("UPDATE About_Collection SET Title = ?, " +
                             "Description = ?, Image1 = ?, Image2 = ? WHERE ID = ?");
 
                     preparedStatement.setString(1, omSamlingen.getTitle());
@@ -201,40 +257,29 @@ public class DAOImplementation implements DAO
     }
 
     @Override
-    public void hentOmOs(ObservableList<OmOs> omOs) throws ExecutionException, InterruptedException {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                try (Connection forbindelse = kilde.getConnection()) {
-                    PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("SELECT * FROM About_Us");
+    public List<OmOs> hentOmOs() throws SQLException {
+        List<OmOs> list = new ArrayList<>();
 
-                    ResultSet resultSet = preparedStatement.executeQuery();
-                    while (resultSet.next()) {
-                        int id = resultSet.getInt("ID");
-                        String titel = resultSet.getString("Title");
-                        String beskrivelse = resultSet.getString("Description");
-                        String adresse = resultSet.getString("Address");
-                        String telefonnummer = resultSet.getString("Phone");
-                        String email = resultSet.getString("Email");
-                        String åbningstider = resultSet.getString("OpeningHours");
-                        byte[] billede1 = resultSet.getBytes("Image1");
-                        byte[] billede2 = resultSet.getBytes("Image2");
-                        byte[] billede3 = resultSet.getBytes("Image3");
+        PreparedStatement ps = connection.prepareStatement("SELECT * FROM About_Us");
 
-                        OmOs omOsObjekt = new OmOs(id, titel, beskrivelse, adresse,
-                                telefonnummer, email, åbningstider, billede1, billede2, billede3);
+        ResultSet rs = ps.executeQuery();
 
-                        omOs.add(omOsObjekt);
-                    }
-                } catch (SQLException e) {
-                    System.out.println("Kunne ikke hente Om Os fra Databasen");
-                    e.printStackTrace();
-                }
-            }
-        };
-        Future future = executor.submit(runnable);
-        future.get();
+        while (rs.next()) {
+            list.add(new OmOs(
+                    rs.getInt("ID"),
+                    rs.getString("Title"),
+                    rs.getString("Description"),
+                    rs.getString("Address"),
+                    rs.getString("Phone"),
+                    rs.getString("Email"),
+                    rs.getString("OpeningHours"),
+                    rs.getBytes("Image1"),
+                    rs.getBytes("Image2"),
+                    rs.getBytes("Image3")
+            ));
+        }
+
+        return list;
     }
 
     @Override
@@ -242,9 +287,9 @@ public class DAOImplementation implements DAO
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try (Connection forbindelse = kilde.getConnection()) {
+                try {
                     PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("UPDATE About_Us SET Title = ?, " +
+                    preparedStatement = connection.prepareStatement("UPDATE About_Us SET Title = ?, " +
                             "Description = ?, Address = ?, Phone = ?, Email = ?, Image1 = ?, Image2 = ?, " +
                             "Image3 = ?, OpeningHours = ? WHERE ID = ?");
 
@@ -275,9 +320,9 @@ public class DAOImplementation implements DAO
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try (Connection forbindelse = kilde.getConnection()) {
+                try {
                     PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("UPDATE Art_Pieces SET " + "Serial_Number = ?, " +
+                    preparedStatement = connection.prepareStatement("UPDATE Art_Pieces SET " + "Serial_Number = ?, " +
                             "Title = ?, " + "Year = ?, " + "Artist = ?, " + "Size_With_Frame = ?, " + "Size_Without_Frame = ?, " +
                             "Description = ?, " + "Image_Data = ?, " + "ThemeID = ?, " + "Favorite = ? " + "WHERE ID = ?");
 
@@ -310,9 +355,9 @@ public class DAOImplementation implements DAO
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try(Connection forbindelse = kilde.getConnection()) {
+                try {
                     PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("SELECT * FROM Art_Pieces WHERE ThemeID = ?");
+                    preparedStatement = connection.prepareStatement("SELECT * FROM Art_Pieces WHERE ThemeID = ?");
                     preparedStatement.setInt(1, temaId);
 
                     ResultSet resultSet = preparedStatement.executeQuery();
@@ -352,9 +397,9 @@ public class DAOImplementation implements DAO
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try(Connection forbindelse = kilde.getConnection()) {
+                try {
                     PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("INSERT INTO Themes (ID, Theme_Name) VALUES (?, ?)");
+                    preparedStatement = connection.prepareStatement("INSERT INTO Themes (ID, Theme_Name) VALUES (?, ?)");
                     preparedStatement.setInt(1, tema.getId());
                     preparedStatement.setString(2, tema.getNavn());
                     preparedStatement.executeUpdate();
@@ -379,9 +424,9 @@ public class DAOImplementation implements DAO
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try (Connection forbindelse = kilde.getConnection()) {
+                try {
                     PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("SELECT * FROM Themes");
+                    preparedStatement = connection.prepareStatement("SELECT * FROM Themes");
                     ResultSet resultSet = preparedStatement.executeQuery();
 
                     while (resultSet.next()) {
@@ -409,9 +454,9 @@ public class DAOImplementation implements DAO
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try(Connection forbindelse = kilde.getConnection()) {
+                try {
                     PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("DELETE FROM Themes WHERE ID = ?");
+                    preparedStatement = connection.prepareStatement("DELETE FROM Themes WHERE ID = ?");
                     preparedStatement.setInt(1, tema.getId());
                     preparedStatement.executeUpdate();
 
@@ -435,9 +480,9 @@ public class DAOImplementation implements DAO
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try(Connection forbindelse = kilde.getConnection()) {
+                try {
                     PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("UPDATE Themes SET " + "Theme_Name = ? " + "WHERE ID = ?");
+                    preparedStatement = connection.prepareStatement("UPDATE Themes SET " + "Theme_Name = ? " + "WHERE ID = ?");
                     preparedStatement.setString(1, tema.getNavn());
                     preparedStatement.setInt(2, tema.getId());
                     preparedStatement.executeUpdate();
@@ -458,9 +503,9 @@ public class DAOImplementation implements DAO
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try(Connection forbindelse = kilde.getConnection()) {
+                try {
                     PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("INSERT INTO Teaching_Materials " +
+                    preparedStatement = connection.prepareStatement("INSERT INTO Teaching_Materials " +
                             "(Title, PDF_Data, Target_Group_ID) " + "VALUES (?, ?, ?)");
 
                     FileInputStream inputStream = new FileInputStream(undervisningsmateriale.getPdf());
@@ -495,9 +540,9 @@ public class DAOImplementation implements DAO
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try(Connection forbindelse = kilde.getConnection()) {
+                try {
                     PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("DELETE FROM Teaching_Materials WHERE ID = ?");
+                    preparedStatement = connection.prepareStatement("DELETE FROM Teaching_Materials WHERE ID = ?");
                     preparedStatement.setInt(1, undervisningsmateriale.getId());
                     preparedStatement.executeUpdate();
 
@@ -521,9 +566,9 @@ public class DAOImplementation implements DAO
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try(Connection forbindelse = kilde.getConnection()) {
+                try {
                     PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("SELECT * FROM Teaching_Materials");
+                    preparedStatement = connection.prepareStatement("SELECT * FROM Teaching_Materials");
 
                     ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -568,9 +613,9 @@ public class DAOImplementation implements DAO
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try(Connection forbindelse = kilde.getConnection()) {
+                try {
                     PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("UPDATE Art_Pieces SET Favorite = ? WHERE ID = ?");
+                    preparedStatement = connection.prepareStatement("UPDATE Art_Pieces SET Favorite = ? WHERE ID = ?");
                     preparedStatement.setBoolean(1, true);
                     preparedStatement.setString(2, kunstværk.getId());
                     preparedStatement.executeUpdate();
@@ -590,9 +635,9 @@ public class DAOImplementation implements DAO
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try(Connection forbindelse = kilde.getConnection()) {
+                try {
                     PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("UPDATE Art_Pieces SET Favorite = ? WHERE ID = ?");
+                    preparedStatement = connection.prepareStatement("UPDATE Art_Pieces SET Favorite = ? WHERE ID = ?");
                     preparedStatement.setBoolean(1, false);
                     preparedStatement.setString(2, kunstværk.getId());
                     preparedStatement.executeUpdate();
@@ -608,41 +653,31 @@ public class DAOImplementation implements DAO
     }
 
     @Override
-    public void hentFavoritter( ObservableList<Kunstværk> kunstværker) throws ExecutionException, InterruptedException {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                try(Connection forbindelse = kilde.getConnection()) {
-                    PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("SELECT * FROM Art_Pieces WHERE Favorite = 1");
-                    ResultSet resultSet = preparedStatement.executeQuery();
+    public List<Kunstværk> hentFavoritter() throws SQLException {
+        List<Kunstværk> list = new ArrayList<>();
 
-                    while(resultSet.next()) {
-                        String id = resultSet.getString("ID");
-                        String serieNummer = resultSet.getString("Serial_Number");
-                        String titel = resultSet.getString("Title");
-                        int årstal = resultSet.getInt("Year");
-                        String kunstner = resultSet.getString("Artist");
-                        String størrelseMedRamme = resultSet.getString("Size_With_Frame");
-                        String størrelseUdenRamme = resultSet.getString("Size_Without_Frame");
-                        String beskrivelse = resultSet.getString("Description");
-                        byte[] billedeData = resultSet.getBytes("Image_Data");
-                        int temaId = resultSet.getInt("ThemeID");
-                        boolean favorit = resultSet.getBoolean("Favorite");
+        PreparedStatement ps = connection.prepareStatement(
+                "SELECT * FROM Art_Pieces WHERE Favorite = 1"
+        );
 
-                        Kunstværk kunstværk = new Kunstværk(id, serieNummer, titel, kunstner, årstal,
-                                størrelseMedRamme, størrelseUdenRamme, beskrivelse, billedeData, temaId, favorit);
+        ResultSet rs = ps.executeQuery();
 
-                        kunstværker.add(kunstværk);
-                    }
+        while (rs.next()) {
+            list.add(new Kunstværk(
+                    rs.getString("ID"),
+                    rs.getString("Serial_Number"),
+                    rs.getString("Title"),
+                    rs.getString("Artist"),
+                    rs.getInt("Year"),
+                    rs.getString("Size_With_Frame"),
+                    rs.getString("Size_Without_Frame"),
+                    rs.getString("Description"),
+                    rs.getBytes("Image_Data"),
+                    rs.getInt("ThemeID"),
+                    rs.getBoolean("Favorite")
+            ));
+        }
 
-                } catch (SQLException e) {
-                    System.out.println("Kunne ikke hente favoritter fra databasen");
-                    e.printStackTrace();
-                }
-            }
-        };
-        Future future = executor.submit(runnable);
-        future.get();
+        return list;
     }
 }

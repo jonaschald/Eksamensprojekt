@@ -1,5 +1,6 @@
 package com.example.eksamensprojekt.controllers;
 
+import com.example.eksamensprojekt.AsyncTask;
 import com.example.eksamensprojekt.SceneManeger;
 import com.example.eksamensprojekt.database.DAO;
 import com.example.eksamensprojekt.database.DAOImplementation;
@@ -7,6 +8,7 @@ import com.example.eksamensprojekt.objekter.Kunstværk;
 import com.example.eksamensprojekt.objekter.OmOs;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -17,11 +19,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
-import java.util.concurrent.ExecutionException;
+import java.sql.SQLException;
+import java.util.*;
 
 public class FavoritterController
 {
@@ -44,7 +46,7 @@ public class FavoritterController
     SceneManeger sceneManeger = new SceneManeger();
 
     // Opretter et DAO objekt - bruges til kommunikation med databasen
-    DAO dao = new DAOImplementation();
+    DAO dao = DAOImplementation.getInstance();
 
     // ObservableList der kan indeholde Om Os fra Databasen
     private ObservableList<OmOs> omOsListe = FXCollections.observableArrayList();
@@ -53,43 +55,54 @@ public class FavoritterController
     public void initialize()
     {
         // Henter favoritkunstværkerne fra databasen, gemmer dem i listen favoritter og viser dem på siden
-        try {
-            dao.hentFavoritter(favoritter);
-            visFavoritter(favoritter);
-        } catch (ExecutionException | InterruptedException e) {
-            // Udskriver fejlen i konsollen
-            System.out.println("Fejl i Initialize i FavoritterController: " +
-                    "Kunne ikke hente favoritter fra databasen");
-            e.printStackTrace(); // Printer hele fejlen i konsollen
-
-            // Giver brugeren besked om fejlen
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente favoritter fra databasen");
-            alert.show();
-        }
+        AsyncTask.run(
+                () -> {
+                    try {
+                        return dao.hentFavoritter();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                },
+                result -> {
+                    favoritter.setAll(result);
+                    visFavoritter(favoritter);
+                },
+                error -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Der skete en fejl med at hente dine favoritter.");
+                }
+        );
 
         // Henter kontaktoplysninger til bundlinjen fra databasen
-        try {
-            // Henter Om Os data fra databasen som et OmOs objekt og ligger det i omOsListe
-            dao.hentOmOs(omOsListe);
+        AsyncTask.run(
+                () -> {
+                    try {
+                        return dao.hentOmOs();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                },
+                result -> {
+                    // Set data
+                    omOsListe.setAll(result);
 
-            // Henter OmOs objektet fra listen
-            OmOs omOs = omOsListe.get(0);
+                    // Henter OmOs objektet fra listen
+                    OmOs omOs = omOsListe.getFirst();
 
-            // Sætter data fra OmOs objektet ind i de forskellige labels
-            adresse.setText(omOs.getAdresse());
-            telefon.setText(omOs.getTelefonnummer());
-            email.setText(omOs.getEmail());
-            åbningstider.setText(omOs.getÅbningstider());
+                    // Sætter data fra OmOs objektet ind i de forskellige labels
+                    adresse.setText(omOs.getAdresse());
+                    telefon.setText(omOs.getTelefonnummer());
+                    email.setText(omOs.getEmail());
+                    åbningstider.setText(omOs.getÅbningstider());
+                },
+                error -> {
+                    System.out.println("Kunne ikke hente Om Os fra databasen");
+                    error.printStackTrace();
 
-        } catch (Exception e) {
-            // Udskriver fejlen i konsollen
-            System.out.println("Kunne ikke hente Om Os fra databasen");
-            e.printStackTrace();
-
-            // Giver brugeren besked om fejlen
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente Om Os fra databasen");
-            alert.show();
-        }
+                    // Giver brugeren besked om fejlen
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente Om Os fra databasen");
+                    alert.show();
+                }
+        );
     }
 
     // Metode til at vise alle favorit-kunstværkerne fra databasen i et GridPane
@@ -184,7 +197,7 @@ public class FavoritterController
     {
         try {
             // Åbner hjemmesiden i computerens standardbrowser
-            Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
+            java.awt.Desktop.getDesktop().browse(new URI("https://kunsthalholmen.dk/"));
         } catch (Exception e) {
             // Udskriver fejlen i konsollen
             System.out.println("Kunne ikke åbne Kunsthal Holmens hjemmeside");

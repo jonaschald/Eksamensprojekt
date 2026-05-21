@@ -1,5 +1,11 @@
 package com.example.eksamensprojekt.objekter;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.image.Image;
+
+import java.io.ByteArrayInputStream;
+
 public class Kunstværk
 {
     private String id;
@@ -13,6 +19,9 @@ public class Kunstværk
     private byte[] billedeData;
     private int temaId;
     private boolean favorit;
+
+    // Vi bruger et ObjectProperty så vi kan nemt lytter efter om billedet har loadet ind eller ej
+    private final ObjectProperty<Image> image = new SimpleObjectProperty<Image>();
 
     // Konstruktør
     public Kunstværk (String id, String serieNummer, String titel, String kunstner, int årstal,
@@ -30,6 +39,20 @@ public class Kunstværk
         this.billedeData = billedeData;
         this.temaId = temaId;
         this.favorit = favorit;
+
+        loadBilledeData();
+    }
+
+    private void loadBilledeData() {
+        if (billedeData == null) {
+            return;
+        }
+
+        // Henter billedet/kunstværket fra Databasen
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(this.billedeData);
+        Image img = new Image(byteArrayInputStream);
+
+        this.image.set(img);
     }
 
     public String getId() {
@@ -93,6 +116,15 @@ public class Kunstværk
     }
     public void setBilledeData(byte[] billedeData) {
         this.billedeData = billedeData;
+        loadBilledeData();
+    }
+
+    public Image getImage() {
+        return this.image.get();
+    }
+
+    public ObjectProperty<Image> imageProperty() {
+        return this.image;
     }
 
     public int getTemaId() {
