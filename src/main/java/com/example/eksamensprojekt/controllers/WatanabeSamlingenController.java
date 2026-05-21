@@ -155,6 +155,10 @@ public class WatanabeSamlingenController
                 // så brugeren kan tilføje eller fjerne kunstværket som favorit
                 PopupController.valgtKunstværk = kunstværk;
 
+                // Sender listen med kunstværker til PopupController
+                // så brugeren kan navigere mellem billederne
+                PopupController.setKunstværker(kunstværker);
+
                 try {
                     // Skifter til Pop-up siden, hvor kunstværket vises i større format
                     sceneManeger.skiftSceneTilbage(event,

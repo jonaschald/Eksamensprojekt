@@ -148,7 +148,7 @@
                                     <Font name="Georgia" size="40.0" />
                                  </font>
                               </Label>
-                              <TextArea fx:id="omOsTekst" prefWidth="521.0" wrapText="true">
+                              <TextArea fx:id="omOsTekst" prefHeight="797.0" prefWidth="513.0" wrapText="true">
                                  <font>
                                     <Font size="28.0" />
                                  </font>
@@ -376,7 +376,7 @@
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </Label>
-                        <TextArea fx:id="åbningstiderFelt" prefHeight="200.0" prefWidth="200.0">
+                        <TextArea fx:id="åbningstiderFelt" prefHeight="74.0" prefWidth="286.0">
                            <font>
                               <Font size="20.0" />
                            </font>

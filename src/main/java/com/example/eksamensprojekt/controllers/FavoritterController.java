@@ -139,6 +139,10 @@ public class FavoritterController
                 // Gemmer det valgte kunstværk
                 PopupController.valgtKunstværk = kunstværk;
 
+                // Sender listen med kunstværker til PopupController
+                // så brugeren kan navigere mellem billederne
+                PopupController.setKunstværker(kunstværker);
+
                 try {
                     // Skifter til Pop-up siden, hvor kunstværket vises i større format
                     sceneManeger.skiftSceneTilbage(event,
