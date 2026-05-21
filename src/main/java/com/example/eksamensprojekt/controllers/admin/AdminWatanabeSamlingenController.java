@@ -1,235 +1,128 @@
 package com.example.eksamensprojekt.controllers.admin;
 
 import com.example.eksamensprojekt.SceneManeger;
+import com.example.eksamensprojekt.database.DAO;
+import com.example.eksamensprojekt.database.DAOImplementation;
+import com.example.eksamensprojekt.objekter.Kunstværk;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 import java.awt.*;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 public class AdminWatanabeSamlingenController
 {
     @FXML
-    private ImageView kunstværk1;
-
-    @FXML
-    private ImageView kunstværk10;
-
-    @FXML
-    private ImageView kunstværk11;
-
-    @FXML
-    private ImageView kunstværk12;
-
-    @FXML
-    private ImageView kunstværk13;
-
-    @FXML
-    private ImageView kunstværk14;
-
-    @FXML
-    private ImageView kunstværk15;
-
-    @FXML
-    private ImageView kunstværk16;
-
-    @FXML
-    private ImageView kunstværk17;
-
-    @FXML
-    private ImageView kunstværk18;
-
-    @FXML
-    private ImageView kunstværk19;
-
-    @FXML
-    private ImageView kunstværk2;
-
-    @FXML
-    private ImageView kunstværk20;
-
-    @FXML
-    private ImageView kunstværk21;
-
-    @FXML
-    private ImageView kunstværk22;
-
-    @FXML
-    private ImageView kunstværk23;
-
-    @FXML
-    private ImageView kunstværk24;
-
-    @FXML
-    private ImageView kunstværk25;
-
-    @FXML
-    private ImageView kunstværk26;
-
-    @FXML
-    private ImageView kunstværk27;
-
-    @FXML
-    private ImageView kunstværk28;
-
-    @FXML
-    private ImageView kunstværk29;
-
-    @FXML
-    private ImageView kunstværk3;
-
-    @FXML
-    private ImageView kunstværk30;
-
-    @FXML
-    private ImageView kunstværk31;
-
-    @FXML
-    private ImageView kunstværk32;
-
-    @FXML
-    private ImageView kunstværk33;
-
-    @FXML
-    private ImageView kunstværk34;
-
-    @FXML
-    private ImageView kunstværk35;
-
-    @FXML
-    private ImageView kunstværk36;
-
-    @FXML
-    private ImageView kunstværk4;
-
-    @FXML
-    private ImageView kunstværk5;
-
-    @FXML
-    private ImageView kunstværk6;
-
-    @FXML
-    private ImageView kunstværk7;
-
-    @FXML
-    private ImageView kunstværk8;
-
-    @FXML
-    private ImageView kunstværk9;
-
-    @FXML
-    private Label kunstværkBeskrivelse1;
-
-    @FXML
-    private Label kunstværkBeskrivelse10;
-
-    @FXML
-    private Label kunstværkBeskrivelse11;
-
-    @FXML
-    private Label kunstværkBeskrivelse12;
-
-    @FXML
-    private Label kunstværkBeskrivelse13;
-
-    @FXML
-    private Label kunstværkBeskrivelse14;
-
-    @FXML
-    private Label kunstværkBeskrivelse15;
-
-    @FXML
-    private Label kunstværkBeskrivelse16;
-
-    @FXML
-    private Label kunstværkBeskrivelse17;
-
-    @FXML
-    private Label kunstværkBeskrivelse18;
-
-    @FXML
-    private Label kunstværkBeskrivelse19;
-
-    @FXML
-    private Label kunstværkBeskrivelse2;
-
-    @FXML
-    private Label kunstværkBeskrivelse20;
-
-    @FXML
-    private Label kunstværkBeskrivelse21;
-
-    @FXML
-    private Label kunstværkBeskrivelse22;
-
-    @FXML
-    private Label kunstværkBeskrivelse23;
-
-    @FXML
-    private Label kunstværkBeskrivelse24;
-
-    @FXML
-    private Label kunstværkBeskrivelse25;
-
-    @FXML
-    private Label kunstværkBeskrivelse26;
-
-    @FXML
-    private Label kunstværkBeskrivelse27;
-
-    @FXML
-    private Label kunstværkBeskrivelse28;
-
-    @FXML
-    private Label kunstværkBeskrivelse29;
-
-    @FXML
-    private Label kunstværkBeskrivelse3;
-
-    @FXML
-    private Label kunstværkBeskrivelse30;
-
-    @FXML
-    private Label kunstværkBeskrivelse31;
-
-    @FXML
-    private Label kunstværkBeskrivelse32;
-
-    @FXML
-    private Label kunstværkBeskrivelse33;
-
-    @FXML
-    private Label kunstværkBeskrivelse34;
-
-    @FXML
-    private Label kunstværkBeskrivelse35;
-
-    @FXML
-    private Label kunstværkBeskrivelse36;
-
-    @FXML
-    private Label kunstværkBeskrivelse4;
-
-    @FXML
-    private Label kunstværkBeskrivelse5;
-
-    @FXML
-    private Label kunstværkBeskrivelse6;
-
-    @FXML
-    private Label kunstværkBeskrivelse7;
-
-    @FXML
-    private Label kunstværkBeskrivelse8;
-
-    @FXML
-    private Label kunstværkBeskrivelse9;
+    private GridPane billedeContainer;
 
     // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
     SceneManeger sceneManeger = new SceneManeger();
+
+    // Opretter et DAO objekt - bruges til kommunikation med databasen
+    DAO dao = new DAOImplementation();
+
+    // Liste der kan indeholde alle kunstværker fra Databasen
+    private ObservableList<Kunstværk> kunstværker = FXCollections.observableArrayList();
+
+    // Gemmer det kunstværk som Admin har klikket på, så det kan redigeres eller slettes
+    private Kunstværk valgtKunstværk;
+
+    // Kører automatisk når FXML siden åbnes
+    public void initialize()
+    {
+        // Henter kunstværkerne fra databasen og gemmer dem i ObservableList kunstværker
+        try {
+            dao.hentAlleKunstværker(kunstværker);
+            visKunstværker(kunstværker);
+        } catch (Exception e) {
+            // Udskriver fejlen i konsollen
+            System.out.println("Kunne ikke hente kunstværker fra databasen");
+            e.printStackTrace();
+
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente kunstværker fra databasen");
+            alert.show();
+        }
+    }
+
+    // Metode til at vise alle kunstværkerne fra databasen i et GridPane
+    public void visKunstværker(ObservableList<Kunstværk> kunstværker)
+    {
+        // Fjerner alle elementer i vores GridPane - for at undgå dubletter
+        billedeContainer.getChildren().clear();
+
+        // Afstand mellem elementerne i GridPane
+        billedeContainer.setHgap(40);
+        billedeContainer.setVgap(40);
+
+        // Bredden på vores GridPane
+        billedeContainer.setPrefWidth(1400);
+
+        // Opretter 2 variabler der holder styr på hvor kunstværkerne placeres i GridPane
+        int kolonne = 0;
+        int række = 0;
+
+        // Går alle kunstværkerne igennem og sætter hvert kunstværk op i GridPane
+        for (Kunstværk kunstværk : kunstværker)
+        {
+            // Opretter en VBox til at indeholde billedet og informationstekst
+            VBox vBox = new VBox();
+            vBox.setSpacing(5);
+            vBox.setPrefWidth(290);
+            vBox.setAlignment(Pos.TOP_LEFT);
+
+            // Henter billedet/kunstværket fra Databasen
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(kunstværk.getBilledeData());
+
+            // Opretter et JavaFX billede ud fra den binær billede data
+            Image image = new Image(byteArrayInputStream);
+
+            // Opretter et ImageView der kan vise billedet på skærmen
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(290);
+            imageView.setFitHeight(390);
+            imageView.setPreserveRatio(true);
+
+            // Gør billedet klikbart for brugeren
+            imageView.setStyle("-fx-cursor: hand;");
+
+            // Når Admin klikker på billedet, gemmes det som valgtKunstværk
+            imageView.setOnMouseClicked(event -> {
+                valgtKunstværk = kunstværk;
+            });
+
+            // Opretter labels med nummer, titel og årstal
+            Label nummer = new javafx.scene.control.Label(kunstværk.getId());
+            Label titel = new Label(kunstværk.getTitel() + " - " + kunstværk.getÅrstal());
+            titel.setWrapText(true);
+
+            // Tilføjer billedet og labels i VBoxen
+            vBox.getChildren().addAll(imageView, nummer, titel);
+
+            // Tilføjer VBoxen i GridPane
+            billedeContainer.add(vBox, kolonne, række);
+
+            // Hopper til næste kolonne
+            kolonne = kolonne + 1;
+
+            // Når der er 4 kunstværker på en række
+            if (kolonne == 4) {
+                kolonne = 0;
+                række = række + 1;
+            }
+        }
+    }
 
     // Skifter scenen til Admin Om Os
     @FXML

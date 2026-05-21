@@ -122,7 +122,7 @@ public class FavoritterController
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(kunstværk.getBilledeData());
 
             // Opretter et JavaFX billede ud fra den binær billede data
-            javafx.scene.image.Image image = new Image(byteArrayInputStream);
+            Image image = new Image(byteArrayInputStream);
 
             // Opretter et ImageView der kan vise billedet på skærmen
             ImageView imageView = new ImageView(image);
