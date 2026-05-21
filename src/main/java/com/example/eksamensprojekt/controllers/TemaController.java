@@ -3,10 +3,11 @@ package com.example.eksamensprojekt.controllers;
 import com.example.eksamensprojekt.*;
 import com.example.eksamensprojekt.database.DAO;
 import com.example.eksamensprojekt.database.DAOImplementation;
+import com.example.eksamensprojekt.objekter.Kunstværk;
 import com.example.eksamensprojekt.objekter.OmOs;
+import com.example.eksamensprojekt.objekter.Tema;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -22,9 +23,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
 import java.awt.*;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Objects;
 
 public class TemaController
 {
@@ -42,18 +43,6 @@ public class TemaController
     private VBox billedeContainer;
 
     @FXML
-    private Button TEMPtilføjMaleri;
-
-    @FXML
-    private Button temaKnap1;
-
-    @FXML
-    private Button temaKnap2;
-
-    @FXML
-    private Button temaKnap3;
-
-    @FXML
     private HBox temaKnapper;
 
     // Opretter et sceneManager objekt - bruges til at skrifte mellem FXML sider
@@ -65,12 +54,32 @@ public class TemaController
     // ObservableList der kan indeholde Om Os fra Databasen
     private ObservableList<OmOs> omOsListe = FXCollections.observableArrayList();
 
+    // Liste der kan indeholde alle kunstværker fra Databasen
+    private ObservableList<Kunstværk> kunstværker = FXCollections.observableArrayList();
+
+    // Liste der kan indeholde Temaerne
+    private ObservableList<Tema> temaer = FXCollections.observableArrayList();
+
     // Variabel der holder styr på den nuværende række af kunstværker
     private HBox ufyldtRække;
 
     // Kører automatisk når FXML siden åbnes
     public void initialize()
     {
+        // Henter temaerne fra databasen og gemmer dem i ObservableList temaer og viser temaknapperne
+        try {
+            dao.hentAlleTemaer(temaer);
+            visTemaKnapper();
+        } catch (Exception e) {
+            // Udskriver fejlen i konsollen
+            System.out.println("Kunne ikke hente Temaer fra databasen");
+            e.printStackTrace();
+
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente Temaer fra databasen");
+            alert.show();
+        }
+
         // Henter kontaktoplysninger til bundlinjen fra databasen
         try {
             // Henter data fra databasen som et OmOs objekt og ligger det i omOsListe
@@ -96,8 +105,9 @@ public class TemaController
     }
 
     // Skaber et nyt kunstværk-kort med billede, nummer og titel
-    private VBox nyMaleriKnap(String billedSti, String nummer, String titel)
+    private VBox nyMaleriKnap(Kunstværk kunstværk)
     {
+        // Opretter en VBox til kunstværk-kortet
         VBox vBox = new VBox();
 
         // Sætter størrelse på boksen
@@ -115,18 +125,20 @@ public class TemaController
         maleri.setFitWidth(290);
 
         // Indlæser billedet
-        maleri.setImage(new Image(billedSti));
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(kunstværk.getBilledeData());
+        Image image = new Image(byteArrayInputStream);
+        maleri.setImage(image);
 
         // Opretter label til kunstværkets nummer
         Label maleriNummer = new Label();
-        maleriNummer.setText(nummer);
+        maleriNummer.setText(kunstværk.getId());
         maleriNummer.setFont(Font.font("System", FontWeight.BOLD, 20));
         maleriNummer.setTextAlignment(TextAlignment.LEFT);
         maleriNummer.setPrefWidth(290);
 
         // Opretter label til kunstværkets titel
         Label maleriTitel = new Label();
-        maleriTitel.setText(titel);
+        maleriTitel.setText(kunstværk.getTitel());
         maleriTitel.setFont(Font.font("System", FontWeight.BOLD, 20));
         maleriTitel.setTextAlignment(TextAlignment.LEFT);
         maleriTitel.setPrefWidth(290);
@@ -134,12 +146,13 @@ public class TemaController
         // Tilføjer billede og labels til VBoxen
         vBox.getChildren().addAll(maleri, maleriNummer, maleriTitel);
 
+        // Returnere VBoxen med kunstværkets billede og labels
         return vBox;
     }
 
     // Opretter en ny række til kunstværkerne
-    private void nyRække() {
-
+    private void nyRække()
+    {
         // Opretter en ny HBox
         HBox hBox = new HBox();
 
@@ -157,7 +170,7 @@ public class TemaController
     }
 
     // Tilføjer et kunstværk til den nuværende række
-    private void tilføjMaleri(String billedSti, String nummer, String titel)
+    private void tilføjMaleri(Kunstværk kunstværk)
     {
         // Hvis der endnu ikke findes en række, oprettes en ny
         if (ufyldtRække == null) {
@@ -170,52 +183,94 @@ public class TemaController
         }
 
         // Opretter et nyt kunstværk-kort
-        VBox maleri = nyMaleriKnap(billedSti, nummer, titel);
+        VBox maleri = nyMaleriKnap(kunstværk);
 
         // Tilføjer kunstværket til rækken
         ufyldtRække.getChildren().add(maleri);
 
         // Gør kunstværket klikbart
-        maleri.setOnMouseClicked(this::visMaleri);
+        maleri.setOnMouseClicked(event ->
+        {
+            // Gemmer det valgte kunstværkm så brugeren se det i Pop-up'en
+            PopupController.valgtKunstværk = kunstværk;
+            // Gemmer listen af kunstværker, så brugeren kan navigere frem og tilbage i Pop-up'en
+            PopupController.setKunstværker(kunstværker);
+
+            try {
+                // Skifter til Pop-up siden, så brugeren kan se kunstværket i større format
+                sceneManager.skiftSceneTilbage(event,
+                        "/com/example/eksamensprojekt/gui/Temaer.fxml",
+                        "/com/example/eksamensprojekt/gui/Pop-Up.fxml");
+            } catch (IOException e) {
+                // Udskriver fejlen i konsollen
+                System.out.println("Kunne ikke vise kunstværket på Pop-up siden");
+                e.printStackTrace(); // Printer hele fejlen i konsollen
+
+                // Giver brugeren besked om fejlen
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke vise kunstværket på Pop-up siden");
+                alert.show();
+            }
+        });
     }
 
-    // Åbner Pop-Up siden når brugeren klikker på et kunstværk
-    private void visMaleri(MouseEvent event) {
+    // Metode der opretter og viser en knap for hvert tema
+    public void visTemaKnapper()
+    {
+        // Fjerner alle elementer i vores HBox - for at undgå dubletter
+        temaKnapper.getChildren().clear();
 
-        try {
-            sceneManager.skiftSceneTilbage(event,
-                    "/com/example/eksamensprojekt/gui/Temaer.fxml",
-                    "/com/example/eksamensprojekt/gui/Pop-Up.fxml"
-            );
+        // Kører alle temaerne fra databasen igennem og laver en knap til hver
+        for (Tema tema : temaer)
+        {
+            Button temaKnap = new Button();
+            temaKnap.setText(tema.getNavn()); // Tema navnet sættes på knappen
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+            temaKnap.setPrefWidth(230); // Knappens bredde
+            temaKnap.setPrefHeight(70); // Knappens højde
+
+            // Sætter tekstens størrelse og tykkelse
+            temaKnap.setFont(Font.font("System", FontWeight.NORMAL, 22));
+
+            // Når brugeren klikker på knappen vises alle kunstværkerne under det tema
+            temaKnap.setOnMouseClicked((event) -> {
+                visTema(tema);
+            });
+
+            // Tilføjer knappen til HBoxen med tema knapper
+            temaKnapper.getChildren().add(temaKnap);
         }
     }
 
-    // Midlertidig testknap der tilføjer et kunstværk til siden
-    @FXML
-    void temaFilter(ActionEvent event)
+    // Viser alle kunstværker der tilhører det valgte tema
+    public void visTema(Tema tema)
     {
-        tilføjMaleri(Objects.requireNonNull(getClass().getResource(
-                "/com/example/eksamensprojekt/Billeder/Billede.png")).toExternalForm(),
-                "test nummer", "test titel");
-    }
+        try {
+            // Fjerner gamle billeder - for at undgå dubletter
+            billedeContainer.getChildren().clear();
 
-    @FXML
-    void temaFilter1(ActionEvent event) {
+            // Nulstiller rækken
+            ufyldtRække = null;
 
-    }
+            // Tømmer listen med kunstværker
+            kunstværker.clear();
 
-    @FXML
-    void temaFilter2(ActionEvent event) {
+            // Henter kunstværkerne der tilhører temaet fra databasen og sætter dem ind i listen kunstværker
+            dao.hentKunstværkerEfterTema(tema.getId(), kunstværker);
 
-    }
+            // Kører listen med kunstværker igennem og viser dem
+            for (Kunstværk kunstværk : kunstværker) {
+                tilføjMaleri(kunstværk);
+            }
 
-    @FXML
-    void temaFilter3(ActionEvent event) {
+        } catch (Exception e) {
+            // Udskriver fejlen i konsollen
+            System.out.println("Kunne ikke vise Temaer fra databasen");
+            e.printStackTrace(); // Printer hele fejlen i konsollen
 
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke vise Temaer fra databasen");
+            alert.show();
+        }
     }
 
     // Metode til at brugeren kan åbne Kunsthal Holmens hjemmeside i bundlinjen
