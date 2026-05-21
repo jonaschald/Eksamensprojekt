@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -15,7 +16,7 @@ import java.io.IOException;
 public class AdminTemaController
 {
     @FXML
-    private VBox billedeContainer;
+    private GridPane billedContainer;
 
     @FXML
     private VBox eksempel;
@@ -33,7 +34,7 @@ public class AdminTemaController
     private Label eksempelTitel;
 
     @FXML
-    private Button temaKnap;
+    private Button temaKnap1;
 
     @FXML
     private Button temaKnap2;
@@ -58,20 +59,6 @@ public class AdminTemaController
 
     }
 
-    // Skifter scenen til Admin Om Os
-    @FXML
-    void omOsKnap(MouseEvent event) throws IOException
-    {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Om-Os.fxml");
-    }
-
-    // Skifter scenen til Admin Om Samlingen
-    @FXML
-    void omSamlingenKnap(MouseEvent event) throws IOException
-    {
-        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Om-Samlingen.fxml");
-    }
-
     @FXML
     void redigerTema(ActionEvent event) {
 
@@ -83,7 +70,17 @@ public class AdminTemaController
     }
 
     @FXML
-    void temaFilter(ActionEvent event) {
+    void temaFilter1(ActionEvent event) {
+
+    }
+
+    @FXML
+    void temaFilter2(ActionEvent event) {
+
+    }
+
+    @FXML
+    void temaFilter3(ActionEvent event) {
 
     }
 
@@ -113,5 +110,19 @@ public class AdminTemaController
     void logudKnap(MouseEvent event) throws IOException
     {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Forside.fxml");
+    }
+
+    // Skifter scenen til Admin Om Os
+    @FXML
+    void omOsKnap(MouseEvent event) throws IOException
+    {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Om-Os.fxml");
+    }
+
+    // Skifter scenen til Admin Om Samlingen
+    @FXML
+    void omSamlingenKnap(MouseEvent event) throws IOException
+    {
+        sceneManeger.skiftSceneMouse (event, "/com/example/eksamensprojekt/admin/Admin-Om-Samlingen.fxml");
     }
 }

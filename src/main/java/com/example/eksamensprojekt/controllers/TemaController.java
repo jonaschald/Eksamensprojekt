@@ -45,7 +45,7 @@ public class TemaController
     private Button TEMPtilføjMaleri;
 
     @FXML
-    private Button temaKnap;
+    private Button temaKnap1;
 
     @FXML
     private Button temaKnap2;
@@ -204,16 +204,18 @@ public class TemaController
     }
 
     @FXML
-    void temaerKnap(MouseEvent event) {
+    void temaFilter1(ActionEvent event) {
 
     }
 
-    // Skifter scenen til Admin Login
     @FXML
-    void adminKnap(MouseEvent event) throws IOException
-    {
-        sceneManager.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Login.fxml"
-        );
+    void temaFilter2(ActionEvent event) {
+
+    }
+
+    @FXML
+    void temaFilter3(ActionEvent event) {
+
     }
 
     // Metode til at brugeren kan åbne Kunsthal Holmens hjemmeside i bundlinjen
@@ -232,6 +234,13 @@ public class TemaController
             Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke åbne Kunsthal Holmens hjemmeside");
             alert.show();
         }
+    }
+
+    // Skifter scenen til Admin Login
+    @FXML
+    void adminKnap(MouseEvent event) throws IOException
+    {
+        sceneManager.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Login.fxml");
     }
 
     // Skifter scenen til Favoritter
@@ -259,8 +268,7 @@ public class TemaController
     @FXML
     void undervisningKnap(MouseEvent event) throws IOException
     {
-        sceneManager.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Undervisning.fxml"
-        );
+        sceneManager.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Undervisning.fxml");
     }
 
     // Skifter scenen til Watanabe-samlingen
