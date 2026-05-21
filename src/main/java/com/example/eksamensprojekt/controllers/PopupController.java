@@ -4,6 +4,8 @@ import com.example.eksamensprojekt.SceneManeger;
 import com.example.eksamensprojekt.database.DAO;
 import com.example.eksamensprojekt.database.DAOImplementation;
 import com.example.eksamensprojekt.objekter.Kunstværk;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -45,45 +47,58 @@ public class PopupController
     // Opretter et DAO objekt - bruges til kommunikation med databasen
     DAO dao = new DAOImplementation();
 
+    // ObservableList der kan indeholde alle kunstværker fra Databasen
+    private static ObservableList<Kunstværk> alleKunstværker = FXCollections.observableArrayList();
+
     // Kører automatisk når FXML siden åbnes
     public void initialize()
     {
-        // Viser det valgte billede i Pop-up vinduet
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(valgtKunstværk.getBilledeData());
-        Image image = new Image(byteArrayInputStream);
-        popupBillede.setImage(image);
+        // Viser det valgte kunstværk og dets info i Pop-upp'en
+        visKunstværk(valgtKunstværk);
+    }
 
-        // Viser titlen på det valgte kunstværk
-        titleLabel.setText(valgtKunstværk.getTitel());
+    // Når brugeren klikker på næste pil vises næste kunstværk i PopUp'en
+    @FXML
+    void næsteBilledeKnap(MouseEvent event)
+    {
+        // Henter index på det kunstværk som brugeren står på nu (i listen med alle kunstværker)
+        int index = alleKunstværker.indexOf(valgtKunstværk);
 
-        // Viser årstallet på det valgte kunstværk
-        årstalLabel.setText(String.valueOf(valgtKunstværk.getÅrstal()));
-
-        // Viser beskrivelsen på det valgte kunstværk
-        besktivelseLabel.setText(valgtKunstværk.getBeskrivelse());
-
-        // Viser kunstværkets nummer og størrelse
-        InfoLabel.setText("Nr: " + valgtKunstværk.getId() +
-                "\nStr. m/ramme: " + valgtKunstværk.getStørrelseMedRamme() +
-                "\nStr. u/ramme: " + valgtKunstværk.getStørrelseUdenRamme());
-
-        // Hvis et billede er sat som favorit, så ændres knappens udseende til "- fjern fra favoritter"
-        if(valgtKunstværk.isFavorit()) {
-            favoritKnap.setText("- fjern fra favoritter");
+        // Tjekker at der findes et næste billede efter det billede vi står på nu
+        // Hvis vi er på sidste index (alleKunstværker.size() - 1) så findes der ikke et næste billede
+        if (index < alleKunstværker.size() - 1)
+        {
+            // Henter det næste billede ved at gå et index op
+            valgtKunstværk = alleKunstværker.get(index + 1);
+            // Viser det næste billede i Pop-up'en
+            visKunstværk(valgtKunstværk);
         } else {
-            // Og omvendt
-            favoritKnap.setText("+ tilføj til favoritter");
+            // Hvis brugeren står på det sidste billede, vises det første billede i listen
+            valgtKunstværk = alleKunstværker.get(0);
+            visKunstværk(valgtKunstværk);
         }
     }
 
+    // Når brugeren klikker på forrige pil vises det forrige kunstværk i PopUp'en
     @FXML
-    void forrigeBilledeKnap(MouseEvent event) {
+    void forrigeBilledeKnap(MouseEvent event)
+    {
+        // Henter index på det kunstværk som brugeren står på nu (i listen med alle kunstværker)
+        int index = alleKunstværker.indexOf(valgtKunstværk);
 
-    }
-
-    @FXML
-    void næsteBilledeKnap(MouseEvent event) {
-
+        // Tjekker at der findes et billede før det billede vi står på nu
+        // Hvis 0, så er vi på det sidste index og så er der ikke et forrige billede
+        if (index > 0)
+        {
+            // Henter det forrige billede ved at gå en index ned
+            valgtKunstværk = alleKunstværker.get(index - 1);
+            // Viser det forrige billede i Pop-up'en
+            visKunstværk(valgtKunstværk);
+        } else {
+            // Hvis brugeren står på det første billede, vises det sidste billede i listen
+            valgtKunstværk = alleKunstværker.get(alleKunstværker.size() - 1);
+            visKunstværk(valgtKunstværk);
+        }
     }
 
     @FXML
@@ -131,5 +146,42 @@ public class PopupController
         sceneManeger.skiftSceneTilbage(event,
                 "/com/example/eksamensprojekt/gui/Pop-Up.fxml",
                 "/com/example/eksamensprojekt/gui/Stor-Pop-up.fxml");
+    }
+
+    // Metode til at vise det valgte kunstværk og dets info i Pop-upp'en
+    public void visKunstværk(Kunstværk kunstværk)
+    {
+        // Viser det valgte billede i Pop-up vinduet
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(valgtKunstværk.getBilledeData());
+        Image image = new Image(byteArrayInputStream);
+        popupBillede.setImage(image);
+
+        // Viser titlen på det valgte kunstværk
+        titleLabel.setText(valgtKunstværk.getTitel());
+
+        // Viser årstallet på det valgte kunstværk
+        årstalLabel.setText(String.valueOf(valgtKunstværk.getÅrstal()));
+
+        // Viser beskrivelsen på det valgte kunstværk
+        besktivelseLabel.setText(valgtKunstværk.getBeskrivelse());
+
+        // Viser kunstværkets nummer og størrelse
+        InfoLabel.setText("Nr: " + valgtKunstværk.getId() +
+                "\nStr. m/ramme: " + valgtKunstværk.getStørrelseMedRamme() +
+                "\nStr. u/ramme: " + valgtKunstværk.getStørrelseUdenRamme());
+
+        // Hvis et billede er sat som favorit, så ændres knappens udseende til "- fjern fra favoritter"
+        if(valgtKunstværk.isFavorit()) {
+            favoritKnap.setText("- fjern fra favoritter");
+        } else {
+            // Og omvendt
+            favoritKnap.setText("+ tilføj til favoritter");
+        }
+    }
+
+    // Metode til sende listen med kunstværker til pop-up'en - de værker der skal navigeres i
+    // Listen afhænger af om brugeren er inde på hele samlingen, favoritter eller temaer
+    public static void setKunstværker(ObservableList<Kunstværk> kunstværker) {
+        alleKunstværker = kunstværker;
     }
 }
