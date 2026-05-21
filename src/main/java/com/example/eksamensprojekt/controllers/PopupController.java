@@ -143,6 +143,10 @@ public class PopupController
     @FXML
     void tilStorPopUp(MouseEvent event) throws IOException
     {
+        // Sender listen med kunstværker videre til Stor Pop-up
+        // så brugeren kan navigere mellem billederne derinde
+        StorPopupController.setKunstværker(alleKunstværker);
+
         sceneManeger.skiftSceneTilbage(event,
                 "/com/example/eksamensprojekt/gui/Pop-Up.fxml",
                 "/com/example/eksamensprojekt/gui/Stor-Pop-up.fxml");
@@ -151,7 +155,9 @@ public class PopupController
     // Metode til at vise det valgte kunstværk og dets info i Pop-upp'en
     public void visKunstværk(Kunstværk kunstværk)
     {
-        // Viser det valgte billede i Pop-up vinduet
+        // Henter det valgte billede som binær data fra databasen
+        // ByteArrayInputStream bruges til at omdanne byte data til et JavaFX billede
+        // Billedet vises herefter i vores ImageView i pop-up'en
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(valgtKunstværk.getBilledeData());
         Image image = new Image(byteArrayInputStream);
         popupBillede.setImage(image);
@@ -179,9 +185,10 @@ public class PopupController
         }
     }
 
-    // Metode til sende listen med kunstværker til pop-up'en - de værker der skal navigeres i
+    // Metode til at sende listen med kunstværker til pop-up'en - de værker der skal navigeres i
     // Listen afhænger af om brugeren er inde på hele samlingen, favoritter eller temaer
-    public static void setKunstværker(ObservableList<Kunstværk> kunstværker) {
+    public static void setKunstværker(ObservableList<Kunstværk> kunstværker)
+    {
         alleKunstværker = kunstværker;
     }
 }
