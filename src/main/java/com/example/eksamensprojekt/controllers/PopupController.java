@@ -174,7 +174,8 @@ public class PopupController
         // Viser kunstværkets nummer og størrelse
         InfoLabel.setText("Nr: " + valgtKunstværk.getId() +
                 "\nStr. m/ramme: " + valgtKunstværk.getStørrelseMedRamme() +
-                "\nStr. u/ramme: " + valgtKunstværk.getStørrelseUdenRamme());
+                "\nStr. u/ramme: " + valgtKunstværk.getStørrelseUdenRamme() +
+                "\n" + valgtKunstværk.getSerieNummer());
 
         // Hvis et billede er sat som favorit, så ændres knappens udseende til "- fjern fra favoritter"
         if(valgtKunstværk.isFavorit()) {
