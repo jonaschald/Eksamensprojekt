@@ -178,6 +178,9 @@ public class AdminTemaController
         // Liste der indeholder alle CheckBoxes til de forskellige temaer
         ArrayList<CheckBox> checkBoxes = new ArrayList<>();
 
+        // Liste der indeholder de synlige temaer, så Øvrige værker ikke er med
+        ArrayList<Tema> synligeTemaer = new ArrayList<>();
+
         try {
             // Tømmer listen med temaer - for at undgå dubletter
             temaer.clear();
@@ -187,7 +190,15 @@ public class AdminTemaController
 
             // Går alle temaerne igennem og opretter en CheckBox til hvert tema
             for (Tema tema : temaer) {
+
+                // Springer temaet Øvrige Værker over, så den ikke vises for Admin
+                if (tema.getNavn().equals("Øvrige værker")) {
+                    continue; // Springer Øvrige værker over og kører videre med de andre temaer
+                }
+
+                // Opretter en CheckBox til hvert tema
                 CheckBox checkBox = new CheckBox(tema.getNavn());
+                synligeTemaer.add(tema); // Tilføjer temaet til listen med synligeTemaer
                 checkBoxes.add(checkBox);
                 vBox.getChildren().add(checkBox);
             }
@@ -202,25 +213,16 @@ public class AdminTemaController
             if (resultat.isPresent() && resultat.get() == ButtonType.OK)
             {
                 // Går alle temaerne igennem
-                for (int i = 0; i < temaer.size(); i++)
+                for (int i = 0; i < synligeTemaer.size(); i++)
                 {
                     // Hvis en CheckBox er markeret
                     if (checkBoxes.get(i).isSelected())
                     {
                         // Henter det tema der er markeret
-                        Tema tema = temaer.get(i);
+                        Tema tema = synligeTemaer.get(i);
 
-                        // Temaet "Øvrige Kunstværker" kan ikke slettes, da den bruges af
-                        // databasen til alle de kunstværker der ikke tilhører et tema
-                        if (tema.getNavn().equals("Øvrige værker"))
-                        {
-                            // Giver Admin besked
-                            Alert alert = new Alert(Alert.AlertType.ERROR, "Temaet Øvrige værker kan ikke slettes");
-                            alert.show();
-                        } else {
-                            // Sletter det markerede tema
-                            dao.sletTema(tema);
-                        }
+                        // Sletter temaet fra databasen
+                        dao.sletTema(tema);
                     }
                 }
                 hentTemaer(); // Opdatere tema-knapperne, så man kan se ændringerne på siden
@@ -254,6 +256,13 @@ public class AdminTemaController
 
             // Går alle temaerne igennem og opretter en knap til hvert tema
             for (Tema tema : temaer) {
+
+                // Admin skal ikke kunne se "Øvrige værker", da det bare er en kategori
+                // i databasen der indeholder alle de kunstværker som ikke tilhører et tema
+                if (tema.getNavn().equals("Øvrige værker")) {
+                    continue; // Springer Øvrige værker over og kører videre med de andre temaer
+                }
+
                 Button temaKnap = new Button();
                 temaKnap.setText(tema.getNavn());
                 temaKnap.setPrefWidth(230);
@@ -290,9 +299,8 @@ public class AdminTemaController
                 // Tilføjer tema-knappen til HBoxen
                 temaKnapper.getChildren().add(temaKnap);
 
-                //Viser automatisk kunstværkerne fra det første tema når siden åbnes
-                // Hvis der findes et første tema og det ikke er "Øvrige værker"
-                if (førsteTema == true && !tema.getNavn().equals("Øvrige værker"))
+                // Viser automatisk kunstværkerne fra det første tema når siden åbnes
+                if (førsteTema == true)
                 {
                     // Gemmer det første tema som det tema der er valgt nu
                     valgtTema = tema;
