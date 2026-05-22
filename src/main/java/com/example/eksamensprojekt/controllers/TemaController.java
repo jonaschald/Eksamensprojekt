@@ -219,9 +219,19 @@ public class TemaController
         // Fjerner alle elementer i vores HBox - for at undgå dubletter
         temaKnapper.getChildren().clear();
 
+        // Variabel der bruges til at vise det første tema automatisk når siden åbnes
+        boolean førsteTema = true;
+
         // Kører alle temaerne fra databasen igennem og laver en knap til hver
         for (Tema tema : temaer)
         {
+            // Brugeren skal ikke kunne se "Øvrige værker", da det bare er en kategori
+            // i databasen der indeholder alle de kunstværker som ikke tilhører et tema
+            if (tema.getNavn().equals("Øvrige værker")) {
+                continue; // Springer Øvrige værker over og kører videre med de andre temaer
+            }
+
+            // Laver en knap til temaet
             Button temaKnap = new Button();
             temaKnap.setText(tema.getNavn()); // Tema navnet sættes på knappen
 
@@ -238,6 +248,12 @@ public class TemaController
 
             // Tilføjer knappen til HBoxen med tema knapper
             temaKnapper.getChildren().add(temaKnap);
+
+            // Hvis det er det første tema vises det automatisk når siden åbner
+            if (førsteTema == true) {
+                visTema(tema);
+                førsteTema = false; // Sørger for at resten af temaerne ikke vises automatisk
+            }
         }
     }
 

@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -12,21 +13,22 @@
    <children>
       <Label text="Login">
          <font>
-            <Font size="96.0" />
+            <Font size="69.0" />
          </font>
          <VBox.margin>
             <Insets bottom="50.0" />
          </VBox.margin>
       </Label>
-      <Label text="E-mail">
-         <font>
-            <Font size="40.0" />
-         </font>
-         <VBox.margin>
-            <Insets top="10.0" />
-         </VBox.margin>
-      </Label>
-      <TextField fx:id="emailField">
+      <HBox maxHeight="50.0" maxWidth="860.0">
+         <children>
+            <Label text="E-mail">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <TextField fx:id="emailField" maxHeight="80.0" maxWidth="870.0">
          <font>
             <Font size="36.0" />
          </font>
@@ -34,20 +36,24 @@
             <Insets bottom="25.0" left="100.0" right="100.0" top="10.0" />
          </VBox.margin>
       </TextField>
-      <Label text="Password">
-         <font>
-            <Font size="40.0" />
-         </font>
+      <HBox maxHeight="50.0" maxWidth="860.0">
+         <children>
+            <Label text="Password">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Label>
+         </children>
          <VBox.margin>
-            <Insets top="25.0" />
+            <Insets top="20.0" />
          </VBox.margin>
-      </Label>
-      <PasswordField fx:id="passwordFiels">
+      </HBox>
+      <PasswordField fx:id="passwordFiels" maxHeight="80.0" maxWidth="870.0">
          <font>
             <Font size="36.0" />
          </font>
          <VBox.margin>
-            <Insets bottom="10.0" left="100.0" right="100.0" top="10.0" />
+            <Insets bottom="50.0" left="100.0" right="100.0" top="10.0" />
          </VBox.margin>
       </PasswordField>
       <Button mnemonicParsing="false" onAction="#login" text="login">
@@ -58,13 +64,5 @@
             <Insets bottom="10.0" top="15.0" />
          </VBox.margin>
       </Button>
-      <Label fx:id="forgotPassword" text="Forgot password">
-         <font>
-            <Font size="40.0" />
-         </font>
-         <VBox.margin>
-            <Insets top="50.0" />
-         </VBox.margin>
-      </Label>
    </children>
 </VBox>

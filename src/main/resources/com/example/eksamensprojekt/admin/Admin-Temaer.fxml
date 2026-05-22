@@ -129,51 +129,38 @@
                   </HBox>
                   <HBox alignment="CENTER" layoutX="50.0" layoutY="185.0" prefWidth="1380.0" spacing="20.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#nytTema" prefHeight="60.0" prefWidth="200.0" text="+ Tilføj Tema" textAlignment="CENTER">
+                        <Button mnemonicParsing="false" onAction="#nytTema" prefHeight="60.0" prefWidth="205.0" text="+ Tilføj Tema" textAlignment="CENTER">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Button>
-                        <Button layoutX="673.0" layoutY="48.0" mnemonicParsing="false" onAction="#redigerTema" prefHeight="60.0" prefWidth="200.0" text="Rediger Temaer" textAlignment="CENTER">
+                        <Button layoutX="673.0" layoutY="48.0" mnemonicParsing="false" onAction="#redigerTema" prefHeight="60.0" prefWidth="205.0" text="Rediger Temaer" textAlignment="CENTER">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Button>
-                        <Button layoutX="700.0" layoutY="48.0" mnemonicParsing="false" onAction="#sletTema" prefHeight="60.0" prefWidth="200.0" text="Slet Tema" textAlignment="CENTER">
+                        <Button layoutX="700.0" layoutY="48.0" mnemonicParsing="false" onAction="#sletTema" prefHeight="60.0" prefWidth="205.0" text="Slet Tema" textAlignment="CENTER">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Button>
-                     </children>
-                  </HBox>
-                  <HBox fx:id="temaKnapper" alignment="CENTER" prefWidth="1380.0" spacing="20.0">
-                     <children>
-                        <Button fx:id="temaKnap1" mnemonicParsing="false" onAction="#temaFilter1" prefHeight="60.0" prefWidth="200.0" text="Tema 1" textAlignment="CENTER">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="temaKnap2" layoutX="673.0" layoutY="48.0" mnemonicParsing="false" onAction="#temaFilter2" prefHeight="60.0" prefWidth="200.0" text="Tema 2" textAlignment="CENTER">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="temaKnap3" layoutX="700.0" layoutY="48.0" mnemonicParsing="false" onAction="#temaFilter3" prefHeight="60.0" prefWidth="200.0" text="Tema 3" textAlignment="CENTER">
+                        <Button layoutX="815.0" layoutY="10.0" mnemonicParsing="false" onAction="#redigerKunstværker" prefHeight="60.0" prefWidth="205.0" text="Rediger Kunstværker" textAlignment="CENTER">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Button>
                      </children>
                   </HBox>
-                  <GridPane fx:id="billedContainer" hgap="5.0" vgap="5.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                  <HBox fx:id="temaKnapper" alignment="CENTER" prefWidth="1380.0" spacing="20.0" />
+                  <GridPane fx:id="billedeContainer" hgap="40.0" prefWidth="1240.0" vgap="40.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="0.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
                      </padding>
                   </GridPane>
                </children>

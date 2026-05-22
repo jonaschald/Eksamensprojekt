@@ -419,9 +419,8 @@ public class DAOImplementation implements DAO
             public void run() {
                 try(Connection forbindelse = kilde.getConnection()) {
                     PreparedStatement preparedStatement;
-                    preparedStatement = forbindelse.prepareStatement("INSERT INTO Themes (ID, Theme_Name) VALUES (?, ?)");
-                    preparedStatement.setInt(1, tema.getId());
-                    preparedStatement.setString(2, tema.getNavn());
+                    preparedStatement = forbindelse.prepareStatement("INSERT INTO Themes (Theme_Name) VALUES (?)");
+                    preparedStatement.setString(1, tema.getNavn());
                     preparedStatement.executeUpdate();
 
                     resultat.set(true);
