@@ -457,8 +457,12 @@ public class AdminTemaController
                     {
                         kunstværk.setTemaId(valgtTema.getId());
                     } else {
-                        // Hvis CheckBoxen ikke er markeret tilknyttes kunstværket til temaet "Øvrige Værker"
-                        kunstværk.setTemaId(4);
+                        // Hvis CheckBoxen ikke er markeret og kunstværket tidligere tilhørte det valgte tema
+                        // flyttes kunstværket til temaet "Øvrige Værker"
+                        if (kunstværk.getTemaId() == valgtTema.getId())
+                        {
+                            kunstværk.setTemaId(4);
+                        }
                     }
                     // Opdatere Kunstværket med det nye tema i databasen
                     dao.opdaterKunstværk(kunstværk);
