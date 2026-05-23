@@ -10,8 +10,8 @@ public interface DAO
 {
     // Kunstværker
     public void hentAlleKunstværker(ObservableList<Kunstværk> kunstværker)  throws ExecutionException, InterruptedException;
-    public void opdaterKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
     public boolean gemKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
+    public void opdaterKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
     public boolean sletKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
 
     // Temaer
