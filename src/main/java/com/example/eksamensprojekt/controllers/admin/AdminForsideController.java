@@ -97,6 +97,57 @@ public class AdminForsideController
 
     }
 
+    // Metode der gemmer alle Forside oplysninger i databasen
+    private void gemForsiden()
+    {
+        try {
+            // Opretter et Forside objekt med alle de oplysninger som Admin har skrevet/lagt ind
+            Forside forside = new Forside(1, "Watanabe-samlingen", watanabeSamlingTekst.getText(),
+                    billede1, "Kunsthal Holmen", omOsTekst.getText(), billede2a, billede2b);
+
+            // Gemmer Forside oplysningerne i databasen
+            dao.opdaterForside(forside);
+
+        } catch (Exception e) {
+            // Udskriver fejlen i konsollen
+            System.out.println("Kunne ikke gemme Forsiden i databasen");
+            e.printStackTrace(); // Printer hele fejlen i konsollen
+
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke gemme Forsiden i databasen");
+            alert.show();
+        }
+    }
+
+    // Metode til at Admin kan vælge et billede fra computeren som så konverteres til bytes til databasen
+    private byte[] redigerBillede (ImageView imageView)
+    {
+        // Opretter en vindue hvor Admin kan vælge en fil fra computeren
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif"));
+
+        // Finder det JavaFX vindue der kørers nu og åbner fileChooser vinduet deri
+        Stage stage = (Stage) imageView.getScene().getWindow();
+        File file = fileChooser.showOpenDialog(stage); // Hvis Admin vælger en fil, gemmes den som file
+
+        // Hvis Admin har valgt en fil
+        if (file != null)
+        {
+            // Oprettes der et JavaFX Image med den valgte fil og billedet vises i ImageView
+            Image image = new Image (file.toURI().toString());
+            imageView.setImage(image);
+
+            // Konvertere billedet til bytes/binær data til databasen
+            try {
+                return Files.readAllBytes(file.toPath());
+            } catch (IOException e) {
+                e.printStackTrace(); // Printer fejlen i konsollen
+            }
+        }
+        return null; // Hvis brugeren annullere fileChooser, så returneres null
+    }
+
     // Når Admin klikker på rediger knappen gemmes tekst ændringerne i databasen
     @FXML
     void rediger(ActionEvent event)
@@ -172,56 +223,5 @@ public class AdminForsideController
     void logudKnap(MouseEvent event) throws IOException
     {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Forside.fxml");
-    }
-
-    // Metode der gemmer alle Forside oplysninger i databasen
-    private void gemForsiden()
-    {
-        try {
-            // Opretter et Forside objekt med alle de oplysninger som Admin har skrevet/lagt ind
-            Forside forside = new Forside(1, "Watanabe-samlingen", watanabeSamlingTekst.getText(),
-                    billede1, "Kunsthal Holmen", omOsTekst.getText(), billede2a, billede2b);
-
-            // Gemmer Forside oplysningerne i databasen
-            dao.opdaterForside(forside);
-
-        } catch (Exception e) {
-            // Udskriver fejlen i konsollen
-            System.out.println("Kunne ikke gemme Forsiden i databasen");
-            e.printStackTrace(); // Printer hele fejlen i konsollen
-
-            // Giver brugeren besked om fejlen
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke gemme Forsiden i databasen");
-            alert.show();
-        }
-    }
-
-    // Metode til at Admin kan vælge et billede fra computeren som så konverteres til bytes til databasen
-    private byte[] redigerBillede (ImageView imageView)
-    {
-        // Opretter en vindue hvor Admin kan vælge en fil fra computeren
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif"));
-
-        // Finder det JavaFX vindue der kørers nu og åbner fileChooser vinduet deri
-        Stage stage = (Stage) imageView.getScene().getWindow();
-        File file = fileChooser.showOpenDialog(stage); // Hvis Admin vælger en fil, gemmes den som file
-
-        // Hvis Admin har valgt en fil
-        if (file != null)
-        {
-            // Oprettes der et JavaFX Image med den valgte fil og billedet vises i ImageView
-            Image image = new Image (file.toURI().toString());
-            imageView.setImage(image);
-
-            // Konvertere billedet til bytes/binær data til databasen
-            try {
-                return Files.readAllBytes(file.toPath());
-            } catch (IOException e) {
-                e.printStackTrace(); // Printer fejlen i konsollen
-            }
-        }
-        return null; // Hvis brugeren annullere fileChooser, så returneres null
     }
 }

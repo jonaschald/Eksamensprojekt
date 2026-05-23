@@ -84,6 +84,57 @@ public class AdminOmSamlingenController
         }
     }
 
+    // Metode der gemmer alle Om Samlingen oplysninger i databasen
+    private void gemOmSamlingen()
+    {
+        try {
+            // Opretter et OmSamlingen objekt med alle de oplysninger som Admin har skrevet/lagt ind
+            OmSamlingen omSamlingen = new OmSamlingen(1, "Om samlingen", redigerSadaoWatanabeText.getText(),
+                    billedeDataTop, billedeDataBund);
+
+            // Gemmer Om Samlingen oplysningerne i databasen
+            dao.opdaterOmSamlingen(omSamlingen);
+
+        } catch (Exception e) {
+            // Udskriver fejlen i konsollen
+            System.out.println("Kunne ikke gemme Om Samlingen i databasen");
+            e.printStackTrace(); // Printer hele fejlen i konsollen
+
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke gemme Om Samlingen i databasen");
+            alert.show();
+        }
+    }
+
+    // Metode til at Admin kan vælge et billede fra computeren som så konverteres til bytes til databasen
+    private byte[] redigerBillede (ImageView imageView)
+    {
+        // Opretter en vindue hvor Admin kan vælge en fil fra computeren
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif"));
+
+        // Finder det JavaFX vindue der kørers nu og åbner fileChooser vinduet deri
+        Stage stage = (Stage) imageView.getScene().getWindow();
+        File file = fileChooser.showOpenDialog(stage); // Hvis Admin vælger en fil, gemmes den som file
+
+        // Hvis Admin har valgt en fil
+        if (file != null)
+        {
+            // Oprettes der et JavaFX Image med den valgte fil og billedet vises i ImageView
+            Image image = new Image (file.toURI().toString());
+            imageView.setImage(image);
+
+            // Konvertere billedet til bytes/binær data til databasen
+            try {
+                return Files.readAllBytes(file.toPath());
+            } catch (IOException e) {
+                e.printStackTrace(); // Printer fejlen i konsollen
+            }
+        }
+        return null; // Hvis brugeren annullere fileChooser, så returneres null
+    }
+
     // Når Admin klikker på rediger knappen gemmes tekst ændringerne i databasen
     @FXML
     void gemOmSadaoWatanabeTekst(ActionEvent event)
@@ -149,56 +200,5 @@ public class AdminOmSamlingenController
     void logudKnap(MouseEvent event) throws IOException
     {
         sceneManeger.skiftSceneMouse(event, "/com/example/eksamensprojekt/gui/Forside.fxml");
-    }
-
-    // Metode der gemmer alle Om Samlingen oplysninger i databasen
-    private void gemOmSamlingen()
-    {
-        try {
-            // Opretter et OmSamlingen objekt med alle de oplysninger som Admin har skrevet/lagt ind
-            OmSamlingen omSamlingen = new OmSamlingen(1, "Om samlingen", redigerSadaoWatanabeText.getText(),
-                    billedeDataTop, billedeDataBund);
-
-            // Gemmer Om Samlingen oplysningerne i databasen
-            dao.opdaterOmSamlingen(omSamlingen);
-
-        } catch (Exception e) {
-            // Udskriver fejlen i konsollen
-            System.out.println("Kunne ikke gemme Om Samlingen i databasen");
-            e.printStackTrace(); // Printer hele fejlen i konsollen
-
-            // Giver brugeren besked om fejlen
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke gemme Om Samlingen i databasen");
-            alert.show();
-        }
-    }
-
-    // Metode til at Admin kan vælge et billede fra computeren som så konverteres til bytes til databasen
-    private byte[] redigerBillede (ImageView imageView)
-    {
-        // Opretter en vindue hvor Admin kan vælge en fil fra computeren
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif"));
-
-        // Finder det JavaFX vindue der kørers nu og åbner fileChooser vinduet deri
-        Stage stage = (Stage) imageView.getScene().getWindow();
-        File file = fileChooser.showOpenDialog(stage); // Hvis Admin vælger en fil, gemmes den som file
-
-        // Hvis Admin har valgt en fil
-        if (file != null)
-        {
-            // Oprettes der et JavaFX Image med den valgte fil og billedet vises i ImageView
-            Image image = new Image (file.toURI().toString());
-            imageView.setImage(image);
-
-            // Konvertere billedet til bytes/binær data til databasen
-            try {
-                return Files.readAllBytes(file.toPath());
-            } catch (IOException e) {
-                e.printStackTrace(); // Printer fejlen i konsollen
-            }
-        }
-        return null; // Hvis brugeren annullere fileChooser, så returneres null
     }
 }
