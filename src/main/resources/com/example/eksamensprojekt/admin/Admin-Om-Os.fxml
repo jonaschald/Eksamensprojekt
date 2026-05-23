@@ -150,7 +150,7 @@
                               </Label>
                               <TextArea fx:id="omOsTekst" prefHeight="797.0" prefWidth="513.0" wrapText="true">
                                  <font>
-                                    <Font size="28.0" />
+                                    <Font name="Georgia" size="28.0" />
                                  </font>
                               </TextArea>
                               <Separator prefWidth="200.0">
@@ -188,7 +188,7 @@
                                           </ImageView>
                                           <TextArea fx:id="adresseTextArea">
                                              <font>
-                                                <Font size="26.0" />
+                                                <Font name="Georgia" size="26.0" />
                                              </font>
                                           </TextArea>
                                        </children>
@@ -205,7 +205,7 @@
                                           </ImageView>
                                           <TextArea fx:id="telefonTextArea">
                                              <font>
-                                                <Font size="26.0" />
+                                                <Font name="Georgia" size="26.0" />
                                              </font></TextArea>
                                        </children>
                                        <VBox.margin>
@@ -221,7 +221,7 @@
                                           </ImageView>
                                           <TextArea fx:id="emailTextArea">
                                              <font>
-                                                <Font size="26.0" />
+                                                <Font name="Georgia" size="26.0" />
                                              </font></TextArea>
                                        </children>
                                        <VBox.margin>
@@ -266,7 +266,7 @@
                               </ImageView>
                            </children>
                         </VBox>
-                        <Button mnemonicParsing="false" onMouseClicked="#gemOmOsTekst" text="Gem Tekst" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+                        <Button mnemonicParsing="false" onMouseClicked="#gemOmOsTekst" text="Gem ændringer" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
                            <font>
                               <Font size="32.0" />
                            </font>

@@ -119,14 +119,14 @@
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Om Samlingen">
                      <font>
-                        <Font size="64.0" />
+                        <Font name="Georgia" size="64.0" />
                      </font>
                   </Label>
                   <HBox prefWidth="1400.0">
                      <children>
                         <VBox prefWidth="740.0" spacing="10.0">
                            <children>
-                              <Button mnemonicParsing="false" onMouseClicked="#gemOmSadaoWatanabeTekst" text="Gem Teksten">
+                              <Button mnemonicParsing="false" onMouseClicked="#gemOmSadaoWatanabeTekst" text="Gem ændringer">
                                  <font>
                                     <Font size="32.0" />
                                  </font>
@@ -136,7 +136,7 @@
                               </Button>
                               <Label text="Om Sadao Watanabe">
                                  <font>
-                                    <Font size="52.0" />
+                                    <Font name="Georgia" size="44.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
@@ -147,7 +147,7 @@
                               </Label>
                               <TextArea fx:id="redigerSadaoWatanabeText" prefHeight="1200.0" prefWidth="800.0" wrapText="true">
                                  <font>
-                                    <Font size="32.0" />
+                                    <Font name="Georgia" size="32.0" />
                                  </font>
                               </TextArea>
                            </children>

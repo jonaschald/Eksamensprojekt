@@ -13,22 +13,22 @@
    <children>
       <Label text="Login">
          <font>
-            <Font size="69.0" />
+            <Font name="System Bold" size="69.0" />
          </font>
          <VBox.margin>
             <Insets bottom="50.0" />
          </VBox.margin>
       </Label>
-      <HBox maxHeight="50.0" maxWidth="860.0">
+      <HBox maxHeight="50.0" maxWidth="600.0">
          <children>
             <Label text="E-mail">
                <font>
-                  <Font size="32.0" />
+                  <Font name="System Bold" size="30.0" />
                </font>
             </Label>
          </children>
       </HBox>
-      <TextField fx:id="emailField" maxHeight="80.0" maxWidth="870.0">
+      <TextField fx:id="emailField" maxHeight="80.0" maxWidth="600.0">
          <font>
             <Font size="36.0" />
          </font>
@@ -36,11 +36,11 @@
             <Insets bottom="25.0" left="100.0" right="100.0" top="10.0" />
          </VBox.margin>
       </TextField>
-      <HBox maxHeight="50.0" maxWidth="860.0">
+      <HBox maxHeight="50.0" maxWidth="600.0">
          <children>
             <Label text="Password">
                <font>
-                  <Font size="32.0" />
+                  <Font name="System Bold" size="30.0" />
                </font>
             </Label>
          </children>
@@ -48,7 +48,7 @@
             <Insets top="20.0" />
          </VBox.margin>
       </HBox>
-      <PasswordField fx:id="passwordFiels" maxHeight="80.0" maxWidth="870.0">
+      <PasswordField fx:id="passwordFiels" maxHeight="80.0" maxWidth="600.0">
          <font>
             <Font size="36.0" />
          </font>
@@ -56,7 +56,7 @@
             <Insets bottom="50.0" left="100.0" right="100.0" top="10.0" />
          </VBox.margin>
       </PasswordField>
-      <Button mnemonicParsing="false" onAction="#login" text="login">
+      <Button mnemonicParsing="false" onAction="#login" text="Login">
          <font>
             <Font size="40.0" />
          </font>

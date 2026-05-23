@@ -119,7 +119,7 @@
                                  <children>
                                     <Label onMouseClicked="#omSamlingenKnap" text="Watanabe-samlingen">
                                        <font>
-                                          <Font size="60.0" />
+                                          <Font name="Georgia" size="56.0" />
                                        </font>
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -130,7 +130,7 @@
                                     </Label>
                                     <TextArea fx:id="watanabeSamlingTekst" prefHeight="606.0" prefWidth="680.0" wrapText="true">
                                        <font>
-                                          <Font size="32.0" />
+                                          <Font name="Georgia" size="30.0" />
                                        </font>
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
@@ -181,7 +181,7 @@
                                  <children>
                                     <Label onMouseClicked="#omOsKnap" text="Kunsthal Holmen">
                                        <font>
-                                          <Font size="60.0" />
+                                          <Font name="Georgia" size="58.0" />
                                        </font>
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -192,7 +192,7 @@
                                     </Label>
                                     <TextArea fx:id="omOsTekst" prefHeight="731.0" prefWidth="680.0" wrapText="true">
                                        <font>
-                                          <Font size="32.0" />
+                                          <Font name="Georgia" size="30.0" />
                                        </font>
                                        <VBox.margin>
                                           <Insets bottom="15.0" />

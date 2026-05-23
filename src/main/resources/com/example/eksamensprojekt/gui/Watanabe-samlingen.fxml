@@ -126,12 +126,12 @@
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" text="Watanabe-samlingen">
                            <font>
-                              <Font size="64.0" />
+                              <Font name="Georgia" size="60.0" />
                            </font>
                         </Label>
                         <Label maxWidth="900.0" text="Watanabe-samlingen er en unik samling af japanske træsnit med &#10;bibelske fortællinger skabt af kunstneren Sadao Watanabe" textAlignment="CENTER">
                            <font>
-                              <Font size="32.0" />
+                              <Font name="Georgia" size="28.0" />
                            </font>
                            <VBox.margin>
                               <Insets bottom="20.0" top="20.0" />
@@ -155,7 +155,7 @@
                                           <Insets right="10.0" />
                                        </HBox.margin>
                                        <font>
-                                          <Font size="28.0" />
+                                          <Font name="Georgia" size="22.0" />
                                        </font>
                                     </Label>
 

@@ -182,7 +182,7 @@
                                           </ImageView>
                                           <Label fx:id="adresseLabel" text="Østergave 13&#10;DK-6240 Løgumkloster">
                                              <font>
-                                                <Font size="26.0" />
+                                                <Font name="Georgia" size="26.0" />
                                              </font>
                                              <HBox.margin>
                                                 <Insets bottom="5.0" left="5.0" />
@@ -202,7 +202,7 @@
                                           </ImageView>
                                           <Label fx:id="telefonLabel" text="Telefon: (+45) 74 74 41 65&#10;Mobil: (+45) 41 41 87 36">
                                              <font>
-                                                <Font size="26.0" />
+                                                <Font name="Georgia" size="26.0" />
                                              </font>
                                              <HBox.margin>
                                                 <Insets left="5.0" />
@@ -225,7 +225,7 @@
                                                 <Insets left="5.0" />
                                              </HBox.margin>
                                              <font>
-                                                <Font size="26.0" />
+                                                <Font name="Georgia" size="26.0" />
                                              </font>
                                           </Label>
                                        </children>

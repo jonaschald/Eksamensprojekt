@@ -32,7 +32,7 @@
                               </ImageView>
                            </graphic>
                            <font>
-                              <Font size="28.0" />
+                              <Font size="20.0" />
                            </font>
                         </Button>
                      </children>
@@ -91,15 +91,15 @@
                     <rowConstraints>
                       <RowConstraints maxHeight="80.0" vgrow="SOMETIMES" />
                       <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="165.0" minHeight="165.0" prefHeight="165.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="135.0" minHeight="135.0" prefHeight="135.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="150.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="75.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <TextField fx:id="titleFelt" minHeight="75.0" text="Jesus ofrer sig selv ">
                            <font>
-                              <Font name="System Bold" size="30.0" />
+                              <Font name="Georgia Bold" size="30.0" />
                            </font>
                            <GridPane.margin>
                               <Insets bottom="10.0" />
@@ -107,33 +107,33 @@
                         </TextField>
                         <TextField fx:id="årstalFelt" text="1961" GridPane.rowIndex="1" GridPane.valignment="TOP">
                            <font>
-                              <Font size="24.0" />
+                              <Font name="Georgia Bold" size="25.0" />
                            </font>
                         </TextField>
-                        <TextArea fx:id="størrelseUdenRammeFelt" maxHeight="50.0" minHeight="50.0" prefWidth="564.0" text="70X58 cm" wrapText="true" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                        <TextArea fx:id="størrelseUdenRammeFelt" maxHeight="40.0" minHeight="40.0" prefWidth="564.0" text="70X58 cm" wrapText="true" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <font>
-                              <Font size="24.0" />
+                              <Font name="Georgia" size="20.0" />
                            </font>
                         </TextArea>
                         <TextField fx:id="nummerFelt" layoutX="10.0" layoutY="110.0" text="MH 1991/1365. 1 " GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                            <font>
-                              <Font size="24.0" />
+                              <Font name="Georgia" size="20.0" />
                            </font>
                            <GridPane.margin>
                               <Insets bottom="5.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextArea fx:id="størrelseMedRammeFelt" layoutX="10.0" layoutY="271.0" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" text="80X69 cm " wrapText="true" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                        <TextArea fx:id="størrelseMedRammeFelt" layoutX="10.0" layoutY="271.0" maxHeight="40.0" minHeight="40.0" text="80X69 cm " wrapText="true" GridPane.rowIndex="2" GridPane.valignment="TOP">
                            <font>
-                              <Font size="24.0" />
+                              <Font name="Georgia" size="20.0" />
                            </font>
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </TextArea>
-                        <Label text="Beskrivelse" GridPane.rowIndex="3">
+                        <Label alignment="BOTTOM_LEFT" text="Beskrivelse" GridPane.rowIndex="3">
                            <font>
-                              <Font name="System Bold" size="32.0" />
+                              <Font name="Georgia Bold" size="25.0" />
                            </font>
                            <GridPane.margin>
                               <Insets />
@@ -141,7 +141,7 @@
                         </Label>
                         <TextArea fx:id="beskrivelsesFelt" maxHeight="150.0" prefWidth="200.0" text="Billedet fremstiller den lidende Jesus umiddelbart før hans tilfangetagelse og korsfæstelse i Getsemane Have." wrapText="true" GridPane.rowIndex="4">
                            <font>
-                              <Font size="24.0" />
+                              <Font name="Georgia" size="20.0" />
                            </font>
                         </TextArea>
                         <Button mnemonicParsing="false" onAction="#redigerKunstværk" text="Gem ændringer" GridPane.rowIndex="5">
@@ -149,9 +149,9 @@
                               <Font size="20.0" />
                            </font>
                         </Button>
-                        <TextArea fx:id="serieNummerFelt" layoutX="10.0" layoutY="271.0" maxHeight="50.0" minHeight="50.0" prefWidth="564.0" text="Tryk 21 ud af 100" wrapText="true" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                        <TextArea fx:id="serieNummerFelt" layoutX="10.0" layoutY="271.0" maxHeight="40.0" minHeight="40.0" prefWidth="564.0" text="Tryk 21 ud af 100" wrapText="true" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                            <font>
-                              <Font size="24.0" />
+                              <Font name="Georgia" size="20.0" />
                            </font>
                         </TextArea>
                      </children>

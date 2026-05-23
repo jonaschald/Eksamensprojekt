@@ -122,7 +122,7 @@
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" text="Kunstværker">
                            <font>
-                              <Font size="64.0" />
+                              <Font name="Georgia" size="64.0" />
                            </font>
                         </Label>
                         <HBox alignment="CENTER" prefHeight="80.0" prefWidth="1380.0">
@@ -155,7 +155,7 @@
                         <RowConstraints minHeight="0.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <padding>
-                        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+                        <Insets bottom="40.0" left="40.0" right="40.0" />
                      </padding>
                   </GridPane>
                </children>

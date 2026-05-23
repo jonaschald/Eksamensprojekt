@@ -29,7 +29,7 @@
                   </ImageView>
                </graphic>
                <font>
-                  <Font size="28.0" />
+                  <Font size="25.0" />
                </font>
             </Button>
             <GridPane hgap="5.0" prefWidth="1400.0" vgap="5.0">
@@ -62,7 +62,7 @@
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="550.0" minWidth="550.0" prefWidth="550.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints vgrow="SOMETIMES" />
+                      <RowConstraints valignment="BOTTOM" vgrow="SOMETIMES" />
                       <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
                       <RowConstraints maxHeight="150.0" minHeight="150.0" prefHeight="150.0" valignment="CENTER" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
@@ -72,7 +72,7 @@
                      <children>
                         <Label fx:id="titleLabel" text="Label" wrapText="true">
                            <font>
-                              <Font name="System Bold" size="48.0" />
+                              <Font name="Georgia Bold" size="42.0" />
                            </font>
                            <padding>
                               <Insets left="10.0" />
@@ -83,7 +83,7 @@
                         </Label>
                         <Label fx:id="årstalLabel" text="Label" GridPane.rowIndex="1">
                            <font>
-                              <Font size="36.0" />
+                              <Font name="Georgia Bold" size="30.0" />
                            </font>
                            <padding>
                               <Insets left="10.0" />
@@ -94,7 +94,7 @@
                         </Label>
                         <Label fx:id="InfoLabel" text="Label" GridPane.rowIndex="2">
                            <font>
-                              <Font size="28.0" />
+                              <Font name="Georgia" size="30.0" />
                            </font>
                            <GridPane.margin>
                               <Insets left="10.0" />
@@ -105,7 +105,7 @@
                         </Label>
                         <Label text="Beskrivelse" GridPane.rowIndex="3">
                            <font>
-                              <Font name="System Bold" size="32.0" />
+                              <Font name="Georgia Bold" size="30.0" />
                            </font>
                            <padding>
                               <Insets left="10.0" />
@@ -116,7 +116,7 @@
                         </Label>
                         <Label fx:id="besktivelseLabel" alignment="TOP_LEFT" text="Label" wrapText="true" GridPane.rowIndex="4">
                            <font>
-                              <Font size="32.0" />
+                              <Font name="Georgia" size="30.0" />
                            </font>
                            <GridPane.margin>
                               <Insets left="10.0" />

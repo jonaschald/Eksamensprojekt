@@ -124,7 +124,7 @@
                      <children>
                         <Label alignment="TOP_LEFT" text="Undervisningsmateriale">
                            <font>
-                              <Font size="68.0" />
+                              <Font name="Georgia" size="60.0" />
                            </font>
                         </Label>
                      </children>
