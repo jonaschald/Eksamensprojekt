@@ -87,7 +87,7 @@ public class PopupController
         int index = alleKunstværker.indexOf(valgtKunstværk);
 
         // Tjekker at der findes et billede før det billede vi står på nu
-        // Hvis 0, så er vi på det sidste index og så er der ikke et forrige billede
+        // Hvis 0, så er vi på det første index og så er der ikke et forrige billede
         if (index > 0)
         {
             // Henter det forrige billede ved at gå en index ned
@@ -158,27 +158,27 @@ public class PopupController
         // Henter det valgte billede som binær data fra databasen
         // ByteArrayInputStream bruges til at omdanne byte data til et JavaFX billede
         // Billedet vises herefter i vores ImageView i pop-up'en
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(valgtKunstværk.getBilledeData());
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(kunstværk.getBilledeData());
         Image image = new Image(byteArrayInputStream);
         popupBillede.setImage(image);
 
         // Viser titlen på det valgte kunstværk
-        titleLabel.setText(valgtKunstværk.getTitel());
+        titleLabel.setText(kunstværk.getTitel());
 
         // Viser årstallet på det valgte kunstværk
-        årstalLabel.setText(String.valueOf(valgtKunstværk.getÅrstal()));
+        årstalLabel.setText(String.valueOf(kunstværk.getÅrstal()));
 
         // Viser beskrivelsen på det valgte kunstværk
-        besktivelseLabel.setText(valgtKunstværk.getBeskrivelse());
+        besktivelseLabel.setText(kunstværk.getBeskrivelse());
 
         // Viser kunstværkets nummer og størrelse
-        InfoLabel.setText("Nr: " + valgtKunstværk.getId() +
-                "\nStr. m/ramme: " + valgtKunstværk.getStørrelseMedRamme() +
-                "\nStr. u/ramme: " + valgtKunstværk.getStørrelseUdenRamme() +
-                "\n" + valgtKunstværk.getSerieNummer());
+        InfoLabel.setText("Nr: " + kunstværk.getId() +
+                "\nStr. m/ramme: " + kunstværk.getStørrelseMedRamme() +
+                "\nStr. u/ramme: " + kunstværk.getStørrelseUdenRamme() +
+                "\n" + kunstværk.getSerieNummer());
 
         // Hvis et billede er sat som favorit, så ændres knappens udseende til "- fjern fra favoritter"
-        if(valgtKunstværk.isFavorit()) {
+        if(kunstværk.isFavorit()) {
             favoritKnap.setText("- fjern fra favoritter");
         } else {
             // Og omvendt

@@ -47,7 +47,6 @@ public class OmSamlingenController
     // ObservableList der kan indeholde Om Samlingen data fra Databasen
     private ObservableList<OmSamlingen> omSamlingenListe = FXCollections.observableArrayList();
 
-
     // Kører automatisk når FXML siden åbnes
     @FXML
     public void initialize()

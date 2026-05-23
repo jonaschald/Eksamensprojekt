@@ -53,7 +53,7 @@ public class WatanabeSamlingenController
     DAO dao = new DAOImplementation();
 
     // ObservableList der kan indeholde alle kunstværkerne fra Databasen
-    ObservableList<Kunstværk> kunstværker = FXCollections.observableArrayList();
+    private ObservableList<Kunstværk> kunstværker = FXCollections.observableArrayList();
 
     // ObservableList der kan indeholde Om Os fra Databasen
     private ObservableList<OmOs> omOsListe = FXCollections.observableArrayList();
