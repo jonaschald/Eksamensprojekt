@@ -342,11 +342,17 @@ public class AdminWatanabeSamlingenController
                     return; // Metoden Stoppes her
                 }
 
+                // Hvis årstal-feltet er tomt sættes årstal til 0 - ellers crasher programmet pga. String ""
+                int årstal = 0;
 
+                // Hvis årstal-feltet er udfyldt, så hentes årstallet som Admin har tastet ind
+                if (!årstalFelt.getText().isEmpty()) {
+                    årstal = Integer.parseInt(årstalFelt.getText());
+                }
 
                 // Opretter et nyt kunstværk objekt med de indtastede oplysninger
                 Kunstværk kunstværk = new Kunstværk(idFelt.getText(), serienummerFelt.getText(), titelFelt.getText(),
-                        kunstnerFelt.getText(), Integer.parseInt(årstalFelt.getText()), størrelseMedRammeFelt.getText(),
+                        kunstnerFelt.getText(), årstal, størrelseMedRammeFelt.getText(),
                         størrelseUdenRammeFelt.getText(), beskrivelsesFelt.getText(), billedeData, 4, false);
 
                 // Gemmer kunstværket i databasen

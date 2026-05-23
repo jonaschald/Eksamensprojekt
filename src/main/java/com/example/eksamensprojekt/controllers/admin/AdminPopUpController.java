@@ -33,10 +33,19 @@ public class AdminPopUpController
     private TextField årstalFelt;
 
     @FXML
-    private TextArea InfoFelt;
+    private TextField nummerFelt;
 
     @FXML
-    private TextArea besktivelseFelt;
+    private TextArea størrelseMedRammeFelt;
+
+    @FXML
+    private TextArea størrelseUdenRammeFelt;
+
+    @FXML
+    private TextArea serieNummerFelt;
+
+    @FXML
+    private TextArea beskrivelsesFelt;
 
     // Opretter et SceneManeger objekt - bruges til at skrifte mellem FXML sider
     SceneManeger sceneManeger = new SceneManeger();
@@ -56,6 +65,16 @@ public class AdminPopUpController
     // Kører automatisk når FXML siden åbnes
     public void initialize()
     {
+        // Vejledende tekst sættes i felterne - så Admin ved hvor hvad skal skrives
+        titleFelt.setPromptText("Titel");
+        årstalFelt.setPromptText("Årstal");
+        nummerFelt.setPromptText("Nummer f.eks. MH 1991/1365. 1");
+        størrelseMedRammeFelt.setPromptText("Str. med ramme f.eks. 85x75 cm");
+        størrelseUdenRammeFelt.setPromptText("Str. uden ramme f.eks. 80x70 cm");
+        serieNummerFelt.setPromptText("Serienummer f.eks. Tryk 21 ud af 100");
+        beskrivelsesFelt.setPromptText("Beskrivelse");
+
+        // Viser det valgte kunstværk
         visKunstværk(valgtKunstværk);
     }
 
@@ -69,20 +88,14 @@ public class AdminPopUpController
         Image image = new Image(byteArrayInputStream);
         popupBillede.setImage(image);
 
-        // Viser titlen på det valgte kunstværk
+        // Viser infotekst til kunstværket i de forskellige labels
         titleFelt.setText(kunstværk.getTitel());
-
-        // Viser årstallet på det valgte kunstværk
         årstalFelt.setText(String.valueOf(kunstværk.getÅrstal()));
-
-        // Viser beskrivelsen på det valgte kunstværk
-        besktivelseFelt.setText(kunstværk.getBeskrivelse());
-
-        // Viser kunstværkets nummer og størrelse
-        InfoFelt.setText("Nr: " + kunstværk.getId() +
-                "\nStr. m/ramme: " + kunstværk.getStørrelseMedRamme() +
-                "\nStr. u/ramme: " + kunstværk.getStørrelseUdenRamme() +
-                "\n" + kunstværk.getSerieNummer());
+        nummerFelt.setText(kunstværk.getId());
+        størrelseMedRammeFelt.setText(kunstværk.getStørrelseMedRamme());
+        størrelseUdenRammeFelt.setText(kunstværk.getStørrelseUdenRamme());
+        serieNummerFelt.setText(kunstværk.getSerieNummer());
+        beskrivelsesFelt.setText(kunstværk.getBeskrivelse());
     }
 
     // Metode til at Admin kan redigere tekst-informationerne om et kunstværk
@@ -95,8 +108,12 @@ public class AdminPopUpController
             // Henter de oplysninger Admin har skrevet ind i tekstfelterne
             // og setter dem på valgtKunstværk
             valgtKunstværk.setTitel(titleFelt.getText());
-            valgtKunstværk.setÅrstal(Integer.parseInt(årstalFelt.getText()));
-            valgtKunstværk.setBeskrivelse(besktivelseFelt.getText());
+            valgtKunstværk.setÅrstal(årstal);
+            valgtKunstværk.setId(nummerFelt.getText());
+            valgtKunstværk.setStørrelseMedRamme(størrelseMedRammeFelt.getText());
+            valgtKunstværk.setStørrelseUdenRamme(størrelseUdenRammeFelt.getText());
+            valgtKunstværk.setSerieNummer(serieNummerFelt.getText());
+            valgtKunstværk.setBeskrivelse(beskrivelsesFelt.getText());
 
             // Gemmer ændringerne i databasen
             dao.opdaterKunstværk(valgtKunstværk);
