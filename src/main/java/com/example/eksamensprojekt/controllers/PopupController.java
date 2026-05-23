@@ -14,9 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class PopupController
 {
@@ -101,9 +101,45 @@ public class PopupController
         }
     }
 
+    // Metode til at brugeren kan downloade det viste kunstværk
     @FXML
-    void downloadKnap(ActionEvent event) {
+    void downloadKnap(ActionEvent event)
+    {
+        try {
+            // Opretter en FileChooser
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Download kunstværk");
 
+            // Sætter navnet på billedet
+            fileChooser.setInitialFileName(valgtKunstværk.getTitel() + ".jpg");
+
+            // Gør at filen gemmes som jpg
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("jpg fil", "*.jpg"));
+
+            // Åbner vinduet hvor brugeren vælger placering
+            File fil = fileChooser.showSaveDialog(null);
+
+            if (fil != null)
+            {
+                // Opretter FileOutputStream der kan skrive filen
+                FileOutputStream fileOutStream = new FileOutputStream(fil);
+
+                // Skriver billedets binære data til filen
+                fileOutStream.write(valgtKunstværk.getBilledeData());
+
+                // Lukker forbindelsen til filen
+                fileOutStream.close();
+            }
+        } catch (IOException e)
+        {
+            // Udskriver fejlen i konsollen
+            System.out.println("Kunne ikke downloade billedet");
+            e.printStackTrace(); // Printer hele fejlen i konsollen
+
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke downloade billedet");
+            alert.show();
+        }
     }
 
     // Metode til at brugeren kan tilføje eller fjerne et kunstværk som favorit via. Favorit knappen
@@ -130,26 +166,6 @@ public class PopupController
             Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke ændre favorit-status på kunstværket");
             alert.show();
         }
-    }
-
-    // Går tilbage til den tidligere side
-    @FXML
-    void tilbageKnap(MouseEvent event) throws IOException
-    {
-        sceneManeger.tilbage(event);
-    }
-
-    // Skifter scenen til Stor Pop-up
-    @FXML
-    void tilStorPopUp(MouseEvent event) throws IOException
-    {
-        // Sender listen med kunstværker videre til Stor Pop-up
-        // så brugeren kan navigere mellem billederne derinde
-        StorPopupController.setKunstværker(alleKunstværker);
-
-        sceneManeger.skiftSceneTilbage(event,
-                "/com/example/eksamensprojekt/gui/Pop-Up.fxml",
-                "/com/example/eksamensprojekt/gui/Stor-Pop-up.fxml");
     }
 
     // Metode til at vise det valgte kunstværk og dets info i Pop-upp'en
@@ -191,5 +207,26 @@ public class PopupController
     public static void setKunstværker(ObservableList<Kunstværk> kunstværker)
     {
         alleKunstværker = kunstværker;
+    }
+
+
+    // Går tilbage til den tidligere side
+    @FXML
+    void tilbageKnap(MouseEvent event) throws IOException
+    {
+        sceneManeger.tilbage(event);
+    }
+
+    // Skifter scenen til Stor Pop-up
+    @FXML
+    void tilStorPopUp(MouseEvent event) throws IOException
+    {
+        // Sender listen med kunstværker videre til Stor Pop-up
+        // så brugeren kan navigere mellem billederne derinde
+        StorPopupController.setKunstværker(alleKunstværker);
+
+        sceneManeger.skiftSceneTilbage(event,
+                "/com/example/eksamensprojekt/gui/Pop-Up.fxml",
+                "/com/example/eksamensprojekt/gui/Stor-Pop-up.fxml");
     }
 }
