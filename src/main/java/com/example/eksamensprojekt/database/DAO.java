@@ -10,14 +10,14 @@ public interface DAO
 {
     // Kunstværker
     public void hentAlleKunstværker(ObservableList<Kunstværk> kunstværker)  throws ExecutionException, InterruptedException;
-    public boolean gemKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
+    public void gemKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
     public void opdaterKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
-    public boolean sletKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
+    public void sletKunstværk(Kunstværk kunstværk) throws ExecutionException, InterruptedException;
 
     // Temaer
-    public boolean gemTema(Tema tema) throws ExecutionException, InterruptedException;
+    public void gemTema(Tema tema) throws ExecutionException, InterruptedException;
     public void hentAlleTemaer(ObservableList<Tema> temaer) throws ExecutionException, InterruptedException;
-    public boolean sletTema(Tema tema) throws ExecutionException, InterruptedException;
+    public void sletTema(Tema tema) throws ExecutionException, InterruptedException;
     public void opdaterTema(Tema tema) throws ExecutionException, InterruptedException;
     public void hentKunstværkerEfterTema(int temaId, ObservableList<Kunstværk> kunstværker) throws ExecutionException, InterruptedException;
 
@@ -44,6 +44,6 @@ public interface DAO
     public void opdaterOmOs(OmOs omOs) throws ExecutionException, InterruptedException;
 
     // Login Admin
-    public boolean login(String username, String password) throws ExecutionException, InterruptedException;
-    public boolean opretBruger(AdminLogin adminLogin) throws ExecutionException, InterruptedException;
+    public void login(String username, String password) throws ExecutionException, InterruptedException;
+    public void opretBruger(AdminLogin adminLogin) throws ExecutionException, InterruptedException;
 }
