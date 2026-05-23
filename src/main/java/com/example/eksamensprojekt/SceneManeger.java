@@ -13,47 +13,96 @@ import java.util.Stack;
 
 public class SceneManeger
 {
-    private int maxX = 1400;
+
+    // Højen og bredden på vinduet
     private int maxY = 800;
-    private static final Stack<String> historie = new Stack<>();
+    private int maxX = 1400;
 
-    // Så vi kan skifte scenen ved brug af On Mouse Clicked
-    public void skiftSceneMouse(MouseEvent event, String fxml) throws IOException {
+    // Stack der gemmer tidligere FXML-sider, så brugeren kan gå tilbage til dem senere
+    private static final Stack<String> historik = new Stack<>();
+
+    // Metode til at skifte til en ny FXML-side ved brug af MouseEvent
+    public void skiftSceneMouse(MouseEvent event, String fxml) throws IOException
+    {
+        // Finder det FXML som der skal åbnes
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+
+        // Loader den nye FXML-side og gemmer den i et Parent objekt
         Parent root = loader.load();
+
+        // Finder det vindue (Stage) programmet kører i
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Skifter det nuværende FXML-vindue til den nye FXML
         stage.setScene(new Scene(root, maxX, maxY));
+
+        // Viser vinduet på skærmen
         stage.show();
     }
 
-    // Så vi kan skifte scenen ved brug af Action Event
-    public void skiftSceneAction (ActionEvent event, String fxml) throws IOException {
+    // Metode til at skifte til en ny FXML-side ved brug af ActionEvent
+    public void skiftSceneAction (ActionEvent event, String fxml) throws IOException
+    {
+        // Finder det FXML som der skal åbnes
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+
+        // Loader den nye FXML-side og gemmer den i et Parent objekt
         Parent root = loader.load();
+
+        // Finder det vindue (Stage) programmet kører i
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Skifter det nuværende FXML-vindue til den nye FXML
         stage.setScene(new Scene(root, maxX, maxY));
+
+        // Viser vinduet på skærmen
         stage.show();
     }
 
-    // Skifter scene med historie til brug ad tilbageKnap
-    public void skiftSceneTilbage (MouseEvent event, String denneFxml, String næsteFxml) throws IOException {
-        // gemmer den scene vi er på og åbner den der klikkes på
-        historie.push(denneFxml);
+    // Metode til at skifte til en ny FXML-side og gemme den tidligere FXML-side i historik
+    public void skiftSceneTilbage (MouseEvent event, String denneFxml, String næsteFxml) throws IOException
+    {
+        // Gemmer den scene vi er på, så brugeren kan gå tilbage senere
+        historik.push(denneFxml);
+
+        // Finder det næste FXML der skal åbnes
         FXMLLoader loader = new FXMLLoader(getClass().getResource(næsteFxml));
+
+        // Loader den nye FXML-side og gemmer den i et Parent objekt
         Parent root = loader.load();
+
+        // Finder det vindue (Stage) programmet kører i
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Skifter det nuværende vindue til den nye FXML
         stage.setScene(new Scene(root, maxX, maxY));
+
+        // Viser vinduet på skærmen
         stage.show();
     }
 
-    // Tilbage til tidligere FXML scene
-    public void tilbage(MouseEvent event) throws IOException {
-        if(!historie.isEmpty()){
-            String tidligereFxml = historie.pop();
+    // Metode til at gå tilbage til den tidligere FXML-side ved hjælp af historik Stack
+    public void tilbage(MouseEvent event) throws IOException
+    {
+        // Tjekker om der findes en tidligere FXML-side i historikken
+        if(!historik.isEmpty())
+        {
+            // Henter den seneste FXML-side fra historikken
+            String tidligereFxml = historik.pop();
+
+            // Finder det tidligere FXML-side der skal åbnes
             FXMLLoader loader = new FXMLLoader(getClass().getResource(tidligereFxml));
+
+            // Loader den tidligere FXML-side
             Parent root = loader.load();
+
+            // Finder det vindue (Stage) programmet kører i
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Skifter det nuværende vindue til den tidligere FXML-side
             stage.setScene(new Scene(root, maxX, maxY));
+
+            // Viser vinduet på skærmen
             stage.show();
         }
     }
