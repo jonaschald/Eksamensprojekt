@@ -45,9 +45,6 @@ public class AdminWatanabeSamlingenController
     // Liste der kan indeholde alle kunstværker fra Databasen
     private ObservableList<Kunstværk> kunstværker = FXCollections.observableArrayList();
 
-    // Gemmer det kunstværk som Admin har klikket på, så det kan redigeres eller slettes
-    private Kunstværk valgtKunstværk;
-
     // Variabel der indeholder billedets binære data (til når Admin vil tilføje et nyt kunstværk)
     private byte[] billedeData;
 

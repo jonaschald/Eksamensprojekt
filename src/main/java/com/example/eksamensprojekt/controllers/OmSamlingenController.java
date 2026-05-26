@@ -3,6 +3,7 @@ package com.example.eksamensprojekt.controllers;
 import com.example.eksamensprojekt.SceneManeger;
 import com.example.eksamensprojekt.database.DAO;
 import com.example.eksamensprojekt.database.DAOImplementation;
+import com.example.eksamensprojekt.objekter.OmOs;
 import com.example.eksamensprojekt.objekter.OmSamlingen;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,11 +22,11 @@ import java.net.URI;
 public class OmSamlingenController
 {
     @FXML
-    private Label adresseLabel;
+    private Label adresse;
     @FXML
-    private Label telefonLabel;
+    private Label telefon;
     @FXML
-    private Label emailLabel;
+    private Label email;
 
     @FXML
     private Label åbningstider;
@@ -46,6 +47,9 @@ public class OmSamlingenController
 
     // ObservableList der kan indeholde Om Samlingen data fra Databasen
     private ObservableList<OmSamlingen> omSamlingenListe = FXCollections.observableArrayList();
+
+    // ObservableList der kan indeholde Om Os fra Databasen
+    private ObservableList<OmOs> omOsListe = FXCollections.observableArrayList();
 
     // Kører automatisk når FXML siden åbnes
     @FXML
@@ -78,6 +82,29 @@ public class OmSamlingenController
 
             // Giver brugeren besked om fejlen
             Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente Om Samlingen fra databasen");
+            alert.show();
+        }
+
+        // Henter kontaktoplysninger til bundlinjen fra databasen
+        try {
+            // Henter data fra databasen som et OmOs objekt og ligger det i omOsListe
+            dao.hentOmOs(omOsListe);
+
+            // Henter OmOs objektet fra listen
+            OmOs omOs = omOsListe.get(0);
+
+            // Sætter data fra objektet ind i de forskellige labels
+            adresse.setText(omOs.getAdresse());
+            telefon.setText(omOs.getTelefonnummer());
+            email.setText(omOs.getEmail());
+            åbningstider.setText(omOs.getÅbningstider());
+        } catch (Exception e) {
+            // Udskriver fejlen i konsollen
+            System.out.println("Kunne ikke hente Om Os fra databasen");
+            e.printStackTrace();
+
+            // Giver brugeren besked om fejlen
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente Om Os fra databasen");
             alert.show();
         }
 
