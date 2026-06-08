@@ -88,6 +88,9 @@ public class ForsideController
             watanabeSamlingTekst.setText(forside.getBeskrivelse_1());
             omOsTekst.setText(forside.getBeskrivelse_2());
 
+            // Tømmer listen der indholder Om Os fra databasen - for at ungå dubletter
+            omOsListe.clear();
+
             // Henter data fra databasen som et OmOs objekt og ligger det i omOsListe til kontaktoplysningerne
             dao.hentOmOs(omOsListe);
 
