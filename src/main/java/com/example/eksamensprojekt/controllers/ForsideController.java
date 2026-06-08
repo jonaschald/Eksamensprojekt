@@ -3,6 +3,7 @@ package com.example.eksamensprojekt.controllers;
 import com.example.eksamensprojekt.SceneManeger;
 import com.example.eksamensprojekt.database.DAO;
 import com.example.eksamensprojekt.database.DAOImplementation;
+import com.example.eksamensprojekt.objekter.Forside;
 import com.example.eksamensprojekt.objekter.OmOs;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,8 +12,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.image.Image;
 
 import java.awt.*;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
 
@@ -52,18 +55,46 @@ public class ForsideController
     // ObservableList der kan indeholde Om Os fra Databasen
     private ObservableList<OmOs> omOsListe = FXCollections.observableArrayList();
 
+    // ObservableList der kan indeholde Forside fra Databasen
+    private ObservableList<Forside> forsideListe = FXCollections.observableArrayList();
+
     // Kører automatisk når FXML siden åbnes
     public void initialize()
     {
-        // Henter kontaktoplysninger til bundlinjen fra databasen
+        // Henter forsiden og kontaktoplysninger til bundlinjen fra databasen
         try {
-            // Henter data fra databasen som et OmOs objekt og ligger det i omOsListe
+            // Tømmer listen der indholder Forsiden fra databasen - for at ungå dubletter
+            forsideListe.clear();
+
+            // Henter Forside data fra databasen som et Forside objekt og ligger det i forsideListe
+            dao.hentForside(forsideListe);
+
+            // Henter Forside objektet fra listen
+            Forside forside = forsideListe.get(0);
+
+            // Hvis der findes billeder i databasen, bliver billedernes byte-data lavet om til et JavaFX billede
+            // som vises i hver deres ImageView
+            if (forside.getBillede_1() != null) {
+                watanabeSamlingBillede.setImage(new Image(new ByteArrayInputStream(forside.getBillede_1())));
+            }
+            if (forside.getBillede_2a() != null) {
+                kunsthalHolmenTopBillede.setImage(new Image(new ByteArrayInputStream(forside.getBillede_2a())));
+            }
+            if (forside.getBillede_2b() != null) {
+                KunsthalHolmenBundBillede.setImage(new Image(new ByteArrayInputStream(forside.getBillede_2b())));
+            }
+
+            // Sætter data fra Forside objektet ind i de forskellige labels
+            watanabeSamlingTekst.setText(forside.getBeskrivelse_1());
+            omOsTekst.setText(forside.getBeskrivelse_2());
+
+            // Henter data fra databasen som et OmOs objekt og ligger det i omOsListe til kontaktoplysningerne
             dao.hentOmOs(omOsListe);
 
-            // Henter OmOs objektet fra listen
+            // Henter OmOs objektet fra listen til kontaktoplysningerne
             OmOs omOs = omOsListe.get(0);
 
-            // Sætter data fra objektet ind i de forskellige labels
+            // Sætter data fra objektet ind i de forskellige labels til kontaktoplysningerne
             adresse.setText(omOs.getAdresse());
             telefon.setText(omOs.getTelefonnummer());
             email.setText(omOs.getEmail());
