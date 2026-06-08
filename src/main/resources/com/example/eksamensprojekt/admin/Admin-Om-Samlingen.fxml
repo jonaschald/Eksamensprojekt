@@ -126,7 +126,7 @@
                      <children>
                         <VBox prefWidth="740.0" spacing="10.0">
                            <children>
-                              <Button mnemonicParsing="false" onMouseClicked="#gemOmSadaoWatanabeTekst" text="Gem ændringer">
+                              <Button mnemonicParsing="false" onAction="#gemOmSadaoWatanabeTekst" text="Gem ændringer">
                                  <font>
                                     <Font size="32.0" />
                                  </font>

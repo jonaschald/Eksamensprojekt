@@ -117,6 +117,9 @@ public class AdminTemaController
         // Liste der indeholder alle tekstfelterne til redigering af temaer - for at gøre antal temaer dynamisk
         ArrayList<TextField> tekstFelter = new ArrayList<>();
 
+        // Liste der indeholder de temaer som må redigeres, så Øvrige værker ikke er med
+        ArrayList<Tema> synligeTemaer = new ArrayList<>();
+
         try {
             // Tømmer listen med temaer - for at undgå dubletter
             temaer.clear();
@@ -126,9 +129,18 @@ public class AdminTemaController
 
             // Går alle temaerne igennem og opretter et tekstfelt til hvert tema
             for (Tema tema : temaer) {
+
+                // Springer "Øvrige værker" over, så den ikke kan redigeres i af Admin
+                // Øvrige værker bruges til at opbevare de værker der ikke er tilknyttet et tema
+                if (tema.getNavn().equals("Øvrige værker")) {
+                    continue;
+                }
+
+                // Opretter et tekstfelt til hvert tema
                 TextField tekstFelt = new TextField();
                 tekstFelt.setText(tema.getNavn());
                 tekstFelter.add(tekstFelt);
+                synligeTemaer.add(tema);
                 vBox.getChildren().add(tekstFelt);
             }
 
@@ -144,7 +156,7 @@ public class AdminTemaController
                 // Kører hele ArrayListen med temaer igennem
                 for (int i = 0; i < tekstFelter.size(); i++)
                 {
-                    Tema tema = temaer.get(i); // Henter et tema
+                    Tema tema = synligeTemaer.get(i); // Henter et tema
                     tema.setNavn(tekstFelter.get(i).getText()); // Sætter navnet på temaet til det Admin har skrevet i tekstfeltet
                     dao.opdaterTema(tema); // Gemmer det nye tema navn i databasen
                 }

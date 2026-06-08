@@ -59,7 +59,11 @@ public class OmOsController
     // Kører automatisk når FXML siden åbnes
     public void initialize ()
     {
+        // Henter Om Os og kontaktoplysninger til bundlinjen fra databasen
         try {
+            // Tømmer listen der indholder Om Os fra databasen - for at ungå dubletter
+            omOsListe.clear();
+
             // Henter Om Os data fra databasen som et OmOs objekt og ligger det i omOsListe
             dao.hentOmOs(omOsListe);
 

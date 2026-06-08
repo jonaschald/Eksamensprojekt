@@ -55,7 +55,11 @@ public class OmSamlingenController
     @FXML
     public void initialize()
     {
+        // Henter Om Samlingen fra databasen
         try {
+            // Tømmer listen der indholder Om Samlingen fra databasen - for at ungå dubletter
+            omSamlingenListe.clear();
+
             // Henter Om Samlingen data fra databasen som et OmSamlingen objekt og ligger det i omSamlingenListe
             dao.hentOmSamlingen(omSamlingenListe);
 
@@ -87,17 +91,18 @@ public class OmSamlingenController
 
         // Henter kontaktoplysninger til bundlinjen fra databasen
         try {
-            // Henter data fra databasen som et OmOs objekt og ligger det i omOsListe
+            // Henter data fra databasen som et OmOs objekt og ligger det i omOsListe til kontaktoplysninger
             dao.hentOmOs(omOsListe);
 
-            // Henter OmOs objektet fra listen
+            // Henter OmOs objektet fra listen til kontaktoplysninger
             OmOs omOs = omOsListe.get(0);
 
-            // Sætter data fra objektet ind i de forskellige labels
+            // Sætter data fra objektet ind i de forskellige labels til kontaktoplysninger
             adresse.setText(omOs.getAdresse());
             telefon.setText(omOs.getTelefonnummer());
             email.setText(omOs.getEmail());
             åbningstider.setText(omOs.getÅbningstider());
+
         } catch (Exception e) {
             // Udskriver fejlen i konsollen
             System.out.println("Kunne ikke hente Om Os fra databasen");
@@ -107,7 +112,6 @@ public class OmSamlingenController
             Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke hente Om Os fra databasen");
             alert.show();
         }
-
     }
 
     // Skifter scenen til Admin Login
